@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+	}
+
+	.wrapper {
+    text-align: center;
+	}
+
+	.buttond {
+    position: absolute;
+    top: 50%;
+	}
+
+<!-- Preguntar problema en colapso -->
+
+.background {
+	width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+  .sizeB{
+    width: 400px;
+    height: 400px;
+    
+    max-width:100%;
+	max-height:100%;
+	overflow:auto;
+  }
+.contentr {
+	position:absolute;
+    left:0; right:1;
+    top:0; bottom:0;
+	margin:auto;
+	margin-left: 115px;
+}
+.contentc {
+	position:absolute;
+    left:0; right:0;
+    top:0; bottom:0;
+	margin:auto;
+}
+.contentl {
+	position:absolute;
+    left:1; right:0;
+    top:0; bottom:0;
+	margin:auto;
+	margin-right: 115px;
+}
+
+  .logo{
+ background-image:url("http://householdairfresheners.com/wp-content/uploads/2017/02/Fresh-House-Logo-	Designs-	32-With-Additional-logo-designer-with-House-Logo-Designs.jpg");
+ background-size: 100px 50px;
+ background-repeat: no-repeat;
+ width: 100px;
+ height: 50px;
+}
+
+<!-- Preguntar lunes 
+a:hover{
+ color: red;
+}
+-->
+ </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand logo" href="Home.html"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a class="ref" href="#">My Devices</a></li>
+        <li><a href="#">My Combos</a></li>
+        <li><a href="#">My Agenda</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Profile <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Configurations</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Change Profile</a></li>
+            <li><a href="#">Log out</a></li>
+          </ul>
+        </li>
+        <li><a href="Main Page.html"><span class="glyphicon glyphicon-off"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid background">
+  <button type="button" class="btn btn-default sizeB contentr">My Devices</button>
+  <button type="button" class="btn btn-default sizeB contentc">My Combos</button>
+  <button type="button" class="btn btn-default sizeB contentl">My Agenda</button>
+</div>
+
+</body>
+</html>
