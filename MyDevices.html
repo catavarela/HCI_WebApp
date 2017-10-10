@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>My Devices</title>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -16,7 +16,7 @@ html{
 }
 
 body{
-	background-color:#1e129b;
+	background-color:white;
     height:100%;
     width:100%;
 }
@@ -30,36 +30,6 @@ body{
  height: 50px;
 }
 
-.nav-personalize{
- position:relative;
- top: -20px;
- border-style: double;
- border-color: grey;
- border-width: 15px;
-}
-
-.floor{
- color:white;
- background-color: #334056;
- border-color: #334056;
- margin-right:20px;  <!-- Esto es para la separacion entre botones -->
-}
-
-.floor:hover{
- background-color: #6079a3;
- border-color: #6079a3;
- color:#d3d3d3;
-}
-
-.new-floor{
- background-color: #c7d2e5;
- border-color: #c7d2e5;
-}
-
-.new-floor:hover{
- background-color: #83a1d1;
- border-color:#83a1d1;
-}
 
 .close{
   	color:black;
@@ -123,46 +93,68 @@ body{
 }
 
 .left-container{
-    background-color:#1e129b;
+    background-color:white;
     width: 25%;
-    height:80%;
+    height:95%;
     position:relative;
-    top:-4%;
-    display:inline-block;
+    right:-1.5%;
+    border-radius: 25px;
+    border-style:solid;
+    border-color:black;
+    float:left;
 }
 
 .wrapper-room-title{
-    background-color: #0eccaf;
-    width:70%;
-    position:relative;
-    right:-7%;
-    border-radius: 25px;
+    background-color: transparent;
+    width:100%;
+    height:10%;
+    padding:-2%;
 }
 
 .title-left-container{
     color:black;
     text-align:center;
+    font-size:3vw;
+    display: block;
+}
+
+.left-fine-line{
+	width:80%;
+	border-color:black;
+    border-width: 0.2vw;
+    position:relative;
+    top:-20px;
+}
+
+.middle{
+	background-color:transparent;
+    position:relative;
+    top:2%;
+    width:100%;
+    height:70%;
 }
 
 .wrapper{
-	background-color:#0eccaf;
+	background-color:#0dc2cc;
     position:relative;
-    right:-7%;
-    top:3%;
+    right:-7.5%;
     border-radius: 25px;
     border-color:black;
     border-style: solid;
-    height: 70%;
-    width:70%;
+    height: 100%;
+    width:85%;
 }
 
 .vertical-menu {
 	position:relative;
     top:2%;
     right:-8%;
-    width: 82%;
+    width: 85%;
 	height:95%;
     overflow-y: auto;
+    float:left;
+    text-overflow: ellipsis;
+    
 }
 
 .vertical-menu::-webkit-scrollbar{
@@ -192,83 +184,104 @@ body{
     width: 30px;
 }
 
+.span-a{
+	width:100%;
+    height:10%;
+    display: flex;
+    margin-bottom:5%;
+}
+
+.mod-room{
+	width:15%;
+    height:100%;
+}
+
 .vertical-menu a {
     color: black;
     border-radius: 10px;
     display: block;
-    width: 90%;
+    width: 80%;
     padding: 5%;
     text-decoration: none;
+    font-size:1.5vw;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .vertical-menu a:hover {
     background-color: #ccc;
 }
 
+.wrapper-button-new-room{
+	height:20%;
+    width:100%;
+    background-color:transparent;
+	
+}
+
 .button-new-room{
-	position:relative;
-    top:50px;
-    left:12%;
-    width:60%;
-    height:8%;
+    width:80%;
+    height:30%;
     min-width:50%;
     border-radius: 10px;
     border-color:black;
-    background-color:#0eccaf;
+    background-color:#0dc2cc;
     color:black;
-    font-size: 1.7vw;
+    font-size: 1.5vw;
+    position:relative;
+    left:11%;
+    top:30%;
 }
 
 .button-new-room:hover{
-	background-color:#8a80ed;
-}
-
-.button-group-rooms{
-	position:relative;
-    top:75px;
-    left:12%;
-    width:60%;
-    height:8%;
-    min-width:50%;
-    border-radius: 10px;
-    border-color:black;
-    background-color:#0eccaf;
-    color:black;
-    font-size: 1.7vw;
-}
-
-.button-group-rooms:hover{
-	background-color:#8a80ed;
+	background-color:#0eccaf;
 }
 
 .right-container{
-	background-color:#1e129b;
+	background-color:white;
     width:70%;
-    height:80%;
+    height:95%;
     position:relative;
-    top:-4%;
-    display:inline-block;
+    right:-3%;
+    float:left;
+    border-radius: 15px;
+    border-color:black;
+    border-style:solid;
 }
 
 .wrapper-room-title-two{
-	background-color: #0eccaf;
+	background-color: transparent;
     width:95%;
+    height:10%;
     position:relative;
     right:-25px;
     border-radius: 25px;
+    margin-bottom:2%;
 }
 
 .title-right-container{
-	text-align:center;
     color:black;
+    text-align:center;
+    font-size:3vw;
+}
+
+.right-fine-line{
+	width:80%;
+	border-color:black;
+    border-width: 0.2vw;
+    position:relative;
+    top:-20px;
 }
 
 .wrapper-devices-container{
     position:relative;
-    top:60px;
-    width:100%;
+    top:-2%;
+    left:5%;
+    width:90%;
     height:80%;
-	background-color: #0eccaf;
+	background-color:#0dc2cc;
     border-radius: 15px;
     border-color:black;
     border-style:solid;
@@ -279,7 +292,7 @@ body{
     top:1%;
     width:97%;
     height:97%;
-	background-color: #0eccaf;
+	background-color: #0dc2cc;
     border-radius: 15px;
     overflow-y: auto;
 
@@ -372,42 +385,25 @@ body{
   </div>
 </nav>
 
-<nav class="navbar navbar-inverse nav-personalize">
-  <div class="container-fluid">
-    <button class="btn  navbar-btn floor">Ground Floor</button>
-    <button class="btn navbar-btn new-floor" id="new-floor"><span class="glyphicon glyphicon-plus"></span>  Create new floor</button>
-  </div>
-</nav>
 <div class="my-container">
 	<div class="left-container">
 		<div class="wrapper-room-title">
 			<h1 class="title-left-container">Rooms</h1>
+            <hr class="left-fine-line">
    	</div>
+    	<div class="middle">
    		 <div class="wrapper">
-			<div class="vertical-menu">
- 		 		<a href="#">Cocina</a>
- 	 			 <a href="#">Living</a>
- 	 			 <a href="#">Dormitorio 1</a>
- 	 	 		<a href="#">Dormitorio 2</a>
-    	 		<a href="#">Dormitorio 3</a>
-    	 		<a href="#">Comedor</a>
-    	 		<a href="#">Banio 1</a>
-    	 		<a href="#">Banio 2</a>
-    			 <a href="#">Sala de juegos</a>
-    			 <a href="#">Garage</a>
-    			 <a href="#">Sala de estar</a>
-    			 <a href="#">Pasillo</a>
-    			 <a href="#">Link 3</a>
-    			 <a href="#">Link 3</a>
-    			 <a href="#">Link 3</a>
+			<div class="vertical-menu" id="ver-menu">
 			</div>
   	     </div>
-   			 <button class="button-new-room" id="new-room"> Create new room </button>
-   			 <button class="button-group-rooms" id="group-rooms"> Group rooms </button>
+        </div>
+         <div class="wrapper-button-new-room">
+   			 <button class="button-new-room" id="new-room"> Create new room </button></div>
 	</div>
 	<div class="right-container">
     	<div class="wrapper-room-title-two">
 			<h1 class="title-right-container">"Room name"</h1>
+            <hr class="right-fine-line">
         </div>
         <div class="wrapper-devices-container">
         <div class="devices-container">
@@ -436,33 +432,6 @@ body{
 	</div>
    </div>
 </div>
-
-
-<!-- Modal -->
-  <div class="modal fade" id="floor" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
-        	<p class="header">Creating new floor</p>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body" style="padding:40px 50px;">
-           <form role="form">
-            <div class="form-group">
-              <label for="usrname"><span class="glyphicon glyphicon-home"></span> Floor name</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter your floor name...">
-            </div>
-           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="cancel" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>    Cancel</button>
-          <button type="submit" class="accept"><span class="glyphicon glyphicon-user"></span>    Accept </button>
-        </div>
-      </div>  
-    </div>
-  </div> 
-  
   
   
 <!-- Modal -->
@@ -478,13 +447,13 @@ body{
            <form role="form">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-home"></span> Room name</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter your room name...">
+              <input type="text" class="form-control" id="room-name" placeholder="Enter your room name...">
             </div>
            </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="cancel" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>    Cancel</button>
-          <button type="submit" class="accept"><span class="glyphicon glyphicon-user"></span>    Accept </button>
+          <button type="submit" class="cancel" onclick="cancelRoom()"><span class="glyphicon glyphicon-remove"></span>    Cancel</button>
+          <button type="submit" class="accept" onclick="createRoom()"><span class="glyphicon glyphicon-user"></span>    Accept </button>
         </div>
       </div>  
     </div>
@@ -518,11 +487,6 @@ body{
 
   
 <script>
-$(document).ready(function(){
-    $("#new-floor").click(function(){
-        $("#floor").modal();
-    });
-});
 
 $(document).ready(function(){
     $("#new-room").click(function(){
@@ -535,6 +499,43 @@ $(document).ready(function(){
         $("#device").modal();
     });
 });
+
+$(document).ready(function(){
+    $("#accept-room").click(function(){
+        $("#device").modal();
+    });
+});
+
+
+function cancelRoom(){
+	document.getElementById("room-name").value = "";
+    $("#room").modal("hide");
+}
+
+function getNameRoom(){
+	return document.getElementById("room-name").value;
+}
+
+function createRoom(){
+var div = document.createElement("div");
+div.classList.add("span-a");
+var para = document.createElement("a");//Creo el tipo de elemento
+var node = document.createTextNode(getNameRoom()); //le digo su contenido
+para.href = "https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic";  //le digo su href
+para.appendChild(node);
+var button = document.createElement("button");
+button.classList.add("mod-room");
+var span = document.createElement("span");
+span.classList.add("glyphicon")
+span.classList.add("glyphicon-pencil")
+button.appendChild(span);
+div.appendChild(para);
+div.appendChild(button);
+var element = document.getElementById("ver-menu");
+element.appendChild(div);
+document.getElementById("room-name").value = "";
+$("#room").modal("hide");
+}
 </script>
 </body>
 </html>
