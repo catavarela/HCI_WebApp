@@ -382,6 +382,65 @@ body{
     
 }
 
+.room-name-modal{
+	font-size: 200%;
+}
+
+.larger-modal{
+	width:600px;
+}
+
+.cancel-larger{
+  	position: relative;
+    top:17px;
+    left:30px;
+    background-color: #FA4D4D;
+    color: white;
+    font-weight: bold;
+    font-size:150%;
+    border-radius: 7px;
+	text-color: white;
+    height: 50px;
+    width: 125px;
+}
+  
+.accept-larger{
+  	position: relative;
+    left: 90px;
+    top:17px;
+    background-color:#4cce97;
+    color: white;
+    font-size:150%;
+    font-weight: bold;
+    border-radius: 7px;
+	text-color: white;
+    height: 50px;
+    width: 125px;
+}
+
+.delete-room{
+  	position: relative;
+    top:17px;
+    left:60px;
+    background-color: #f4aa42;
+    color: white;
+    font-weight: bold;
+    font-size:150%;
+    border-radius: 7px;
+	text-color: white;
+    height: 50px;
+    width: 125px;
+}
+
+.modal-footer-larger{
+ 	position:relative;
+  	left: 50px;
+    top: -25px;
+	background-color:#E1E9F0;
+	width:500px;
+    height: 80px;
+}
+
  </style>
 </head>
 <body>
@@ -475,7 +534,7 @@ body{
       <div class="modal-content">
         <div class="modal-header" style="padding:35px 50px;">
         	<p class="header">Creating new room</p>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" id="close-create-room">&times;</button>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
            <form role="form">
@@ -486,8 +545,8 @@ body{
            </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="cancel" onclick="cancelRoom()"><span class="glyphicon glyphicon-remove"></span>    Cancel</button>
-          <button type="submit" class="accept" onclick="createRoom()"><span class="glyphicon glyphicon-user"></span>    Accept </button>
+          <button type="submit" class="cancel" onclick="cancelRoom();"><span class="glyphicon glyphicon-remove"></span>    Cancel</button>
+          <button type="submit" class="accept" onclick="createRoom();"><span class="glyphicon glyphicon-user"></span>    Accept </button>
         </div>
       </div>  
     </div>
@@ -518,12 +577,40 @@ body{
       </div>  
     </div>
   </div> 
+  
+  
+<!-- Modal de modify-->
+  <div class="modal fade" id="modify-room" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content larger-modal">
+        <div class="modal-header" style="padding:35px 50px;">
+          <p class="header" type="none" id="modify-room-header"></p>
+          <button type="button" class="close" id="cancel-icon-modify-room">&times;</button>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+           <form role="form">
+            <div class="form-group">
+              <p class="room-name-modal" id="actual-room-name"></p>
+              <label for="usrname">Change room name:</label>
+              <input type="text" class="form-control" id="new-room-name" placeholder="Enter new room name...">
+            </div>
+           </form>
+        </div>
+        <div class="modal-footer-larger">
+          <button type="submit" class="cancel-larger" id="cancel-modify-room"><span class="glyphicon glyphicon-remove"></span>    Cancel</button>
+          <button type="submit" class="delete-room" onclick="removeRoom();"><span class="glyphicon glyphicon-trash">   Delete</span></button>
+          <button type="submit" class="accept-larger" onclick="changeName();"><span class="glyphicon glyphicon-user"></span>    Accept </button>
+        </div>
+      </div>  
+    </div>
+  </div> 
 
   
 <script>
 
 $(document).ready(function(){
     $("#new-room").click(function(){
+    	document.getElementById("room-name").value = "";
         $("#room").modal();
     });
 });
@@ -535,10 +622,26 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $("#accept-room").click(function(){
-        $("#device").modal();
+    $("#close-create-room").click(function(){
+        $("#room").modal("hide");
+        document.getElementById("room-name").value = "";
     });
 });
+
+$(document).ready(function(){
+    $("#cancel-modify-room").click(function(){
+        $("#modify-room").modal("hide");
+        document.getElementById("new-room-name").value = "";
+    });
+});
+
+$(document).ready(function(){
+    $("#cancel-icon-modify-room").click(function(){
+        $("#modify-room").modal("hide");
+        document.getElementById("new-room-name").value = "";
+    });
+});
+
 
 
 function cancelRoom(){
@@ -554,10 +657,13 @@ function createRoom(){
 var div = document.createElement("div");
 div.classList.add("span-a");
 var para = document.createElement("a");//Creo el tipo de elemento
+para.setAttribute("id", getNameRoom() + "room");
 var node = document.createTextNode(getNameRoom()); //le digo su contenido
 para.href = "https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic";  //le digo su href
 para.appendChild(node);
 var button = document.createElement("button");
+button.setAttribute("onclick", "modifyRoom(this);");
+button.setAttribute("id", getNameRoom());
 button.classList.add("mod-room");
 var span = document.createElement("span");
 span.classList.add("glyphicon")
@@ -567,9 +673,46 @@ div.appendChild(para);
 div.appendChild(button);
 var element = document.getElementById("ver-menu");
 element.appendChild(div);
-document.getElementById("room-name").value = "";
 $("#room").modal("hide");
 }
+
+function modifyRoom(button){
+ document.getElementById("modify-room-header").innerHTML = "Room configuration";
+ document.getElementById("modify-room-header").setAttribute("type",button.getAttribute('id'));
+ var roomName = button.getAttribute('id');
+ document.getElementById("actual-room-name").innerHTML = "Actual room name: " + roomName;
+ $("#modify-room").modal();
+}
+
+function getNewNameRoom(){
+	return document.getElementById("new-room-name").value;
+}
+
+function changeName(){
+	var info = document.getElementById("modify-room-header");
+    var idroom = info.getAttribute("type") + "room";
+    var idbutton = info.getAttribute("type");
+    var editButton = document.getElementById(idbutton);
+	var room = document.getElementById(idroom);
+    room.setAttribute("id",getNewNameRoom() + "room");
+    editButton.setAttribute("id",getNewNameRoom());
+    room.innerHTML = getNewNameRoom();
+    document.getElementById("new-room-name").value = "";
+    $("#modify-room").modal("hide");
+}
+
+function removeRoom(){
+	var info = document.getElementById("modify-room-header");
+    var idroom = info.getAttribute("type") + "room";
+    var room = document.getElementById(idroom);
+	var parent = room.parentNode
+    parent.parentNode.removeChild(parent);
+    document.getElementById("new-room-name").value = "";
+    $("#modify-room").modal("hide");
+}
+
+
+
 </script>
 </body>
 </html>
