@@ -331,6 +331,15 @@ body{
 
 }
 
+.text-starter-devices-container{
+    font-size:150%;
+    position: relative;
+	float: left;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
 .devices-container::-webkit-scrollbar{
     width: 2%;
     height: 2%;
@@ -441,6 +450,78 @@ body{
     height: 80px;
 }
 
+.modal-content-conf-delete{
+	widht:500px;
+    height:200px;
+    background-color:white;
+    text-align:center;
+}
+
+.modal-header-conf-delete{
+	width:100%;
+    height:15%;
+    background-color:#4cce97;
+}
+
+.close-conf{
+	border-color:transparent;
+    background-color:transparent;
+	font-size:150%;
+    font-weight: bold;
+    float:right;
+    
+}
+
+.modal-body-conf-delete{
+	width:100%;
+    height:55%;
+}
+
+.modal-footer-conf-delete{
+	width:80%;
+    height:40%;
+    background-color:#E1E9F0;
+    position:relative;
+    top:-20%;
+    
+}
+
+.confirm-delete-text{
+	font-size:200%;
+    
+}
+
+.cancel-confirmation{
+    background-color: #FA4D4D;
+    color: white;
+    font-weight: bold;
+    font-size:150%;
+    border-radius: 7px;
+	text-color: white;
+    height: 80%;
+    width: 40%;
+    position:relative;
+    left:-15%;
+}
+
+.accept-confirmation{
+	background-color:#4cce97;
+    color: white;
+    font-weight: bold;
+    font-size:150%;
+    border-radius: 7px;
+	text-color: white;
+    height: 80%;
+    width: 40%;
+    position:relative;
+    left:-10%;
+}
+
+.hidden-devices{
+	display:none;
+}
+
+
  </style>
 </head>
 <body>
@@ -493,38 +574,38 @@ body{
          <div class="wrapper-button-new-room">
    			 <button class="button-new-room" id="new-room"> Create new room </button></div>
 	</div>
-	<div class="right-container">
+	<div class="right-container" id="starter-right-container">
     	<div class="wrapper-room-title-two">
 			<h1 class="title-right-container">"Room name"</h1>
             <hr class="right-fine-line">
         </div>
         <div class="wrapper-devices-container">
+        	<div class="devices-container">
+        		<p class="text-starter-devices-container">To see the devices, please select or create a room!!</p>
+            </div>
+	    </div>
+   </div>
+</div>
+
+
+
+<!-- Idea del href del "a" del ver-menu-->
+<div class="hidden-devices">
+		<div class="right-container" id="Cocinaholder">
+    	<div class="wrapper-room-title-two">
+			<h1 class="title-right-container">"Cocina"</h1>
+            <hr class="right-fine-line">
+        </div>
+        <div class="wrapper-devices-container">
         <div class="devices-container">
-        	<div class="device-container">
-        		<button class="create-device" id="new-device"></button>
-            </div>
-            <div class="device-container">
-        		<button class="create-device" id="new-device"></button>
-            </div>
-                        <div class="device-container">
-        		<button class="create-device" id="new-device"></button>
-            </div>
-                        <div class="device-container">
-        		<button class="create-device" id="new-device"></button>
-            </div>
-            <div class="device-container">
-        		<button class="create-device" id="new-device"></button>
-            </div>
-            <div class="device-container">
-        		<button class="create-device" id="new-device"></button>
-            </div>
-            <div class="device-container">
+        	<div class="device-container" >
         		<button class="create-device" id="new-device"></button>
             </div>
         </div>
 	</div>
    </div>
 </div>
+
   
   
 <!-- Modal -->
@@ -598,10 +679,28 @@ body{
         </div>
         <div class="modal-footer-larger">
           <button type="submit" class="cancel-larger" id="cancel-modify-room"><span class="glyphicon glyphicon-remove"></span>    Cancel</button>
-          <button type="submit" class="delete-room" onclick="removeRoom();"><span class="glyphicon glyphicon-trash">   Delete</span></button>
+          <button type="submit" class="delete-room" onclick="confirmDelete();"><span class="glyphicon glyphicon-trash">   Delete</span></button>
           <button type="submit" class="accept-larger" onclick="changeName();"><span class="glyphicon glyphicon-user"></span>    Accept </button>
         </div>
       </div>  
+    </div>
+  </div> 
+  
+  <!-- Confirmation modal delete-->
+  <div class="modal fade" id="confirmation-Delete" role="dialog">
+    <div class="modal-dialog">
+    	<div class="modal-content modal-content-conf-delete">
+             <div class="modal-header-conf-delete">
+         		<button type="button" class="close-conf" onclick="closeConfirmationRoomDelete()">&times;</button>
+            </div>
+         <div class="modal-body modal-body-conf-delete">
+         	<p class="confirm-delete-text">Are you sure you want to delete the room?</p>
+         </div>
+       	 <div class="modal-footer modal-footer-conf-delete">
+          <button type="submit" class="cancel-confirmation" onclick="closeConfirmationRoomDelete()"><span class="glyphicon glyphicon-remove"></span>    Cancel</button>
+          <button type="submit" class="accept-confirmation" onclick="removeRoom()"><span class="glyphicon glyphicon-user"></span>    Accept </button>
+      </div>  
+      </div>
     </div>
   </div> 
 
@@ -643,6 +742,13 @@ $(document).ready(function(){
 });
 
 
+/* Esto es para que el enter no haga nada */
+addEventListener("keydown", function(event) {
+    if (event.keyCode == 13){
+    }
+  });
+
+
 
 function cancelRoom(){
 	document.getElementById("room-name").value = "";
@@ -654,12 +760,22 @@ function getNameRoom(){
 }
 
 function createRoom(){
+if( document.getElementById(getNameRoom())){
+	alert("Name already exists");
+    return;
+}
+
+if(getNameRoom() == ""){
+	alert("Please put a name for the room");
+    return;
+}
+
 var div = document.createElement("div");
 div.classList.add("span-a");
 var para = document.createElement("a");//Creo el tipo de elemento
 para.setAttribute("id", getNameRoom() + "room");
 var node = document.createTextNode(getNameRoom()); //le digo su contenido
-para.href = "https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic";  //le digo su href
+para.setAttribute("href", getNameRoom() + "holder");
 para.appendChild(node);
 var button = document.createElement("button");
 button.setAttribute("onclick", "modifyRoom(this);");
@@ -689,6 +805,15 @@ function getNewNameRoom(){
 }
 
 function changeName(){
+	if( document.getElementById(getNewNameRoom())){
+	alert("Name already exists");
+    return;
+}
+
+	if(getNewNameRoom() == ""){
+		alert("Please put a name to change the room name");
+   		return;
+}
 	var info = document.getElementById("modify-room-header");
     var idroom = info.getAttribute("type") + "room";
     var idbutton = info.getAttribute("type");
@@ -701,6 +826,16 @@ function changeName(){
     $("#modify-room").modal("hide");
 }
 
+function confirmDelete(){
+	$("#modify-room").modal("hide");
+    $("#confirmation-Delete").modal();
+}
+
+function closeConfirmationRoomDelete(){
+	$("#confirmation-Delete").modal("hide");
+	$("#modify-room").modal()
+}
+
 function removeRoom(){
 	var info = document.getElementById("modify-room-header");
     var idroom = info.getAttribute("type") + "room";
@@ -708,9 +843,8 @@ function removeRoom(){
 	var parent = room.parentNode
     parent.parentNode.removeChild(parent);
     document.getElementById("new-room-name").value = "";
-    $("#modify-room").modal("hide");
+    $("#confirmation-Delete").modal("hide");
 }
-
 
 
 </script>
