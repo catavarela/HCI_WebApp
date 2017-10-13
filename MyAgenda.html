@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="animate.css">
   <style>
   
   /* W3.CSS 4.04 Apr 2017 by Jan Egil and Borge Refsnes */
@@ -79,6 +80,10 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
   background-color: black;
  }
 
+ .modal-footer{
+  background-color: #D8E4EF;
+ }
+
  </style>
 </head>
 <body>
@@ -134,16 +139,16 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     </div>
 
     <!-- Modal -->
-  <div class="modal fade" id="addEvent" role="dialog">
+  <div class="modal animated fadeInDown" id="addEvent" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title text-center">Add Event</h4>
+          <h3 class="modal-title text-center">Add Event</h3>
         </div>
         <div class="modal-body">
-          <form>
+          <form class="horizontal">
             <div class="form-group">
               <label for="inputName">Event Name:</label>
               <input type="text" class="form-control" id="inputEventName" placeholder="Enter Event name" name="Eventname" required>
@@ -151,8 +156,8 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
         </div>
       </div>
       
