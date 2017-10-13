@@ -23,7 +23,10 @@ img{border-style:none}
 /* End extract */
 
 html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
-h3{font-size:24px;font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0}
+h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3b7aaf;
+    text-align:left;
+    font-size:3vw;
+    display: block;}
 
 .w3-display-container{position:relative}
 .w3-container:after,.w3-container:before,.w3-row-padding:after,.w3-row-padding:before{content:"";display:table;clear:both}
@@ -38,7 +41,7 @@ h3{font-size:24px;font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin
 .w3-row-padding,.w3-row-padding>.w3-col{padding:0 8px}
 .w3-container{padding:0.01em 16px}
 
-.w3-border-bottom{border-bottom:1px solid #ccc!important}
+.w3-border-bottom{border-bottom-color: #d3d3d3; border-style: solid; border-bottom-width: thin; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent;}
 .w3-margin-bottom{margin-bottom:16px!important}
 .w3-padding{padding:8px 16px!important}
 .w3-padding-16{padding-top:16px!important;padding-bottom:16px!important}
@@ -54,7 +57,6 @@ h3{font-size:24px;font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin
     margin-top: 15px;
   }
 
-
   .modal-header, h4, .close {
       background-color: #5cb85c;
       color:white !important;
@@ -66,24 +68,39 @@ h3{font-size:24px;font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin
   }
 
 
-  .logo{
- background-image:url("http://householdairfresheners.com/wp-content/uploads/2017/02/Fresh-House-Logo-Designs-32-With-Additional-logo-designer-with-House-Logo-Designs.jpg");
- background-size: 100px 50px;
+ .logo{
+ background-image:url("smart_house_logo.png");
+ background-size: 56px 56px;
  background-repeat: no-repeat;
- width: 100px;
- height: 50px;
+ width: 56px;
+ height: 56px;
 }
 
-/* Preguntar lunes */
-a:hover{
- color: red;
-}
+ .justify-center-56px{
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  height: 56px;
+ }
+
+ .flex-center{
+  display: flex;
+  align-items: center;
+ }
+
+ .tam{
+    font-size:16px;
+ }
+
+ .color{
+  background-color: black;
+ }
 
  </style>
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse color">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -94,15 +111,15 @@ a:hover{
       <a class="navbar-brand logo" href="Home.html"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="#">My Devices</a></li>
-        <li><a href="#">My Combos</a></li>
-        <li><a href="#">My Agenda</a></li>
-        <li><a href="#">Now On</a></li>
+      <ul class="nav navbar-nav justify-center-56px">
+        <li><a class="flex-center tam" href="MyDevices.html">Rooms and Devices</a></li>
+        <li><a class="flex-center tam" href="MyCombos.html">Combinations</a></li>
+        <li><a class="flex-center tam" href="MyAgenda.html">Agenda</a></li>
+        <li><a class="flex-center tam" href="Now On.html">Now On</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Profile <span class="caret"></span></a>
+          <a class="dropdown-toggle flex-center tam" data-toggle="dropdown" href="#">My Profile <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Configurations</a></li>
             <li><a href="#">News</a></li>
@@ -110,7 +127,6 @@ a:hover{
             <li><a href="Main Page.html">Log out</a></li>
           </ul>
         </li>
-        <li><a href="Main Page.html"><span class="glyphicon glyphicon-off"></span></a></li>
       </ul>
     </div>
   </div>
@@ -120,7 +136,7 @@ a:hover{
 <div class="w3-content w3-padding" style="max-width:1564px">
 
   <!-- Project Section -->
-  <div class="w3-container w3-padding-0-32" id="MyCombinations">
+  <div class="w3-container w3-padding-0-32" id="NowOn">
     <h3 class="w3-border-bottom w3-padding-0-16">Now On</h3>
   </div>
 
