@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>My Devices</title>
+  <title>Rooms and Devices</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -9,7 +9,17 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
 
+  /* W3.CSS 4.04 Apr 2017 by Jan Egil and Borge Refsnes */
+html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
+/* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+img{border-style:none}
 
+::-webkit-input-placeholder{color:inherit;opacity:0.54}
+::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
+/* End extract */
+
+html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
 
 html{
     height: 100%;
@@ -22,13 +32,33 @@ body{
 }
 
 
-.logo{
- background-image:url("http://householdairfresheners.com/wp-content/uploads/2017/02/Fresh-House-Logo-Designs-32-With-Additional-logo-designer-with-House-Logo-Designs.jpg");
- background-size: 100px 50px;
+ .logo{
+ background-image:url("smart_house_logo.png");
+ background-size: 56px 56px;
  background-repeat: no-repeat;
- width: 100px;
- height: 50px;
+ width: 56px;
+ height: 56px;
 }
+
+ .justify-center-56px{
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  height: 56px;
+ }
+
+ .flex-center{
+  display: flex;
+  align-items: center;
+ }
+
+ .tam{
+    font-size:16px;
+ }
+
+ .color{
+  background-color: black;
+ }
 
 
 .close{
@@ -61,7 +91,7 @@ body{
     font-weight: bold;
     font-size:150%;
     border-radius: 7px;
-    text-color: white;
+    color: white;
     height: 50px;
     width: 175px;
 }
@@ -74,7 +104,7 @@ body{
     font-size:150%;
     font-weight: bold;
     border-radius: 7px;
-    text-color: white;
+    color: white;
     height: 50px;
     width: 175px;
 }
@@ -123,12 +153,12 @@ body{
 
 .left-fine-line{
     width:80%;
-    border-right: 0px;
-    border-left: 0px;
-    border-top:0px;
-    border-color:#d3d3d3;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color:transparent;
+    border-bottom-color:#d3d3d3;
     border-style:solid;
-    border-width:thin;
+    border-bottom-width:thin;
     position:relative;
     top:-20px;
 }
@@ -161,7 +191,7 @@ body{
     position:relative;
     top:2%;
     right:-8%;
-    width: 85%;
+    width: 83%;
     height:95%;
     overflow-y: auto;
     float:left;
@@ -214,6 +244,11 @@ body{
 .mod-room:hover{
     background-color: #B1CADF;
     color: black;
+}
+
+.mod-room-pencil{
+    border-bottom-right-radius:0px;
+    border-top-right-radius:0px;
 }
 
 .span-a{
@@ -312,12 +347,12 @@ body{
 
 .right-fine-line{
     width:80%;
-    border-right: 0px;
-    border-left: 0px;
-    border-top:0px;
-    border-color:#d3d3d3;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color:transparent;
+    border-bottom-color:#d3d3d3;
     border-style:solid;
-    border-width:thin;
+    border-bottom-width:thin;
     position:relative;
     top:-20px;
 }
@@ -422,7 +457,7 @@ body{
     font-weight: bold;
     font-size:150%;
     border-radius: 7px;
-    text-color: white;
+    color: white;
     height: 50px;
     width: 125px;
 }
@@ -436,7 +471,7 @@ body{
     font-size:150%;
     font-weight: bold;
     border-radius: 7px;
-    text-color: white;
+    color: white;
     height: 50px;
     width: 125px;
 }
@@ -450,7 +485,7 @@ body{
     font-weight: bold;
     font-size:150%;
     border-radius: 7px;
-    text-color: white;
+    color: white;
     height: 50px;
     width: 125px;
 }
@@ -465,7 +500,7 @@ body{
 }
 
 .modal-content-conf-delete{
-    widht:500px;
+    width:500px;
     height:200px;
     background-color:white;
     text-align:center;
@@ -511,7 +546,7 @@ body{
     font-weight: bold;
     font-size:150%;
     border-radius: 7px;
-    text-color: white;
+    color: white;
     height: 80%;
     width: 40%;
     position:relative;
@@ -524,7 +559,7 @@ body{
     font-weight: bold;
     font-size:150%;
     border-radius: 7px;
-    text-color: white;
+    color: white;
     height: 80%;
     width: 40%;
     position:relative;
@@ -540,7 +575,7 @@ body{
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse color">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -551,15 +586,15 @@ body{
       <a class="navbar-brand logo" href="Home.html"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="#">My Devices</a></li>
-        <li><a href="#">My Combos</a></li>
-        <li><a href="#">My Agenda</a></li>
-        <li><a href="#">Now On</a></li>
+      <ul class="nav navbar-nav justify-center-56px">
+        <li><a class="flex-center tam" href="MyDevices.html">Rooms and Devices</a></li>
+        <li><a class="flex-center tam" href="MyCombos.html">Combinations</a></li>
+        <li><a class="flex-center tam" href="MyAgenda.html">Agenda</a></li>
+        <li><a class="flex-center tam" href="Now On.html">Now On</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Profile <span class="caret"></span></a>
+          <a class="dropdown-toggle flex-center tam" data-toggle="dropdown" href="#">My Profile <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Configurations</a></li>
             <li><a href="#">News</a></li>
@@ -567,7 +602,6 @@ body{
             <li><a href="Main Page.html">Log out</a></li>
           </ul>
         </li>
-        <li><a href="Main Page.html"><span class="glyphicon glyphicon-off"></span></a></li>
       </ul>
     </div>
   </div>
@@ -586,7 +620,7 @@ body{
             </div>
         </div>
         <div class="wrapper-button-new-room">
-            <button class="button-new-room btn btn-default" id="new-room"> Create new room </button>
+            <button class="button-new-room btn btn-default" id="new-room"> Add a new room </button>
         </div>
     </div>
     <div class="right-container" id="starter-right-container">
@@ -596,7 +630,7 @@ body{
         </div>
         <div class="wrapper-devices-container scrollContent">
             <div class="devices-container">
-                <p class="text-starter-devices-container">To see the devices, please select or create a room!!</p>
+                <p class="text-starter-devices-container">Select the desired room to see the devices.</p>
             </div>
         </div>
     </div>
@@ -605,20 +639,7 @@ body{
 
 
 <!-- Idea del href del "a" del ver-menu-->
-<div class="hidden-devices">
-        <div class="right-container" id="Cocinaholder">
-        <div class="wrapper-room-title-two">
-            <h1 class="title-right-container">"Cocina"</h1>
-            <hr class="right-fine-line">
-        </div>
-        <div class="wrapper-devices-container">
-        <div class="devices-container">
-            <div class="device-container" >
-                <button class="create-device" id="new-device"></button>
-            </div>
-        </div>
-    </div>
-   </div>
+<div class="hidden-devices" id ="hidden-div">
 </div>
 
   
@@ -687,7 +708,7 @@ body{
            <form role="form">
             <div class="form-group">
               <p class="room-name-modal" id="actual-room-name"></p>
-              <label for="usrname">Change room name:</label>
+              <label for="usrname">Change room name</label>
               <input type="text" class="form-control" id="new-room-name" placeholder="Enter new room name...">
             </div>
            </form>
@@ -721,6 +742,239 @@ body{
 
   
 <script>
+/*
+$(document).ready(function(){
+    $("#new-room").click(function(){
+        document.getElementById("room-name").value = "";
+        $("#room").modal();
+    });
+});
+
+$(document).ready(function(){
+    $("#new-device").click(function(){
+        $("#device").modal();
+    });
+});
+
+$(document).ready(function(){
+    $("#close-create-room").click(function(){
+        $("#room").modal("hide");
+        document.getElementById("room-name").value = "";
+    });
+});
+
+$(document).ready(function(){
+    $("#cancel-modify-room").click(function(){
+        $("#modify-room").modal("hide");
+        document.getElementById("new-room-name").value = "";
+    });
+});
+
+$(document).ready(function(){
+    $("#cancel-icon-modify-room").click(function(){
+        $("#modify-room").modal("hide");
+        document.getElementById("new-room-name").value = "";
+    });
+});
+
+*/
+/* Esto es para que el enter no haga nada */
+/*
+addEventListener("keydown", function(event) {
+    if (event.keyCode == 13){
+    }
+  });
+
+
+
+function cancelRoom(){
+    document.getElementById("room-name").value = "";
+    $("#room").modal("hide");
+}
+
+function getNameRoom(){
+    var name = document.getElementById("room-name").value;
+    return name.replace(/ /g, '-');
+}
+
+function createRoom(){
+if( document.getElementById(getNameRoom())){
+    alert("Name already exists");
+    return;
+}
+
+if(getNameRoom() == ""){
+    alert("Please put a name for the room");
+    return;
+}
+
+var div = document.createElement("div");
+div.classList.add("span-a");
+var para = document.createElement("a");//Creo el tipo de elemento
+para.setAttribute("id", getNameRoom() + "room");
+var node = document.createTextNode(getNameRoom()); //le digo su contenido
+
+para.setAttribute("type", getNameRoom());
+para.setAttribute("onclick", "showDevicesRoom(this);");
+para.appendChild(node);
+para.className = "chargeDiv";
+
+var button = document.createElement("button");
+button.setAttribute("onclick", "modifyRoom(this);");
+button.setAttribute("id", getNameRoom());
+button.classList.add("mod-room");
+button.classList.add("mod-room-pencil");
+var span = document.createElement("span");
+span.classList.add("glyphicon");
+span.classList.add("glyphicon-pencil");
+var button1 = document.createElement("button");
+button1.setAttribute("onclick", "modifyRoom(this);");
+button1.setAttribute("id", getNameRoom() + "trash");
+button1.classList.add("mod-room");
+var span1 = document.createElement("span");
+span1.classList.add("glyphicon");
+span1.classList.add("glyphicon-trash");
+button.appendChild(span);
+button1.appendChild(span1);
+div.appendChild(para);
+div.appendChild(button);
+div.appendChild(button1);
+
+var element = document.getElementById("ver-menu");
+element.appendChild(div);
+createRightContainer(getNameRoom());
+$("#room").modal("hide");
+}
+
+
+function createRightContainer(roomName){
+
+    var hiddenDiv = document.getElementById("hidden-div");
+
+    var div = document.createElement("div");
+    var idDivName = roomName + "holder";
+    div.classList.add("right-container");
+    div.setAttribute("id", idDivName);
+    var div2 = document.createElement("div");
+    div2.classList.add("wrapper-room-title-two");
+    var h1 = document.createElement("h1");
+    h1.classList.add("title-right-container");
+    var h1Id = "title-room-" + roomName;
+    h1.setAttribute("id",h1Id);
+    var node = document.createTextNode(roomName);
+    h1.appendChild(node);
+    var hr = document.createElement("hr");
+    hr.classList.add("right-fine-line");
+    
+    var div3 = document.createElement("div");
+    div3.classList.add("wrapper-devices-container");
+    var div4 = document.createElement("div");
+    div4.classList.add("devices-container");
+    var div5 = document.createElement("div");
+    div5.classList.add("device-container");
+    var button = document.createElement("button");
+    button.classList.add("create-device");
+    var idButtonName = roomName + "new-device";
+    button.setAttribute("id", idButtonName);
+    
+    
+    hiddenDiv.appendChild(div);
+    div.appendChild(div2);
+    div.appendChild(div3);
+    
+    div2.appendChild(h1);
+    div2.appendChild(hr);
+    
+    div3.appendChild(div4);
+    div4.appendChild(div5);
+    
+    div5.appendChild(button);
+}
+
+function showDevicesRoom(nameRoom){
+    var hiddenDiv = document.getElementById("hidden-div")
+    var mainDiv = document.getElementById("main-container");
+    requiredDiv = mainDiv.children[1];
+    clone = requiredDiv.cloneNode(true);//problema espacio
+    hiddenDiv.appendChild(clone);
+    var idName = "#" + nameRoom.getAttribute("type") + "holder";
+    var idName2 = nameRoom.getAttribute("type") + "holder";
+    $(requiredDiv).replaceWith($(idName));
+}
+
+function showInitialDevicesRoom(){
+    var hiddenDiv = document.getElementById("hidden-div")
+    var mainDiv = document.getElementById("main-container");
+    requiredDiv = mainDiv.children[1];
+    $(requiredDiv).replaceWith( $("#starter-right-container"));
+}
+
+
+function modifyRoom(button){
+ document.getElementById("modify-room-header").innerHTML = "Room configuration";
+ document.getElementById("modify-room-header").setAttribute("type",button.getAttribute('id'));
+ var roomName = button.getAttribute('id');
+ document.getElementById("actual-room-name").innerHTML = "Actual room name: " + roomName;
+ $("#modify-room").modal();
+}
+
+function getNewNameRoom(){
+    var newName = document.getElementById("new-room-name").value;
+    return newName.replace(/ /g, '-');
+}
+
+function changeName(){
+    if( document.getElementById(getNewNameRoom())){
+    alert("Name already exists");
+    return;
+}
+
+    if(getNewNameRoom() == ""){
+        alert("Please put a name to change the room name");
+        return;
+}
+    var info = document.getElementById("modify-room-header");
+    var idroom = info.getAttribute("type") + "room";
+    var idbutton = info.getAttribute("type");
+    var editButton = document.getElementById(idbutton);
+    var titleId = "title-room-" + info.getAttribute("type");
+    var title = document.getElementById(titleId);
+    var newTitle = getNewNameRoom();
+    title.innerHTML = newTitle;
+    var room = document.getElementById(idroom);
+    room.setAttribute("id",getNewNameRoom() + "room");
+    title.setAttribute("id", "title-room-" + newTitle);
+    editButton.setAttribute("id",getNewNameRoom());
+    info.setAttribute("type", getNewNameRoom());
+    room.innerHTML = getNewNameRoom();
+    document.getElementById("new-room-name").value = "";
+    $("#modify-room").modal("hide");
+    
+}
+
+function confirmDelete(){
+    $("#modify-room").modal("hide");
+    $("#confirmation-Delete").modal();
+}
+
+function closeConfirmationRoomDelete(){
+    $("#confirmation-Delete").modal("hide");
+    $("#modify-room").modal()
+}
+
+function removeRoom(){
+    var info = document.getElementById("modify-room-header");
+    var idroom = info.getAttribute("type") + "room";
+    var room = document.getElementById(idroom);
+    var parent = room.parentNode
+    parent.parentNode.removeChild(parent);
+    document.getElementById("new-room-name").value = "";
+    showInitialDevicesRoom();
+    $("#confirmation-Delete").modal("hide");
+}
+*/
+
+
 
 $(document).ready(function(){
     $("#new-room").click(function(){
@@ -771,7 +1025,8 @@ function cancelRoom(){
 }
 
 function getNameRoom(){
-    return document.getElementById("room-name").value;
+    var name = document.getElementById("room-name").value;
+    return name.replace(/ /g, '-');
 }
 
 function createRoom(){
@@ -784,27 +1039,105 @@ if(getNameRoom() == ""){
     alert("Please put a name for the room");
     return;
 }
-
 var div = document.createElement("div");
 div.classList.add("span-a");
 var para = document.createElement("a");//Creo el tipo de elemento
 para.setAttribute("id", getNameRoom() + "room");
 var node = document.createTextNode(getNameRoom()); //le digo su contenido
-para.setAttribute("href", getNameRoom() + "holder");
+
+para.setAttribute("type", getNameRoom());
+para.setAttribute("onclick", "showDevicesRoom(this);");
+
+
 para.appendChild(node);
+para.className = "chargeDiv";
 var button = document.createElement("button");
 button.setAttribute("onclick", "modifyRoom(this);");
 button.setAttribute("id", getNameRoom());
 button.classList.add("mod-room");
+button.classList.add("mod-room-pencil");
 var span = document.createElement("span");
-span.classList.add("glyphicon")
-span.classList.add("glyphicon-pencil")
+span.classList.add("glyphicon");
+span.classList.add("glyphicon-pencil");
+var button1 = document.createElement("button");
+button1.setAttribute("onclick", "modifyRoom(this);");
+button1.setAttribute("id", getNameRoom() + "trash");
+button1.classList.add("mod-room");
+var span1 = document.createElement("span");
+span1.classList.add("glyphicon");
+span1.classList.add("glyphicon-trash");
 button.appendChild(span);
+button1.appendChild(span1);
 div.appendChild(para);
 div.appendChild(button);
+div.appendChild(button1);
+
 var element = document.getElementById("ver-menu");
 element.appendChild(div);
+createRightContainer(getNameRoom());
 $("#room").modal("hide");
+}
+
+function createRightContainer(roomName){
+
+    var hiddenDiv = document.getElementById("hidden-div");
+
+    var div = document.createElement("div");
+    var idDivName = roomName + "holder";
+    div.classList.add("right-container");
+    div.setAttribute("id", idDivName);
+    var div2 = document.createElement("div");
+    div2.classList.add("wrapper-room-title-two");
+    var h1 = document.createElement("h1");
+    h1.classList.add("title-right-container");
+    var h1Id = "title-room-" + roomName;
+    h1.setAttribute("id",h1Id);
+    var node = document.createTextNode(roomName);
+    h1.appendChild(node);
+    var hr = document.createElement("hr");
+    hr.classList.add("right-fine-line");
+    
+    var div3 = document.createElement("div");
+    div3.classList.add("wrapper-devices-container");
+    var div4 = document.createElement("div");
+    div4.classList.add("devices-container");
+    var div5 = document.createElement("div");
+    div5.classList.add("device-container");
+    var button = document.createElement("button");
+    button.classList.add("create-device");
+    var idButtonName = roomName + "new-device";
+    button.setAttribute("id", idButtonName);
+    
+    
+    hiddenDiv.appendChild(div);
+    div.appendChild(div2);
+    div.appendChild(div3);
+    
+    div2.appendChild(h1);
+    div2.appendChild(hr);
+    
+    div3.appendChild(div4);
+    div4.appendChild(div5);
+    
+    div5.appendChild(button);
+}
+
+function showDevicesRoom(nameRoom){
+    var hiddenDiv = document.getElementById("hidden-div")
+    var mainDiv = document.getElementById("main-container");
+    requiredDiv = mainDiv.children[1];
+    clone = requiredDiv.cloneNode(true);//problema espacio
+    hiddenDiv.appendChild(clone);
+    var idName = "#" + nameRoom.getAttribute("type") + "holder";
+    var idName2 = nameRoom.getAttribute("type") + "holder";
+    $(requiredDiv).replaceWith($(idName));
+}
+
+function showInitialDevicesRoom(){
+    var hiddenDiv = document.getElementById("hidden-div")
+    var mainDiv = document.getElementById("main-container");
+    requiredDiv = mainDiv.children[1];
+    $(requiredDiv).replaceWith( $("#starter-right-container"));
 }
 
 function modifyRoom(button){
@@ -816,7 +1149,8 @@ function modifyRoom(button){
 }
 
 function getNewNameRoom(){
-    return document.getElementById("new-room-name").value;
+    var newName = document.getElementById("new-room-name").value;
+    return newName.replace(/ /g, '-');
 }
 
 function changeName(){
@@ -833,12 +1167,19 @@ function changeName(){
     var idroom = info.getAttribute("type") + "room";
     var idbutton = info.getAttribute("type");
     var editButton = document.getElementById(idbutton);
+    var titleId = "title-room-" + info.getAttribute("type");
+    var title = document.getElementById(titleId);
+    var newTitle = getNewNameRoom();
+    title.innerHTML = newTitle;
     var room = document.getElementById(idroom);
     room.setAttribute("id",getNewNameRoom() + "room");
+    title.setAttribute("id", "title-room-" + newTitle);
     editButton.setAttribute("id",getNewNameRoom());
+    info.setAttribute("type", getNewNameRoom());
     room.innerHTML = getNewNameRoom();
     document.getElementById("new-room-name").value = "";
     $("#modify-room").modal("hide");
+    
 }
 
 function confirmDelete(){
@@ -858,6 +1199,7 @@ function removeRoom(){
     var parent = room.parentNode
     parent.parentNode.removeChild(parent);
     document.getElementById("new-room-name").value = "";
+    showInitialDevicesRoom();
     $("#confirmation-Delete").modal("hide");
 }
 
