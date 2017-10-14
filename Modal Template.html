@@ -3,11 +3,18 @@
 <style>
  .modal-footer{
   background-color: #D8E4EF;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+ }
+
+.modal-header{
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
  }
 </style>
 
 <!-- Modal -->
-  <div class="modal animated fadeInDown" id="template" role="dialog"> //cambiar ID
+  <div class="modal fade" id="template" role="dialog"> //cambiar ID
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -24,8 +31,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>
       
