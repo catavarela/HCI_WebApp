@@ -22,6 +22,11 @@ img{border-style:none}
 
 html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
 
+h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3b7aaf;
+    text-align:left;
+    font-size:3vw;
+    display: block;}
+
 html{
     height: 100%;
 }
@@ -31,11 +36,6 @@ body{
     height:100%;
     width:100%;
 }
-
-h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3b7aaf;
-    text-align:left;
-    font-size:3vw;
-    display: block;}
 
 
  .logo{
@@ -65,15 +65,6 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
  .color{
   background-color: black;
  }
-
-.close{
-    color:black;
-    font-size: 300%;
-    position: relative;
-    top:-85px;
-    left:20px;
-    opacity: 1;
-}
 
 .my-container{
     width:100%;
@@ -156,7 +147,6 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     text-overflow: ellipsis;
 }
 
-
 .mod-room{
     width:15%;
     height:100%;
@@ -219,8 +209,6 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     
 }
 
-
-
 .button-new-room{
     width:78%;
     height:33%;
@@ -246,6 +234,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     position:relative;
     right:-4.5%;
     float:left;
+    /*border-radius: 25px;*/
     border-style:solid;
     border-width:thin;
     border-left-color: #d3d3d3;
@@ -341,21 +330,11 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     
 }
 
-.delete-room{
-    position: relative;
-    top:17px;
-    left:60px;
-    background-color: #f4aa42;
-    color: white;
-    font-weight: bold;
-    font-size:150%;
-    border-radius: 7px;
-    color: white;
-    height: 50px;
-    width: 125px;
+.hidden-devices{
+    display:none;
 }
 
- .modal-footer{
+.modal-footer{
   background-color: #D8E4EF;
   border-bottom-right-radius: 12px;
   border-bottom-left-radius: 12px;
@@ -365,11 +344,6 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
   border-bottom-right-radius: 12px;
   border-bottom-left-radius: 12px;
  }
-
-.hidden-devices{
-    display:none;
-}
-
 
  </style>
 </head>
@@ -420,7 +394,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
             </div>
         </div>
         <div class="wrapper-button-new-room">
-            <button class="button-new-room btn btn-default" id="new-room"> Add new room </button>
+            <button class="button-new-room btn btn-default" id="new-room">Add room</button>
         </div>
     </div>
     <div class="right-container" id="starter-right-container">
@@ -445,108 +419,97 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
   
   
 <!-- Modal -->
-
-  <div class="modal fade" id="room" role="dialog"> 
+  <div class="modal fade" id="room" role="dialog">
     <div class="modal-dialog">
-    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title text-center">Add room</h3>
+            <h3 class="modal-title text-center">Add room</h3>
         </div>
         <div class="modal-body">
-          <form class="horizontal">
+           <form role="form">
             <div class="form-group">
-              <label for="roomn"><span class="glyphicon glyphicon-home"></span> Room name</label>
-              <input type="text" class="form-control" id="room-name" placeholder="Enter your room name..." name="roomn" required>
+              <label for="usrname"><span class="glyphicon glyphicon-home"></span> Room name:</label>
+              <input type="text" class="form-control" id="room-name" placeholder="Enter room name" name="room-name">
             </div>
-          </form>
+           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary accept" onclick="createRoom();" data-dismiss="modal">Accept</button>
-          <button type="button" class="btn btn-default cancel" data-dismiss="modal" onclick="cancelRoom();">Close</button>
+          <button type="submit" class="btn btn-primary" onclick="createRoom();">Accept </button>
+          <button type="submit" class="btn btn-default" onclick="cancelRoom();">Cancel</button>
         </div>
-      </div>
-      
+      </div>  
     </div>
-  </div>
-
-
-
+  </div> 
+  
+  
 <!-- Modal -->
   <div class="modal fade" id="device" role="dialog">
     <div class="modal-dialog">
-    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title text-center">Add new device</h3>
+            <h3 class="modal-title text-center">Add device</h3>
         </div>
         <div class="modal-body">
-          <form class="horizontal">
+           <form role="form">
             <div class="form-group">
-              <label for="devicen"><span class="glyphicon glyphicon-home"></span> Device name</label>
-              <input type="text" class="form-control" id="form-control" placeholder="Enter your device name..." name="devicen" required>
+              <label for="usrname">Device name:</label>
+              <input type="text" class="form-control" id="usrname" placeholder="Enter device name" name="usrname">
             </div>
-          </form>
+           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Accept </button>
+          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
-      </div>
-      
+      </div>  
     </div>
-  </div>
+  </div> 
+  
   
 <!-- Modal de modify-->
-
   <div class="modal fade" id="modify-room" role="dialog">
     <div class="modal-dialog">
-    
-      <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title text-center" id="actual-room-name"></h3>
+          <h3 class="modal-title text-center" type="none" id="modify-room-header">Edit room</h3>
         </div>
         <div class="modal-body">
-          <form class="horizontal">
+           <form role="form">
             <div class="form-group">
-              <label for="croomn"><span class="glyphicon glyphicon-home">Change room name:</label>
-              <input type="text" class="form-control" id="new-room-name" placeholder="New name..." name="croomn" required>
+              <p class="room-name-modal" id="actual-room-name"></p>
+              <label for="usrname"><span class="glyphicon glyphicon-home"></span> Change room name:</label>
+              <input type="text" class="form-control" id="new-room-name" placeholder="Enter new room name" name="new-room-name">
             </div>
-          </form>
+           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="changeName();" data-dismiss="modal">Accept</button>
-          <button type="button" class="btn btn-default" id="cancel-modify-room" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" onclick="changeName();">Accept </button>
+          <button type="submit" class="btn btn-default" id="cancel-modify-room">Cancel</button>
         </div>
-      </div>
-      
+      </div>  
     </div>
-  </div>
-<!--
-          <button type="submit" class="delete-room" onclick="confirmDelete();"><span class="glyphicon glyphicon-trash">   Delete</span></button>
--->
+  </div> 
   
   <!-- Confirmation modal delete-->
-    <div class="modal fade" id="confirmation-Delete" role="dialog">
+  <div class="modal fade" id="confirmation-Delete" role="dialog">
     <div class="modal-dialog">
-    
-      <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title text-center" id="title-delete-room"></h3>
+          <h3 class="modal-title text-center">Delete room<h3>
+        </div>
+        <div class="modal-body">
+          <p class="confirm-delete-text">Are you sure you want to delete the room? All devices in this room will be deleted.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" onclick="removeRoom()" data-dismiss="modal">Accept</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        </div>
+          <button type="submit" class="btn btn-primary" onclick="removeRoom()">Accept </button>
+          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>  
       </div>
-      
     </div>
-  </div>
-
+  </div> 
+  
   
 <script>
 
@@ -627,7 +590,7 @@ var span = document.createElement("span");
 span.classList.add("glyphicon");
 span.classList.add("glyphicon-pencil");
 var button1 = document.createElement("button");
-button1.setAttribute("onclick", "deleteRoom(this);");
+button1.setAttribute("onclick", "confirmDelete();");
 button1.setAttribute("id", getNameRoom() + "trash");
 button1.classList.add("mod-room");
 var span1 = document.createElement("span");
@@ -652,9 +615,9 @@ function getNameRoom(){
 
 function createRightContainer(roomName){
 
-	var hiddenDiv = document.getElementById("hidden-div");
+  var hiddenDiv = document.getElementById("hidden-div");
 
-	var div = document.createElement("div");
+  var div = document.createElement("div");
     var idDivName = roomName + "holder";
     div.classList.add("right-container");
     div.setAttribute("id", idDivName);
@@ -695,37 +658,28 @@ function createRightContainer(roomName){
 }
 
 function showDevicesRoom(nameRoom){
-	var hiddenDiv = document.getElementById("hidden-div")
-	var mainDiv = document.getElementById("main-container");
+  var hiddenDiv = document.getElementById("hidden-div")
+  var mainDiv = document.getElementById("main-container");
     requiredDiv = mainDiv.children[1];
     clone = requiredDiv.cloneNode(true);//problema espacio
     hiddenDiv.appendChild(clone);
-	var idName = "#" + nameRoom.getAttribute("type") + "holder";
+  var idName = "#" + nameRoom.getAttribute("type") + "holder";
     var idName2 = nameRoom.getAttribute("type") + "holder";
-	$(requiredDiv).replaceWith($(idName));
+  $(requiredDiv).replaceWith($(idName));
 }
 
 function showInitialDevicesRoom(){
-	var hiddenDiv = document.getElementById("hidden-div")
-	var mainDiv = document.getElementById("main-container");
+  var hiddenDiv = document.getElementById("hidden-div")
+  var mainDiv = document.getElementById("main-container");
     requiredDiv = mainDiv.children[1];
-	$(requiredDiv).replaceWith( $("#starter-right-container"));
+  $(requiredDiv).replaceWith( $("#starter-right-container"));
 }
 
 function modifyRoom(button){
+ document.getElementById("modify-room-header").setAttribute("type",button.getAttribute('id'));
  var roomName = button.getAttribute('id');
- document.getElementById("actual-room-name").innerHTML = roomName;
- document.getElementById("actual-room-name").setAttribute("type",button.getAttribute('id'));
-
+ document.getElementById("actual-room-name").innerHTML = "Actual room name: " + roomName;
  $("#modify-room").modal();
-}
-
-function deleteRoom(button){
- var roomName = button.getAttribute('id').replace('trash','') ;
- document.getElementById("title-delete-room").innerHTML = "Are you sure you want to delete " + roomName + " ?";
- document.getElementById("title-delete-room").setAttribute("type",button.getAttribute('id'));
-
- $("#confirmation-Delete").modal();
 }
 
 function getNewNameRoom(){
