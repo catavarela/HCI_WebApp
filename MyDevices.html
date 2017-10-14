@@ -455,9 +455,9 @@ body{
            <form role="form">
             <div class="form-group">
               <label for="usrname">Device name:</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter device name" name="usrname">
+              <input type="text" class="form-control" id="device-name" placeholder="Enter device name" name="usrname">
               <label for="descr">Description (optional):</label>
-              <input type="text" class="form-control" id="descr" placeholder="Enter description" name="descr">
+              <input type="text" class="form-control" id="device-description" placeholder="Enter description" name="descr">
             </div>
            </form>
         </div>
@@ -523,12 +523,6 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $("#new-device").click(function(){
-        $("#device").modal();
-    });
-});
-
-$(document).ready(function(){
     $("#close-create-room").click(function(){
         $("#room").modal("hide");
         document.getElementById("room-name").value = "";
@@ -581,6 +575,7 @@ para.setAttribute("id", getNameRoom() + "room");
 var node = document.createTextNode(getNameRoom()); //le digo su contenido
 para.setAttribute("type", getNameRoom());
 para.setAttribute("onclick", "showDevicesRoom(this);");
+para.setAttribute("href","#");
 para.appendChild(node);
 para.className = "chargeDiv";
 var button = document.createElement("button");
@@ -642,6 +637,7 @@ function createRightContainer(roomName){
     div5.classList.add("device-container");
     var button = document.createElement("button");
     button.classList.add("create-device");
+    button.setAttribute("onclick","openCreateDeviceModal();");
     var idButtonName = roomName + "new-device";
     button.setAttribute("id", idButtonName);
     
@@ -725,7 +721,7 @@ function confirmDelete(){
 
 function closeConfirmationRoomDelete(){
     $("#confirmation-Delete").modal("hide");
-    $("#modify-room").modal()
+    $("#modify-room").modal();
 }
 
 function removeRoom(){
@@ -739,6 +735,10 @@ function removeRoom(){
     $("#confirmation-Delete").modal("hide");
 }
 
+
+function openCreateDeviceModal(){
+	$("#device").modal()  
+}
 
 </script>
 </body>
