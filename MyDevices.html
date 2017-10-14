@@ -587,8 +587,9 @@ var span = document.createElement("span");
 span.classList.add("glyphicon");
 span.classList.add("glyphicon-pencil");
 var button1 = document.createElement("button");
-button1.setAttribute("onclick", "confirmDelete();");
+button1.setAttribute("onclick", "confirmDelete(this);");
 button1.setAttribute("id", getNameRoom() + "trash");
+button1.setAttribute("data-info",getNameRoom());
 button1.classList.add("mod-room");
 var span1 = document.createElement("span");
 span1.classList.add("glyphicon");
@@ -696,6 +697,7 @@ function changeName(){
         return;
 }
     var info = document.getElementById("modify-room-header");
+    var trashButton = document.getElementById(info.getAttribute("type") + "trash");
     var idroom = info.getAttribute("type") + "room";
     var idbutton = info.getAttribute("type");
     var editButton = document.getElementById(idbutton);
@@ -708,15 +710,24 @@ function changeName(){
     title.setAttribute("id", "title-room-" + newTitle);
     editButton.setAttribute("id",getNewNameRoom());
     info.setAttribute("type", getNewNameRoom());
+    trashButton.setAttribute("data-info",getNewNameRoom());
     room.innerHTML = getNewNameRoom();
     document.getElementById("new-room-name").value = "";
     $("#modify-room").modal("hide");
+
     
 }
 
-function confirmDelete(){
+function confirmDelete(roomName){
     $("#modify-room").modal("hide");
+    updateRoomToDelete(roomName);
     $("#confirmation-Delete").modal();
+}
+
+function updateRoomToDelete(roomName){
+  var updateName = roomName.getAttribute("data-info");
+  document.getElementById("modify-room-header").setAttribute("type",updateName);
+
 }
 
 function closeConfirmationRoomDelete(){
@@ -724,7 +735,7 @@ function closeConfirmationRoomDelete(){
     $("#modify-room").modal();
 }
 
-function removeRoom(){
+function removeRoom(){  
     var info = document.getElementById("modify-room-header");
     var idroom = info.getAttribute("type") + "room";
     var room = document.getElementById(idroom);
