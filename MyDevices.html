@@ -330,6 +330,17 @@ body{
     
 }
 
+.new-device-button{
+	    position:relative;
+    top:25%;
+    width:100%;
+    height:100%;
+    background-image:url("https://i.imgur.com/RkNu2T3.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border-color:transparent;
+}
+
 .hidden-devices{
     display:none;
 }
@@ -435,7 +446,7 @@ body{
            </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" onclick="createRoom();">Accept </button>
+          <button type="submit" class="btn btn-primary" onclick="createRoom();" id="new-room-accept">Accept </button>
           <button type="submit" class="btn btn-default" onclick="cancelRoom();">Cancel</button>
         </div>
       </div>  
@@ -462,7 +473,7 @@ body{
            </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Accept </button>
+          <button type="submit" class="btn btn-primary" onclick="createDevice();">Accept </button>
           <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>  
@@ -515,6 +526,8 @@ body{
   
 <script>
 
+var actualRoomName;
+
 $(document).ready(function(){
     $("#new-room").click(function(){
         document.getElementById("room-name").value = "";
@@ -557,7 +570,18 @@ function cancelRoom(){
     $("#room").modal("hide");
 }
 
+function getNameRoom(){
+    var name = document.getElementById("room-name").value;
+    return name;
+}
+
+
 function createRoom(){
+if(! isAlphaNumeric(getNameRoom())){
+	alert("The room name must contain only letters or numbers")
+	return;
+}
+
 if( document.getElementById(getNameRoom())){
     alert("Name already exists");
     return;
@@ -567,7 +591,6 @@ if(getNameRoom() == ""){
     alert("Please put a name for the room");
     return;
 }
-
 var div = document.createElement("div");
 div.classList.add("span-a");
 var para = document.createElement("a");//Creo el tipo de elemento
@@ -605,17 +628,30 @@ createRightContainer(getNameRoom());
 $("#room").modal("hide");
 }
 
-function getNameRoom(){
-    var name = document.getElementById("room-name").value;
-    return name.replace(/ /g, '-');
-}
 
+
+
+
+
+function isAlphaNumeric(str) {
+  var code, i, len;
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (!(code > 47 && code < 58) && // numeric (0-9)
+        !(code > 64 && code < 91) && // upper alpha (A-Z)
+        !(code > 96 && code < 123) && // lower alpha (a-z)
+        !(code == '-')) { 			  // '-'
+      return false;
+    }
+  }
+  return true;
+};
 
 function createRightContainer(roomName){
 
   var hiddenDiv = document.getElementById("hidden-div");
 
-  var div = document.createElement("div");
+    var div = document.createElement("div");
     var idDivName = roomName + "holder";
     div.classList.add("right-container");
     div.setAttribute("id", idDivName);
@@ -634,6 +670,7 @@ function createRightContainer(roomName){
     div3.classList.add("wrapper-devices-container");
     var div4 = document.createElement("div");
     div4.classList.add("devices-container");
+    div4.setAttribute("id", roomName + "devices-container");
     var div5 = document.createElement("div");
     div5.classList.add("device-container");
     var button = document.createElement("button");
@@ -654,23 +691,28 @@ function createRightContainer(roomName){
     div4.appendChild(div5);
     
     div5.appendChild(button);
+
 }
 
 function showDevicesRoom(nameRoom){
   var hiddenDiv = document.getElementById("hidden-div")
   var mainDiv = document.getElementById("main-container");
-    requiredDiv = mainDiv.children[1];
-    clone = requiredDiv.cloneNode(true);//problema espacio
-    hiddenDiv.appendChild(clone);
+  requiredDiv = mainDiv.children[1];
+  clone = requiredDiv.cloneNode(true);//problema espacio
+  hiddenDiv.appendChild(clone);
   var idName = "#" + nameRoom.getAttribute("type") + "holder";
-    var idName2 = nameRoom.getAttribute("type") + "holder";
+  var idName2 = nameRoom.getAttribute("type") + "holder";
+  var idRightDevicesContainer = document.getElementById(nameRoom.getAttribute("type") + "devices-container")
+  var modalDevice = document.getElementById("device");
+  actualRoomName = nameRoom.getAttribute("type");
+  modalDevice.setAttribute("type", idRightDevicesContainer.getAttribute("id"));
   $(requiredDiv).replaceWith($(idName));
 }
 
 function showInitialDevicesRoom(){
   var hiddenDiv = document.getElementById("hidden-div")
   var mainDiv = document.getElementById("main-container");
-    requiredDiv = mainDiv.children[1];
+  requiredDiv = mainDiv.children[1];
   $(requiredDiv).replaceWith( $("#starter-right-container"));
 }
 
@@ -683,10 +725,15 @@ function modifyRoom(button){
 
 function getNewNameRoom(){
     var newName = document.getElementById("new-room-name").value;
-    return newName.replace(/ /g, '-');
+    return newName;
 }
 
 function changeName(){
+	if(! isAlphaNumeric(getNewNameRoom())){
+		alert("The room name must contain only letters or numbers")
+		return;
+	}
+
     if( document.getElementById(getNewNameRoom())){
     alert("Name already exists");
     return;
@@ -696,26 +743,40 @@ function changeName(){
         alert("Please put a name to change the room name");
         return;
 }
-    var info = document.getElementById("modify-room-header");
+
+	var info = document.getElementById("modify-room-header");
     var trashButton = document.getElementById(info.getAttribute("type") + "trash");
+    var rightContainer = document.getElementById(info.getAttribute("type") + "holder")
     var idroom = info.getAttribute("type") + "room";
     var idbutton = info.getAttribute("type");
     var editButton = document.getElementById(idbutton);
     var titleId = "title-room-" + info.getAttribute("type");
     var title = document.getElementById(titleId);
     var newTitle = getNewNameRoom();
+    var newDeviceButton = document.getElementById(info.getAttribute("type") + "new-device");
     title.innerHTML = newTitle;
     var room = document.getElementById(idroom);
+    var devCont = document.getElementById(info.getAttribute("type") + "devices-container");
+    devCont.setAttribute("id", getNewNameRoom() + "devices-container");
+    newDeviceButton.setAttribute("id", getNewNameRoom() + "new-device")
     room.setAttribute("id",getNewNameRoom() + "room");
+    room.setAttribute("type", getNewNameRoom());
     title.setAttribute("id", "title-room-" + newTitle);
     editButton.setAttribute("id",getNewNameRoom());
-    info.setAttribute("type", getNewNameRoom());
     trashButton.setAttribute("data-info",getNewNameRoom());
+    trashButton.setAttribute("id", getNewNameRoom() + "trash")
+    rightContainer.setAttribute("id" , getNewNameRoom() + "holder")
     room.innerHTML = getNewNameRoom();
+    if(actualRoomName == info.getAttribute("type")){
+    	actualRoomName = getNewNameRoom();
+    	var modalDevice = document.getElementById("device");
+    	modalDevice.setAttribute("type", devCont.getAttribute("id"));
+
+    }
     document.getElementById("new-room-name").value = "";
+    info.setAttribute("type", getNewNameRoom());
     $("#modify-room").modal("hide");
 
-    
 }
 
 function confirmDelete(roomName){
@@ -737,12 +798,16 @@ function closeConfirmationRoomDelete(){
 
 function removeRoom(){  
     var info = document.getElementById("modify-room-header");
+    var rightContainer = document.getElementById(info.getAttribute("type") + "holder")
     var idroom = info.getAttribute("type") + "room";
     var room = document.getElementById(idroom);
-    var parent = room.parentNode
-    parent.parentNode.removeChild(parent);
-    document.getElementById("new-room-name").value = "";
-    showInitialDevicesRoom();
+    var parentRoom = room.parentNode
+    parentRoom.parentNode.removeChild(parentRoom);
+    if(actualRoomName == info.getAttribute("type")){
+    	showInitialDevicesRoom();
+   	}
+   	document.getElementById("hidden-div").appendChild(rightContainer);
+   	rightContainer.parentNode.removeChild(rightContainer);
     $("#confirmation-Delete").modal("hide");
 }
 
@@ -750,6 +815,29 @@ function removeRoom(){
 function openCreateDeviceModal(){
 	$("#device").modal()  
 }
+
+function createDevice(){
+	var info = document.getElementById("device");
+	var idDevicesContainer = info.getAttribute("type") //esto me da el id del devices-container
+	var devicesContainer = document.getElementById(idDevicesContainer);
+	var deviceContainer = document.createElement("div");
+	deviceContainer.classList.add("device-container");
+	var buttonDevice = document.createElement("button");
+	buttonDevice.classList.add("new-device-button");
+	deviceContainer.appendChild(buttonDevice);
+	devicesContainer.appendChild(deviceContainer);
+	var newDeviceButton = document.getElementById(actualRoomName + "new-device");
+	var parentNewDeviceButton = newDeviceButton.parentNode
+	parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
+	devicesContainer.appendChild(parentNewDeviceButton);
+
+	$("#device").modal("hide") 
+}
+
+
+
+
+
 
 </script>
 </body>
