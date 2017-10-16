@@ -358,7 +358,7 @@ body{
 
  </style>
 </head>
-<body>
+<body onload="loadRooms()">
 
 <nav class="navbar navbar-inverse color">
   <div class="container-fluid">
@@ -570,6 +570,77 @@ function cancelRoom(){
     $("#room").modal("hide");
 }
 
+
+var api = class {
+  static get baseUrl() {
+    return "http://127.0.0.1:8080/api/";
+  }
+
+  static get timeout() {
+    return 60 * 1000;
+  }
+}
+api.room = class {
+  static get url() {
+    return api.baseUrl + "rooms/";
+  }
+
+  static add(room) {
+   return $.ajax({
+      url: api.room.url,
+      method: "POST",
+      dataType: "json",
+      timeout: api.timeout,
+      data: room
+    }); 
+  }
+
+  static modify(room) {
+   return $.ajax({
+      url: api.room.url + room.id,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+      data: room
+    }); 
+  }
+
+  static delete(id) {
+   return $.ajax({
+      url: api.room.url + id,
+      method: "DELETE",
+      dataType: "json",
+      timeout: api.timeout,
+      data: room
+    }); 
+  }
+
+  static get(id) {
+    return $.ajax({
+      url: api.room.url + id,
+      method: "GET",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
+}
+
+api.model = api.model || {};
+
+api.model.room = class {
+  constructor(id, name, meta) {
+    if (id) {
+      this.id = id;
+    } else {
+      delete(this.id);
+    }
+    this.name = name;
+    this.meta = meta;
+  }
+}
+
+
+
 function getNameRoom(){
     var name = document.getElementById("room-name").value;
     return name;
@@ -625,11 +696,16 @@ div.appendChild(button1);
 var element = document.getElementById("ver-menu");
 element.appendChild(div);
 createRightContainer(getNameRoom());
+var room = new api.model.room(null, getNameRoom(), "{ size: \"9m2\" }"); // Aca cata, esta lo de crear el room en la api
+newRoom = api.room.get("8902e7b8f0279e02");
+api.room.add(newRoom)
 $("#room").modal("hide");
 }
 
 
+function loadRooms(){
 
+}
 
 
 
