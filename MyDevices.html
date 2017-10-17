@@ -331,7 +331,7 @@ body{
 }
 
 .new-device-button{
-	    position:relative;
+	  position:relative;
     top:25%;
     width:100%;
     height:100%;
@@ -355,6 +355,11 @@ body{
   border-bottom-right-radius: 12px;
   border-bottom-left-radius: 12px;
  }
+
+.modal-text-device{
+  font-size:200%;
+}
+
 
  </style>
 </head>
@@ -527,6 +532,30 @@ body{
       </div>
     </div>
   </div> 
+
+
+<!-- MODALS DE DEVICES-->
+
+<!-- MODAL DE BIND-->
+  <div class="modal fade" id="device-blind" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">Device Configuration</h3>
+        </div>
+        <div class="modal-body">
+          <p id="blind-device-name">Device name:</p>
+          <p>Device type: Blind</p>
+          <div class ="div-flex">
+            <p class="modal-text-device">Device status:</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" >Accept </button>
+          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>  
+    </div>
   
   
 <script>
@@ -726,6 +755,37 @@ api.device = class {
       timeout: api.timeout
     });
   }
+
+  static getState(deviceID,action){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + getState,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+      data: action
+    });
+  }
+}
+
+api.device.bind = class{
+  static up(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + up,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+    });
+  }
+
+  static up(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + down,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+    });
+  }
+
 }
 
 api.model = api.model || {};
@@ -751,6 +811,12 @@ api.model.device = class {
     }
     this.name = name;
     this.meta = meta;
+  }
+}
+
+api.model.action = class{
+    constructor(name) {
+     this.name = name;
   }
 }
 
@@ -1147,12 +1213,13 @@ function openCreateDeviceModal(){
 function createDevice(){
   var comboBoxTypeDevices = document.getElementById("comboBoxTypeDevices")
   var deviceTypeId = comboBoxTypeDevices.options[comboBoxTypeDevices.selectedIndex].value
+  var deviceName = document.getElementById("device-name").value;
   if(deviceTypeId == "none"){
     alert("You have not selected a device type");
     return;
   }
   
-  if(getNameRoom().length < 3){
+  if(deviceName.length < 3){
     alert("The room name must have at least 3 characters");
     return;
   }
@@ -1161,16 +1228,22 @@ function createDevice(){
 	var idDevicesContainer = info.getAttribute("type") //esto me da el id del devices-container
 	var devicesContainer = document.getElementById(idDevicesContainer);
 	var deviceContainer = document.createElement("div");
-	var deviceName = document.getElementById("device-name").value;
 	var deviceDesc =document.getElementById("device-description").value;
 	var description = "{ Description: " + deviceDesc + " }";
 	deviceContainer.classList.add("device-container");
 	deviceContainer.setAttribute("data-name",deviceName)
 	deviceContainer.setAttribute("data-desc",deviceDesc)
   deviceContainer.setAttribute("data-typeID",deviceTypeId)
+  deviceContainer.setAttribute("data-ID",device.id)
 	var buttonDevice = document.createElement("button");
   buttonDevice.classList.add("new-device-button");
 	setDeviceImage(buttonDevice, deviceTypeId)
+  buttonDevice.setAttribute("onclick","viewState(this)");
+  buttonDevice.classList.add("new-device-button");
+  buttonDevice.setAttribute("data-name",device.name)
+  buttonDevice.setAttribute("data-desc",device.meta)
+  buttonDevice.setAttribute("data-typeID",device.typeId)
+  buttonDevice.setAttribute("data-ID",device.id)
 	deviceContainer.appendChild(buttonDevice);
 	devicesContainer.appendChild(deviceContainer);
 	var newDeviceButton = document.getElementById(actualRoomName + "new-device");
@@ -1192,27 +1265,35 @@ function setDeviceImage(buttonDevice,deviceTypeId){
     switch(data.device.name) {
     case "blind":
         buttonDevice.style.backgroundImage = "url('https://d30y9cdsu7xlg0.cloudfront.net/png/147594-200.png')";
+        buttonDevice.setAttribute("data-type","blind")
         break;
     case "lamp":
         buttonDevice.style.backgroundImage = "url('https://www.iconexperience.com/_img/o_collection_png/green_dark_grey/512x512/plain/desk_lamp.png')";
+        buttonDevice.setAttribute("data-type","lamp")
         break;
     case "oven":
         buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/oven-electric-tool_318-63231.jpg')";
+        buttonDevice.setAttribute("data-type","oven")
         break;
     case "ac":
         buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/minisplit_318-51012.jpg')";
+        buttonDevice.setAttribute("data-type","ac")
         break;
     case "alarm":
         buttonDevice.style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZvNMw4I_3PWVwHXdaQ2XEYlNq87UlD5VFx_kCDbx9dRE8UH7v')";
+        buttonDevice.setAttribute("data-type","alarm")
         break;
     case "timer":
         buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/timer_318-61019.jpg')";
+        buttonDevice.setAttribute("data-type","timer")
         break;
     case "door":
         buttonDevice.style.backgroundImage = "url('https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/door2_open.png')";
+        buttonDevice.setAttribute("data-type","door")
         break;
     case "refrigerator":
         buttonDevice.style.backgroundImage = "url('https://cdn.vectorstock.com/i/thumb-large/53/89/3565389.jpg')";
+        buttonDevice.setAttribute("data-type","refrigerator")
         break;
     default:
         buttonDevice.style.backgroundImage = "url('https://vignette4.wikia.nocookie.net/villains/images/6/6b/Unknown_icon.png/revision/latest?cb=20150426164103')";
@@ -1294,15 +1375,21 @@ function chargeDevice(device,room){
 	deviceContainer.setAttribute("data-name",device.name)
 	deviceContainer.setAttribute("data-desc",device.meta)
   deviceContainer.setAttribute("data-typeID",device.typeId)
+  deviceContainer.setAttribute("data-ID",device.id)
 	var buttonDevice = document.createElement("button");
+  setDeviceImage(buttonDevice, device.typeId)
+  buttonDevice.setAttribute("onclick","viewState(this)");
 	buttonDevice.classList.add("new-device-button");
+  buttonDevice.setAttribute("data-name",device.name)
+  buttonDevice.setAttribute("data-desc",device.meta)
+  buttonDevice.setAttribute("data-typeID",device.typeId)
+  buttonDevice.setAttribute("data-ID",device.id)
 	deviceContainer.appendChild(buttonDevice);
 	devicesContainer.appendChild(deviceContainer);
 	var newDeviceButton = document.getElementById(room.name + "new-device");
 	var parentNewDeviceButton = newDeviceButton.parentNode
 	parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
 	devicesContainer.appendChild(parentNewDeviceButton);
-  setDeviceImage(buttonDevice, device.typeId)
 }
 
 function updateNewDeviceModal(data){
@@ -1316,6 +1403,16 @@ function updateNewDeviceModal(data){
     option.innerHTML = typeName
     select.appendChild(option)
   }
+}
+
+function viewState(button){
+   var modalId = "#device-" + button.getAttribute("data-type")
+   updateDeviceModal(button)
+   $(modalId).modal();
+}
+
+function updateDeviceModal(button){
+  document.getElementById("blind-device-name").innerHTML = "Device name: " +  button.getAttribute("data-name")
 }
 </script>
 </body>
