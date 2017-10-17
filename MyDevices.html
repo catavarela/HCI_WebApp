@@ -537,15 +537,15 @@ body{
 <!-- MODALS DE DEVICES-->
 
 <!-- MODAL DE BIND-->
-  <div class="modal fade" id="device-blind" role="dialog">
+  <div class="modal fade" id="device-blinds" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title text-center">Device Configuration</h3>
         </div>
         <div class="modal-body">
-          <p id="blind-device-name">Device name:</p>
-          <p>Device type: Blind</p>
+          <p id="blinds-device-name">Device name:</p>
+          <p>Device type: Blinds</p>
           <div class ="div-flex">
             <p class="modal-text-device">Device status:</p>
           </div>
@@ -1263,9 +1263,9 @@ function setDeviceImage(buttonDevice,deviceTypeId){
   api.device.getType(deviceTypeId)
   .done(function (data) {
     switch(data.device.name) {
-    case "blind":
+    case "blinds":
         buttonDevice.style.backgroundImage = "url('Blinds.png')";
-        buttonDevice.setAttribute("data-type","blind")
+        buttonDevice.setAttribute("data-type","blinds")
         break;
     case "lamp":
         buttonDevice.style.backgroundImage = "url('Lamp.png')";
@@ -1412,7 +1412,7 @@ function viewState(button){
 }
 
 function updateDeviceModal(button){
-  document.getElementById("blind-device-name").innerHTML = "Device name: " +  button.getAttribute("data-name")
+  document.getElementById("blinds-device-name").innerHTML = "Device name: " +  button.getAttribute("data-name")
 }
 </script>
 </body>
