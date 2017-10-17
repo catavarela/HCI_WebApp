@@ -276,7 +276,7 @@ function loadDevices(){
   api.device.getAll()
 
   .done(function (data) {
-    createDevicesHTML(data);
+    loadDevicesHTML(data);
   })
 
   .fail(function (jqXHR, textStatus) {
@@ -284,10 +284,10 @@ function loadDevices(){
   })
 }        
 
-function createDevicesHTML(data){
+function loadDevicesHTML(data){
   var i, father, currentRow;
 
-  father = document.getElementById(devicesContainer);
+  father = document.getElementById("devicesContainer");
 
   for(i = 0; i < data.devices.length; i++){
 
@@ -296,7 +296,7 @@ function createDevicesHTML(data){
       father.appendChild(currentRow);
     }
 
-    currentRow.appendChild(createDevice(data, i));
+    currentRow.appendChild(loadDevice(data, i));
   }
 }
 
@@ -307,7 +307,7 @@ function createRow(){
   return row;
 }
 
-function createDevice(pData, i){
+function loadDevice(pData, i){
   var deviceContainer = document.createElement("div");
   deviceContainer.classList.add("my-col");
   deviceContainer.classList.add("l3");
@@ -326,7 +326,7 @@ function createDevice(pData, i){
 
   displayContainer.appendChild(tag);
 
-  var deviceName = pData.devices[i];
+  var deviceName = pData.devices[i].name;
   tag.innerHTML = deviceName;
 
   var deviceButton = document.createElement("button");
@@ -343,57 +343,51 @@ function createDevice(pData, i){
 
   api.device.getTypes()
 
-  .done(function (data) {
-    addImageOfDeviceType(deviceButton, deviceImage, data);
-  })
-
-  .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
-  })
+  addImageOfDeviceType(deviceButton, data);
 
   return deviceContainer;
 }
 
-function addImageOfDeviceType(deviceButton, deviceImage, data){
+function addImageOfDeviceType(deviceButton, data){
 
   switch(deviceButton.type){
 
-    case data.devices[0].id :
+    case "eu0v2xgprrhhg41g" :
 
         deviceImage.setAttribute("src", "Blinds.png");
         break;
 
-    case data.devices[1].id:
+    case "go46xmbqeomjrsjr":
 
         deviceImage.setAttribute("src", "Lamp.png");
         break;
 
-    case data.devices[2].id:
+    case "im77xxyulpegfmv8":
 
         deviceImage.setAttribute("src", "Oven.png");
         break;
 
-    case data.devices[3].id:
+    case "li6cbv5sdlatti0j":
 
         deviceImage.setAttribute("src", "Ac.png");
         break;
 
-    case data.devices[4].id:
+    case "lsf78ly0eqrjbz91":
 
         deviceImage.setAttribute("src", "Door.png");
         break;
 
-    case data.devices[5].id:
+    case "mxztsyjzsrq7iaqc":
 
         deviceImage.setAttribute("src", "Alarm.png");
         break;
 
-    case data.devices[6].id:
+    case "ofglvd9gqX8yfl3l":
 
         deviceImage.setAttribute("src", "Timer.png");
         break;
 
-    case data.devices[7].id:
+    case "rnizejqr2di0okho":
 
         deviceImage.setAttribute("src", "Fridge.png");
         break;
