@@ -1264,39 +1264,39 @@ function setDeviceImage(buttonDevice,deviceTypeId){
   .done(function (data) {
     switch(data.device.name) {
     case "blind":
-        buttonDevice.style.backgroundImage = "url('https://d30y9cdsu7xlg0.cloudfront.net/png/147594-200.png')";
+        buttonDevice.style.backgroundImage = "url('Blinds.png')";
         buttonDevice.setAttribute("data-type","blind")
         break;
     case "lamp":
-        buttonDevice.style.backgroundImage = "url('https://www.iconexperience.com/_img/o_collection_png/green_dark_grey/512x512/plain/desk_lamp.png')";
+        buttonDevice.style.backgroundImage = "url('Lamp.png')";
         buttonDevice.setAttribute("data-type","lamp")
         break;
     case "oven":
-        buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/oven-electric-tool_318-63231.jpg')";
+        buttonDevice.style.backgroundImage = "url('Oven.png')";
         buttonDevice.setAttribute("data-type","oven")
         break;
     case "ac":
-        buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/minisplit_318-51012.jpg')";
+        buttonDevice.style.backgroundImage = "url('Ac.png')";
         buttonDevice.setAttribute("data-type","ac")
         break;
     case "alarm":
-        buttonDevice.style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZvNMw4I_3PWVwHXdaQ2XEYlNq87UlD5VFx_kCDbx9dRE8UH7v')";
+        buttonDevice.style.backgroundImage = "url('Alarm.png')";
         buttonDevice.setAttribute("data-type","alarm")
         break;
     case "timer":
-        buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/timer_318-61019.jpg')";
+        buttonDevice.style.backgroundImage = "url('Timer.png')";
         buttonDevice.setAttribute("data-type","timer")
         break;
     case "door":
-        buttonDevice.style.backgroundImage = "url('https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/door2_open.png')";
+        buttonDevice.style.backgroundImage = "url('Door.png')";
         buttonDevice.setAttribute("data-type","door")
         break;
     case "refrigerator":
-        buttonDevice.style.backgroundImage = "url('https://cdn.vectorstock.com/i/thumb-large/53/89/3565389.jpg')";
+        buttonDevice.style.backgroundImage = "url('Fridge.png')";
         buttonDevice.setAttribute("data-type","refrigerator")
         break;
     default:
-        buttonDevice.style.backgroundImage = "url('https://vignette4.wikia.nocookie.net/villains/images/6/6b/Unknown_icon.png/revision/latest?cb=20150426164103')";
+        buttonDevice.style.backgroundImage = "url('Default.png')";
 }
   })
   .fail(function (jqXHR, textStatus) {
