@@ -26,31 +26,30 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     font-size:3vw;
     display: block;}
 
-.w3-image{max-width:100%;height:auto}img{margin-bottom:-5px}
+.my-image{max-width:100%;height:auto}img{margin-bottom:-5px}
 
-.w3-display-container{position:relative}
-.w3-container:after,.w3-container:before,.w3-row-padding:after,.w3-row-padding:before{content:"";display:table;clear:both}
-.w3-col{float:left;width:100%}
+.my-display-container{position:relative}
+.my-container:after,.my-container:before,.my-row-padding:after,.my-row-padding:before{content:"";display:table;clear:both}
+.my-col{float:left;width:100%}
 
-@media (min-width:601px){.w3-col.m6{width:49.99999%}}
-@media (min-width:993px){.w3-col.l3{width:24.99999%}}
-.w3-content{max-width:980px;margin:auto}
+@media (min-width:601px){.my-col.m6{width:49.99999%}}
+@media (min-width:993px){.my-col.l3{width:24.99999%}}
+.my-content{max-width:980px;margin:auto}
 
-.w3-display-topleft{position:absolute;left:0;top:0}
+.my-display-topleft{position:absolute;left:0;top:0}
 
-.w3-row-padding,.w3-row-padding>.w3-col{padding:0 8px}
-.w3-container{padding:0.01em 16px}
+.my-row-padding,.my-row-padding>.my-col{padding:0 8px}
+.my-container{padding:0.01em 16px}
 
-.w3-border-bottom{border-bottom-color: #d3d3d3; border-style: solid; border-bottom-width: thin; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent;}
-.w3-margin-bottom{margin-bottom:16px!important}
-.w3-padding{padding:8px 16px!important}
-.w3-padding-16{padding-top:16px!important;padding-bottom:16px!important}
-.w3-padding-0-16{padding-top:0px!important;padding-bottom:16px!important}
-.w3-padding-32{padding-top:32px!important;padding-bottom:32px!important}
-.w3-padding-0-32{padding-top:0px!important;padding-bottom:32px!important}
+.my-border-bottom{border-bottom-color: #d3d3d3; border-style: solid; border-bottom-width: thin; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent;}
+.my-margin-bottom{margin-bottom:16px!important}
+.my-padding{padding:8px 16px!important}
+.my-padding-16{padding-top:16px!important;padding-bottom:16px!important}
+.my-padding-0-16{padding-top:0px!important;padding-bottom:16px!important}
+.my-padding-32{padding-top:32px!important;padding-bottom:32px!important}
+.my-padding-0-32{padding-top:0px!important;padding-bottom:32px!important}
 
-.w3-black{color:#fff!important;background-color:#000!important}
-
+.my-black{color:#fff!important;background-color:#000!important}
 
  .logo{
  background-image:url("smart_house_logo.png");
@@ -94,7 +93,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 
  </style>
 </head>
-<body>
+<body onload="loadRoutines()">
 
 <nav class="navbar navbar-inverse color">
   <div class="container-fluid">
@@ -129,73 +128,193 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 </nav>
   
 <!-- Page content -->
-<div class="w3-content w3-padding" style="max-width:1564px">
+<div class="my-content my-padding" id="routinesContainer" style="max-width:1564px">
 
   <!-- Project Section -->
-  <div class="w3-container w3-padding-0-32" id="MyCombinations">
-    <h3 class="w3-border-bottom w3-padding-0-16">Combinations</h3>
+  <div class="my-container my-padding-0-32">
+    <h3 class="my-border-bottom my-padding-0-16">Combinations</h3>
   </div>
+  <div class="my-row-padding" id="firstRow">
+    <div class="my-col l3 m6 my-margin-bottom">
+      <div class="my-display-container">
+        <div class="my-display-topleft my-black my-padding">Agregar Combinacion</div>
+          <button class="btn btn-default" onclick="createCombination()">
+            <img src="Add Combo.png" alt="Agregar Combinacion" class="my-image">
+          </button>
 
-  <div class="w3-row-padding">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">COMBO1</div>
-        <img src="Combo.png" alt="COMBO1" style="width:100%">
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">COMBO2</div>
-        <img src="Combo.png" alt="COMBO2" style="width:100%">
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">COMBO3</div>
-        <img src="Combo.png" alt="COMBO3" style="width:100%">
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">COMBO4</div>
-        <img src="Combo.png" alt="COMBO4" style="width:100%">
       </div>
     </div>
   </div>
-
-  <div class="w3-row-padding">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">COMBO5</div>
-        <img src="Combo.png" alt="COMBO5" style="width:100%">
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">COMBO6</div>
-        <img src="Combo.png" alt="COMBO6" style="width:100%">
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">COMBO7</div>
-        <img src="Combo.png" alt="COMBO7" style="width:100%">
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">COMBO8</div>
-        <img src="Combo.png" alt="COMBO8" style="width:100%">
-      </div>
-    </div>
-  </div>
-
-
-  
+ 
 <!-- End page content -->
 </div>
 
 <script>
+
+  var api = class {
+  static get baseUrl() {
+    return "http://127.0.0.1:8080/api/";
+  }
+
+  static get timeout() {
+    return 60 * 1000;
+  }
+}
+
+api.model = api.model || {};
+
+api.model.routine = class {
+  constructor(id, name, actions, meta) {
+    if (id) {
+      this.id = id;
+    } else {
+      delete(this.id);
+    }
+    this.name = name;
+    this.actions = actions;
+    this.meta = meta;
+  }
+}
+
+api.routine = class{
+  static get url() {
+    return api.baseUrl + "routines/";
+  }
+
+  static add(routine) {
+   return $.ajax({
+      url: api.routines.url,
+      method: "POST",
+      dataType: "json",
+      timeout: api.timeout,
+      data: routine
+    }); 
+  }
+
+  static modify(routine) {
+   return $.ajax({
+      url: api.routine.url + routine.id,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+      data: routine
+    }); 
+  }
+
+  static delete(id) {
+   return $.ajax({
+      url: api.routine.url + id,
+      method: "DELETE",
+      dataType: "json",
+      timeout: api.timeout,
+    }); 
+  }
+
+  static get(id) {
+    return $.ajax({
+      url: api.routine.url + id,
+      method: "GET",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
+
+  static getAll(){
+    return $.ajax({
+      url: api.routine.url,
+      method: "GET",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
+
+  static execute(id){
+    return $.ajax({
+      url: api.routine.url + routine.id + "/execute",
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
+}
+
+function loadRoutines(){
+
+  api.routine.getAll()
+
+  .done(function (data) {
+    loadRoutinesHTML(data);
+  })
+
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  })
+}   
+
+function loadRoutinesHTML(data){
+  var i, father, currentRow;
+
+  currentRow = document.getElementById("firstRow");
+  father = document.getElementById("routinesContainer");
+
+  for(i = 0; i < data.routines.length; i++){
+    if((i % 4) == 0){
+      if(i >= 3){
+        currentRow = createRow();
+        father.appendChild(currentRow);
+      }
+    }
+
+    currentRow.appendChild(loadRoutine(data, i));
+  }
+}
+
+function createRow(){
+  var row = document.createElement("div");
+  row.classList.add("my-row-padding");
+
+  return row;
+}
+
+function loadRoutine(pData, i){
+  var routineContainer = document.createElement("div");
+  routineContainer.classList.add("my-col");
+  routineContainer.classList.add("l3");
+  routineContainer.classList.add("m6");
+  routineContainer.classList.add("my-margin-bottom");
+
+  var displayContainer = document.createElement("div");
+  displayContainer.classList.add("my-display-container");
+
+  routineContainer.appendChild(displayContainer);
+
+  var tag = document.createElement("div");
+  tag.classList.add("my-display-topleft");
+  tag.classList.add("my-black");
+  tag.classList.add("my-padding");
+
+  displayContainer.appendChild(tag);
+
+  var routineName = pData.routines[i].name;
+  tag.innerHTML = routineName;
+
+  var routineButton = document.createElement("button");
+  routineButton.classList.add("btn");
+  routineButton.classList.add("btn-default");
+  routineButton.setAttribute("id", pData.routines[i].id);
+
+  var routineImage = document.createElement("img");
+  routineImage.setAttribute("alt", routineName);
+  routineImage.setAttribute("src", "Combo.png");
+
+  routineButton.appendChild(routineImage);
+
+  return routineContainer;
+}
+
+function createCombination(){
+
+}
 
 </script>
 
