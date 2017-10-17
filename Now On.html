@@ -29,6 +29,8 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     font-size:3vw;
     display: block;}
 
+.my-image{max-width:100%;height:auto}img{margin-bottom:-5px}
+
 .my-display-container{position:relative}
 .my-container:after,.my-container:before,.my-row-padding:after,.my-row-padding:before{content:"";display:table;clear:both}
 .my-col{float:left;width:100%}
@@ -51,15 +53,6 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 .my-padding-0-32{padding-top:0px!important;padding-bottom:32px!important}
 
 .my-black{color:#fff!important;background-color:#000!important}
-
-  .large{
-    height: 320px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    width: 100%
-  }
-
-
 
  .logo{
  background-image:url("smart_house_logo.png");
@@ -271,86 +264,9 @@ api.model.device = class {
   }
 }
 
-function loadDevices(){
+function addImageOfDeviceType(type, deviceImage){
 
-  api.device.getAll()
-
-  .done(function (data) {
-    loadDevicesHTML(data);
-  })
-
-  .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
-  })
-}        
-
-function loadDevicesHTML(data){
-  var i, father, currentRow;
-
-  father = document.getElementById("devicesContainer");
-
-  for(i = 0; i < data.devices.length; i++){
-
-    if((i % 4) == 0){
-      currentRow = createRow();
-      father.appendChild(currentRow);
-    }
-
-    currentRow.appendChild(loadDevice(data, i));
-  }
-}
-
-function createRow(){
-  var row = document.createElement("div");
-  row.classList.add("my-row-padding");
-
-  return row;
-}
-
-function loadDevice(pData, i){
-  var deviceContainer = document.createElement("div");
-  deviceContainer.classList.add("my-col");
-  deviceContainer.classList.add("l3");
-  deviceContainer.classList.add("m6");
-  deviceContainer.classList.add("my-margin-bottom");
-
-  var displayContainer = document.createElement("div");
-  displayContainer.classList.add("my-display-container");
-
-  deviceContainer.appendChild(displayContainer);
-
-  var tag = document.createElement("div");
-  tag.classList.add("my-display-topleft");
-  tag.classList.add("my-black");
-  tag.classList.add("my-padding");
-
-  displayContainer.appendChild(tag);
-
-  var deviceName = pData.devices[i].name;
-  tag.innerHTML = deviceName;
-
-  var deviceButton = document.createElement("button");
-  deviceButton.classList.add("btn");
-  deviceButton.classList.add("btn-default");
-  deviceButton.classList.add("large");
-  deviceButton.setAttribute("type", pData.devices[i].typeId);
-  deviceButton.setAttribute("id", pData.devices[i].id);
-
-  var deviceImage = document.createElement("img");
-  deviceImage.setAttribute("alt", deviceName);
-
-  deviceButton.appendChild(deviceImage);
-
-  api.device.getTypes()
-
-  addImageOfDeviceType(deviceButton, data);
-
-  return deviceContainer;
-}
-
-function addImageOfDeviceType(deviceButton, data){
-
-  switch(deviceButton.type){
+  switch(type){
 
     case "eu0v2xgprrhhg41g" :
 
@@ -397,6 +313,85 @@ function addImageOfDeviceType(deviceButton, data){
         deviceImage.setAttribute("src", "Default.png");
   }
 }
+
+
+function loadDevice(data, i){
+
+  var deviceContainer = document.createElement("div");
+  deviceContainer.classList.add("my-col");
+  deviceContainer.classList.add("l3");
+  deviceContainer.classList.add("m6");
+  deviceContainer.classList.add("my-margin-bottom");
+
+  var displayContainer = document.createElement("div");
+  displayContainer.classList.add("my-display-container");
+
+  deviceContainer.appendChild(displayContainer);
+
+  var tag = document.createElement("div");
+  tag.classList.add("my-display-topleft");
+  tag.classList.add("my-black");
+  tag.classList.add("my-padding");
+
+  displayContainer.appendChild(tag);
+
+  var deviceName = data.devices[i].name;
+  tag.innerHTML = deviceName;
+
+  var deviceButton = document.createElement("button");
+  deviceButton.classList.add("btn");
+  deviceButton.classList.add("btn-default");
+  deviceButton.setAttribute("type", data.devices[i].typeId);
+  deviceButton.setAttribute("id", data.devices[i].id);
+
+  displayContainer.appendChild(deviceButton);
+
+  var deviceImage = document.createElement("img");
+  deviceImage.setAttribute("alt", deviceName);
+  deviceImage.classList.add("my-image");
+
+  deviceButton.appendChild(deviceImage);
+
+  addImageOfDeviceType(deviceButton.getAttribute("type"), deviceImage);
+
+  return deviceContainer;
+}
+
+
+function createRow(){
+  var row = document.createElement("div");
+  row.classList.add("my-row-padding");
+
+  return row;
+}
+
+function loadDevicesHTML(data){
+  var i, father, currentRow;
+
+  father = document.getElementById("devicesContainer");
+
+  for(i = 0; i < data.devices.length; i++){
+    if((i % 4) == 0){
+      currentRow = createRow();
+      father.appendChild(currentRow);
+    }
+
+    currentRow.appendChild(loadDevice(data, i));
+  }
+}
+
+function loadDevices(){
+
+  api.device.getAll()
+
+  .done(function (data) {
+    loadDevicesHTML(data);
+  })
+
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  })
+}        
 
 </script>
 

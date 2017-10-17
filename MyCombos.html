@@ -276,7 +276,7 @@ function createRow(){
   return row;
 }
 
-function loadRoutine(pData, i){
+function loadRoutine(data, i){
   var routineContainer = document.createElement("div");
   routineContainer.classList.add("my-col");
   routineContainer.classList.add("l3");
@@ -295,16 +295,19 @@ function loadRoutine(pData, i){
 
   displayContainer.appendChild(tag);
 
-  var routineName = pData.routines[i].name;
+  var routineName = data.routines[i].name;
   tag.innerHTML = routineName;
 
   var routineButton = document.createElement("button");
   routineButton.classList.add("btn");
   routineButton.classList.add("btn-default");
-  routineButton.setAttribute("id", pData.routines[i].id);
+  routineButton.setAttribute("id", data.routines[i].id);
+
+  displayContainer.appendChild(routineButton);
 
   var routineImage = document.createElement("img");
   routineImage.setAttribute("alt", routineName);
+  routineImage.classList.add("my-image");
   routineImage.setAttribute("src", "Combo.png");
 
   routineButton.appendChild(routineImage);
