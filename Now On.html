@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Now On</title>
+  <title>Switched On</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -29,33 +29,34 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     font-size:3vw;
     display: block;}
 
-.w3-display-container{position:relative}
-.w3-container:after,.w3-container:before,.w3-row-padding:after,.w3-row-padding:before{content:"";display:table;clear:both}
-.w3-col{float:left;width:100%}
+.my-display-container{position:relative}
+.my-container:after,.my-container:before,.my-row-padding:after,.my-row-padding:before{content:"";display:table;clear:both}
+.my-col{float:left;width:100%}
 
-@media (min-width:700px){.w3-col.m6{width:49.99999%}}
-@media (min-width:1300px){.w3-col.l3{width:24.99999%}}
-.w3-content{max-width:980px;margin:auto}
+@media (min-width:700px){.my-col.m6{width:49.99999%}}
+@media (min-width:1300px){.my-col.l3{width:24.99999%}}
+.my-content{max-width:980px;margin:auto}
 
-.w3-display-topleft{position:absolute;left:0;top:0}
+.my-display-topleft{position:absolute;left:0;top:0}
 
-.w3-row-padding,.w3-row-padding>.w3-col{padding:0 8px}
-.w3-container{padding:0.01em 16px}
+.my-row-padding,.my-row-padding>.my-col{padding:0 8px}
+.my-container{padding:0.01em 16px}
 
-.w3-border-bottom{border-bottom-color: #d3d3d3; border-style: solid; border-bottom-width: thin; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent;}
-.w3-margin-bottom{margin-bottom:16px!important}
-.w3-padding{padding:8px 16px!important}
-.w3-padding-16{padding-top:16px!important;padding-bottom:16px!important}
-.w3-padding-0-16{padding-top:0px!important;padding-bottom:16px!important}
-.w3-padding-32{padding-top:32px!important;padding-bottom:32px!important}
-.w3-padding-0-32{padding-top:0px!important;padding-bottom:32px!important}
+.my-border-bottom{border-bottom-color: #d3d3d3; border-style: solid; border-bottom-width: thin; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent;}
+.my-margin-bottom{margin-bottom:16px!important}
+.my-padding{padding:8px 16px!important}
+.my-padding-16{padding-top:16px!important;padding-bottom:16px!important}
+.my-padding-0-16{padding-top:0px!important;padding-bottom:16px!important}
+.my-padding-32{padding-top:32px!important;padding-bottom:32px!important}
+.my-padding-0-32{padding-top:0px!important;padding-bottom:32px!important}
 
-.w3-black{color:#fff!important;background-color:#000!important}
+.my-black{color:#fff!important;background-color:#000!important}
 
   .large{
     height: 320px;
     margin-bottom: 15px;
     margin-top: 15px;
+    width: 100%
   }
 
 
@@ -101,7 +102,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 
  </style>
 </head>
-<body>
+<body onload="loadDevices()">
 
 <nav class="navbar navbar-inverse color">
   <div class="container-fluid">
@@ -136,68 +137,14 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 </nav>
  
 <!-- Page content -->
-<div class="w3-content w3-padding" style="max-width:1564px">
+<div class="my-content my-padding" id="devicesContainer" style="max-width:1564px">
 
   <!-- Project Section -->
-  <div class="w3-container w3-padding-0-32" id="NowOn">
-    <h3 class="w3-border-bottom w3-padding-0-16">Now On</h3>
+  <div class="my-container my-padding-0-32" id="NowOn">
+    <h3 class="my-border-bottom my-padding-0-16">Now On</h3>
   </div>
 
-  <div class="w3-row-padding">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">D1</div>
-        	<button type="button" class="btn btn-default large" id="d1" style="width:100%">D1</button>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">D2</div>
-        	<button type="button" class="btn btn-default large" style="width:100%">D2</button>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">D3</div>
-        	<button type="button" class="btn btn-default large" id="d3" style="width:100%">D3</button>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">D4</div>
-        	<button type="button" class="btn btn-default large" id="d4" style="width:100%">D4</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="w3-row-padding">
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">D5</div>
-        	<button type="button" class="btn btn-default large" id="d5" style="width:100%">D5</button>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">D6</div>
-        	<button type="button" class="btn btn-default large" id="d6" style="width:100%">D6</button>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">D7</div>
-        	<button type="button" class="btn btn-default large" id="d7" style="width:100%">D7</button>
-      </div>
-    </div>
-    <div class="w3-col l3 m6 w3-margin-bottom">
-      <div class="w3-display-container">
-        <div class="w3-display-topleft w3-black w3-padding">D8</div>
-        	<button type="button" class="btn btn-default large" id="d8" style="width:100%">D8</button>
-      </div>
-    </div>
-  </div>
-
-
+<!-- Aca estarian los dispositivos añadidos dinamicamente-->
   
 <!-- End page content -->
 </div>
@@ -227,11 +174,236 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
   </div>
 
   <script>
-$(document).ready(function(){
-    $("#d1").click(function(){
-        $("#now-on-modal").modal();
+
+var api = class {
+  static get baseUrl() {
+    return "http://127.0.0.1:8080/api/";
+  }
+
+  static get timeout() {
+    return 60 * 1000;
+  }
+}
+
+api.device = class {
+  static get url() {
+    return api.baseUrl + "devices/";
+  }
+
+  static add(device) {
+   return $.ajax({
+      url: api.device.url,
+      method: "POST",
+      dataType: "json",
+      timeout: api.timeout,
+      data: device
+    }); 
+  }
+
+  static modify(device) {
+   return $.ajax({
+      url: api.device.url + device.id,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+      data:device
+    }); 
+  }
+
+  static delete(id) {
+   return $.ajax({
+      url: api.device.url + id,
+      method: "DELETE",
+      dataType: "json",
+      timeout: api.timeout,
+    }); 
+  }
+
+  static get(id) {
+    return $.ajax({
+      url: api.device.url + id,
+      method: "GET",
+      dataType: "json",
+      timeout: api.timeout
     });
-});
+  }
+
+  static linkToRoom(idDevice,idRoom){
+      return $.ajax({
+      url: "http://127.0.0.1:8080/api" + /devices/+ idDevice + /rooms/ + idRoom,
+      method: "POST",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
+
+  static getAll(){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices",
+      method: "GET",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
+
+  static getTypes(){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devicetypes",
+      method: "GET",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
+
+}
+
+api.model = api.model || {};
+
+api.model.device = class {
+  constructor(typeId, name, meta) {
+    if (typeId) {
+      this.typeId = typeId;
+    } else {
+      delete(this.typeId);
+    }
+    this.name = name;
+    this.meta = meta;
+  }
+}
+
+function loadDevices(){
+
+  api.device.getAll()
+
+  .done(function (data) {
+    createDevicesHTML(data);
+  })
+
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  })
+}        
+
+function createDevicesHTML(data){
+  var i, father, currentRow;
+
+  father = document.getElementById(devicesContainer);
+
+  for(i = 0; i < data.devices.length; i++){
+
+    if((i % 4) == 0){
+      currentRow = createRow();
+      father.appendChild(currentRow);
+    }
+
+    currentRow.appendChild(createDevice(data, i));
+  }
+}
+
+function createRow(){
+  var row = document.createElement("div");
+  row.classList.add("my-row-padding");
+
+  return row;
+}
+
+function createDevice(pData, i){
+  var deviceContainer = document.createElement("div");
+  deviceContainer.classList.add("my-col");
+  deviceContainer.classList.add("l3");
+  deviceContainer.classList.add("m6");
+  deviceContainer.classList.add("my-margin-bottom");
+
+  var displayContainer = document.createElement("div");
+  displayContainer.classList.add("my-display-container");
+
+  deviceContainer.appendChild(displayContainer);
+
+  var tag = document.createElement("div");
+  tag.classList.add("my-display-topleft");
+  tag.classList.add("my-black");
+  tag.classList.add("my-padding");
+
+  displayContainer.appendChild(tag);
+
+  var deviceName = pData.devices[i];
+  tag.innerHTML = deviceName;
+
+  var deviceButton = document.createElement("button");
+  deviceButton.classList.add("btn");
+  deviceButton.classList.add("btn-default");
+  deviceButton.classList.add("large");
+  deviceButton.setAttribute("type", pData.devices[i].typeId);
+  deviceButton.setAttribute("id", pData.devices[i].id);
+
+  var deviceImage = document.createElement("img");
+  deviceImage.setAttribute("alt", deviceName);
+
+  deviceButton.appendChild(deviceImage);
+
+  api.device.getTypes()
+
+  .done(function (data) {
+    addImageOfDeviceType(deviceButton, deviceImage, data);
+  })
+
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  })
+
+  return deviceContainer;
+}
+
+function addImageOfDeviceType(deviceButton, deviceImage, data){
+
+  switch(deviceButton.type){
+
+    case data.devices[0].id :
+
+        deviceImage.setAttribute("src", "Blinds.png");
+        break;
+
+    case data.devices[1].id:
+
+        deviceImage.setAttribute("src", "Lamp.png");
+        break;
+
+    case data.devices[2].id:
+
+        deviceImage.setAttribute("src", "Oven.png");
+        break;
+
+    case data.devices[3].id:
+
+        deviceImage.setAttribute("src", "Ac.png");
+        break;
+
+    case data.devices[4].id:
+
+        deviceImage.setAttribute("src", "Door.png");
+        break;
+
+    case data.devices[5].id:
+
+        deviceImage.setAttribute("src", "Alarm.png");
+        break;
+
+    case data.devices[6].id:
+
+        deviceImage.setAttribute("src", "Timer.png");
+        break;
+
+    case data.devices[7].id:
+
+        deviceImage.setAttribute("src", "Fridge.png");
+        break;
+
+    default:
+
+        deviceImage.setAttribute("src", "Default.png");
+  }
+}
+
 </script>
 
 </body>
