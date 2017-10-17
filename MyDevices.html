@@ -471,6 +471,11 @@ body{
               <input type="text" class="form-control" id="device-description" placeholder="Enter description" name="descr">
             </div>
            </form>
+           <p> Select device type
+           <select id="comboBoxTypeDevices">
+            <option value="none"></option>
+           </select>
+         </p>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" onclick="createDevice();">Accept </button>
@@ -703,6 +708,24 @@ api.device = class {
       timeout: api.timeout
     });
   }
+
+  static getTypes(){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devicetypes",
+      method: "GET",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
+
+  static getType(id){
+      return $.ajax({
+      url: "http://127.0.0.1:8080/api/devicetypes/" + id,
+      method: "GET",
+      dataType: "json",
+      timeout: api.timeout
+    });
+  }
 }
 
 api.model = api.model || {};
@@ -754,6 +777,11 @@ if(getNameRoom() == ""){
     alert("Please put a name for the room");
     return;
 }
+
+if(getNameRoom().length < 3){
+  alert("The room name must have at least 3 characters");
+  return;
+}
 var div = document.createElement("div");
 div.classList.add("span-a");
 var para = document.createElement("a");//Creo el tipo de elemento
@@ -804,6 +832,15 @@ function loadAll(){
   .fail(function (jqXHR, textStatus) {
     alert ('Request failed:' + textStatus);
   })
+  
+  api.device.getTypes()
+  .done(function (data) {
+    updateNewDeviceModal(data)
+  })
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  }) 
+    
   
 }
 
@@ -966,6 +1003,11 @@ function changeName(){
         return;
 }
 
+if(getNewNameRoom().length < 3){
+  alert("The room name must have at least 3 characters");
+  return;
+}
+
 	var info = document.getElementById("modify-room-header");
 	var oldName = info.getAttribute("type")
     var trashButton = document.getElementById(info.getAttribute("type") + "trash");
@@ -1103,6 +1145,18 @@ function openCreateDeviceModal(){
 }
 
 function createDevice(){
+  var comboBoxTypeDevices = document.getElementById("comboBoxTypeDevices")
+  var deviceTypeId = comboBoxTypeDevices.options[comboBoxTypeDevices.selectedIndex].value
+  if(deviceTypeId == "none"){
+    alert("You have not selected a device type");
+    return;
+  }
+  
+  if(getNameRoom().length < 3){
+    alert("The room name must have at least 3 characters");
+    return;
+  }
+
 	var info = document.getElementById("device");
 	var idDevicesContainer = info.getAttribute("type") //esto me da el id del devices-container
 	var devicesContainer = document.getElementById(idDevicesContainer);
@@ -1112,21 +1166,61 @@ function createDevice(){
 	var description = "{ Description: " + deviceDesc + " }";
 	deviceContainer.classList.add("device-container");
 	deviceContainer.setAttribute("data-name",deviceName)
-	deviceContainer.setAttribute("data-name",deviceDesc)
+	deviceContainer.setAttribute("data-desc",deviceDesc)
+  deviceContainer.setAttribute("data-typeID",deviceTypeId)
 	var buttonDevice = document.createElement("button");
-	buttonDevice.classList.add("new-device-button");
+  buttonDevice.classList.add("new-device-button");
+	setDeviceImage(buttonDevice, deviceTypeId)
 	deviceContainer.appendChild(buttonDevice);
 	devicesContainer.appendChild(deviceContainer);
 	var newDeviceButton = document.getElementById(actualRoomName + "new-device");
 	var parentNewDeviceButton = newDeviceButton.parentNode
 	parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
 	devicesContainer.appendChild(parentNewDeviceButton);
-	var newDevice = new api.model.device("go46xmbqeomjrsjr", deviceName, description);
+	var newDevice = new api.model.device(deviceTypeId, deviceName, description);
 	api.device.add(newDevice);
 	addDeviceToRoom(actualRoomName,deviceName);
 	document.getElementById("device-name").value = "";
 	document.getElementById("device-description").value = "";
+  comboBoxTypeDevices.selectedIndex = "0";
 	$("#device").modal("hide") 
+}
+
+function setDeviceImage(buttonDevice,deviceTypeId){
+  api.device.getType(deviceTypeId)
+  .done(function (data) {
+    switch(data.device.name) {
+    case "blind":
+        buttonDevice.style.backgroundImage = "url('https://d30y9cdsu7xlg0.cloudfront.net/png/147594-200.png')";
+        break;
+    case "lamp":
+        buttonDevice.style.backgroundImage = "url('https://www.iconexperience.com/_img/o_collection_png/green_dark_grey/512x512/plain/desk_lamp.png')";
+        break;
+    case "oven":
+        buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/oven-electric-tool_318-63231.jpg')";
+        break;
+    case "ac":
+        buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/minisplit_318-51012.jpg')";
+        break;
+    case "alarm":
+        buttonDevice.style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZvNMw4I_3PWVwHXdaQ2XEYlNq87UlD5VFx_kCDbx9dRE8UH7v')";
+        break;
+    case "timer":
+        buttonDevice.style.backgroundImage = "url('https://image.freepik.com/free-icon/timer_318-61019.jpg')";
+        break;
+    case "door":
+        buttonDevice.style.backgroundImage = "url('https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/door2_open.png')";
+        break;
+    case "refrigerator":
+        buttonDevice.style.backgroundImage = "url('https://cdn.vectorstock.com/i/thumb-large/53/89/3565389.jpg')";
+        break;
+    default:
+        buttonDevice.style.backgroundImage = "url('https://vignette4.wikia.nocookie.net/villains/images/6/6b/Unknown_icon.png/revision/latest?cb=20150426164103')";
+}
+  })
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  })
 }
 
 function addDeviceToRoom(roomName,deviceName){
@@ -1198,7 +1292,8 @@ function chargeDevice(device,room){
 	var deviceContainer = document.createElement("div");
 	deviceContainer.classList.add("device-container");
 	deviceContainer.setAttribute("data-name",device.name)
-	deviceContainer.setAttribute("data-name",device.meta)
+	deviceContainer.setAttribute("data-desc",device.meta)
+  deviceContainer.setAttribute("data-typeID",device.typeId)
 	var buttonDevice = document.createElement("button");
 	buttonDevice.classList.add("new-device-button");
 	deviceContainer.appendChild(buttonDevice);
@@ -1207,6 +1302,20 @@ function chargeDevice(device,room){
 	var parentNewDeviceButton = newDeviceButton.parentNode
 	parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
 	devicesContainer.appendChild(parentNewDeviceButton);
+  setDeviceImage(buttonDevice, device.typeId)
+}
+
+function updateNewDeviceModal(data){
+  var allDevicesTypes = data;
+  var typeName;
+  for (var i = 0; i < allDevicesTypes.devices.length; i++){
+    typeName = allDevicesTypes.devices[i].name
+    var select = document.getElementById("comboBoxTypeDevices")
+    var option = document.createElement("option")
+    option.setAttribute("value",allDevicesTypes.devices[i].id)
+    option.innerHTML = typeName
+    select.appendChild(option)
+  }
 }
 </script>
 </body>
