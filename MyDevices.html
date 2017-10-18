@@ -360,6 +360,63 @@ body{
   font-size:200%;
 }
 
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #3b7aaf;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #3b7aaf;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 
  </style>
 </head>
@@ -445,8 +502,10 @@ body{
         <div class="modal-body">
            <form role="form">
             <div class="form-group">
-              <label for="usrname"><span class="glyphicon glyphicon-home"></span> Room name:</label>
-              <input type="text" class="form-control" id="room-name" placeholder="Enter room name" name="room-name">
+              <label for="room-name"><span class="glyphicon glyphicon-home"></span>Name:</label>
+              <input type="text" class="form-control" id="room-name" placeholder="Enter name" name="room-name">
+              <label for="room-description">Description (optional):</label>
+              <input type="text" class="form-control" id="room-description" placeholder="Enter description" name="room-description">
             </div>
            </form>
         </div>
@@ -470,13 +529,13 @@ body{
         <div class="modal-body">
            <form role="form">
             <div class="form-group">
-              <label for="usrname">Device name:</label>
-              <input type="text" class="form-control" id="device-name" placeholder="Enter device name" name="usrname">
+              <label for="usrname">Name:</label>
+              <input type="text" class="form-control" id="device-name" placeholder="Enter name" name="usrname">
               <label for="descr">Description (optional):</label>
               <input type="text" class="form-control" id="device-description" placeholder="Enter description" name="descr">
             </div>
            </form>
-           <p> Select device type
+           <p> Select type:
            <select id="comboBoxTypeDevices">
             <option value="none"></option>
            </select>
@@ -501,9 +560,14 @@ body{
         <div class="modal-body">
            <form role="form">
             <div class="form-group">
-              <p class="room-name-modal" id="actual-room-name"></p>
-              <label for="usrname"><span class="glyphicon glyphicon-home"></span> Change room name:</label>
-              <input type="text" class="form-control" id="new-room-name" placeholder="Enter new room name" name="new-room-name">
+              <label for="actual-room-name" class="control-label">Current name:</label>
+              <p class="room-name-modal form-control-static" id="actual-room-name"></p>
+              <label for="actual-room-description" class="control-label">Current description:</label>
+              <p class="room-description-modal form-control-static" id="actual-room-description"></p>                           <!--hay que poner la descripcion actual-->
+              <label for="new-room-name"><span class="glyphicon glyphicon-home"></span> Change name:</label>
+              <input type="text" class="form-control" id="new-room-name" placeholder="Enter new name" name="new-room-name">
+              <label for="new-room-description">Change description:</label>                                                     <!--hay que updatear la descripcion tambien-->
+              <input type="text" class="form-control" id="new-room-description" placeholder="Enter new description" name="new-room-description">
             </div>
            </form>
         </div>
@@ -536,19 +600,46 @@ body{
 
 <!-- MODALS DE DEVICES-->
 
-<!-- MODAL DE BIND-->
+<!-- MODAL DE BLIND-->
   <div class="modal fade" id="device-blinds" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title text-center">Device Configuration</h3>
+            <h3 class="modal-title text-center">Blinds</h3>
         </div>
         <div class="modal-body">
-          <p id="blinds-device-name">Device name:</p>
-          <p>Device type: Blinds</p>
-          <div class ="div-flex">
-            <p class="modal-text-device">Device status:</p>
-          </div>
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="blinds-type" class="control-label col-sm-4" style="text-align: right">Type:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="blinds-type" style="text-align: left">Blinds</p>
+              </div>
+              <br>
+              <label for="blinds-name" class="control-label col-sm-4" style="text-align: right;">Name:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="blinds-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
+              </div>
+              <label for="blinds-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="blinds-change-name" placeholder="Enter new name" name="blinds-change-name">
+              </div>
+              <br>
+              <label for="blinds-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="blinds-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
+              </div>
+              <label for="blinds-change-description" class="control-label col-sm-4" style="text-align: right">Change description:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="blinds-change-description" placeholder="Enter new description" name="blinds-change-description">
+              </div>
+              <br>
+              <label for="blinds-status" class="control-label col-sm-4" style="text-align: right">Current status:</label>
+              <div class="col-sm-8">
+                <label class="radio-inline"><input type="radio" name="open">Open</label>
+                <label class="radio-inline"><input type="radio" name="closed">Closed</label>
+              </div>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" >Accept </button>
@@ -556,6 +647,94 @@ body{
         </div>
       </div>  
     </div>
+  </div>
+
+    <!-- Modal -->
+ <div class="modal fade" id="device-lamp" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-center">Lamp</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="lamp-type" class="control-label col-sm-4" style="text-align: right">Type:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="lamp-type" style="text-align: left">Lamp</p>
+              </div>
+              <br>
+              <label for="lamp-name" class="control-label col-sm-4" style="text-align: right">Name:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="lamp-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
+              </div>
+              <label for="lamp-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="lamp-change-name" placeholder="Enter new name" name="lamp-change-name">
+              </div>
+              <br>
+              <label for="lamp-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="lamp-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
+              </div>
+              <label for="lamp-change-description" class="control-label col-sm-4" style="text-align: right">Change description:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="lamp-change-description" placeholder="Enter new description" name="lamp-change-description">
+              </div>
+              <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Current status:</label>
+              <div class="col-sm-8">
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <br>
+              <label for="lamp-brightness" class="control-label col-sm-4" style="text-align: right">Current brightness:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="lamp-brightness" style="text-align: left"></p> <!--hay que poner el brillo actual-->
+              </div>
+              <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Change brightness:</label>
+              <div class="col-sm-8">
+                <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter new brightness (0 - 100)" name="lamp-change-brightness"> <!--hay que verificar que sea un numero entre 0 y 100-->
+              </div>
+              <br>
+              <label for="lamp-color" class="control-label col-sm-4" style="text-align: right">Current color:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="lamp-color" style="text-align: left"></p> <!--hay que poner el color actual-->
+              </div>
+              <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select new color:</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="lamp-change-color">
+                  <option val="FFFFFF">White</option>
+                  <option val="C0C0C0">Silver</option>
+                  <option val="808080">Gray</option>
+                  <option val="000000">Black</option>
+                  <option val="FF0000">Red</option>
+                  <option val="800000">Maroon</option>
+                  <option val="FFFF00">Yellow</option>
+                  <option val="808000">Olive</option>
+                  <option val="00FF00">Lime</option>
+                  <option val="008000">Green</option>
+                  <option val="00FFFF">Aqua</option>
+                  <option val="008080">Teal</option>
+                  <option val="0000FF">Blue</option>
+                  <option val="000080">Navy</option>
+                  <option val="FF00FF">Fuchsia</option>
+                  <option val="800080">Purple</option>
+                </select>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- End page content -->
   
   
 <script>
@@ -1044,7 +1223,7 @@ function showInitialDevicesRoom(){
 function modifyRoom(button){
  document.getElementById("modify-room-header").setAttribute("type",button.getAttribute('id'));
  var roomName = button.getAttribute('id');
- document.getElementById("actual-room-name").innerHTML = "Actual room name: " + roomName;
+ document.getElementById("actual-room-name").innerHTML = roomName;
  $("#modify-room").modal();
 }
 
