@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="animate.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/css/bootstrap-colorpicker.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/js/bootstrap-colorpicker.js"></script>
   <style>
 
   /* W3.CSS 4.04 Apr 2017 by Jan Egil and Borge Refsnes */
@@ -711,24 +716,10 @@ input:checked + .slider:before {
               </div>
               <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select new color:</label>
               <div class="col-sm-8">
-                <select class="form-control" id="lamp-change-color">
-                  <option val="FFFFFF">White</option>
-                  <option val="C0C0C0">Silver</option>
-                  <option val="808080">Gray</option>
-                  <option val="000000">Black</option>
-                  <option val="FF0000">Red</option>
-                  <option val="800000">Maroon</option>
-                  <option val="FFFF00">Yellow</option>
-                  <option val="808000">Olive</option>
-                  <option val="00FF00">Lime</option>
-                  <option val="008000">Green</option>
-                  <option val="00FFFF">Aqua</option>
-                  <option val="008080">Teal</option>
-                  <option val="0000FF">Blue</option>
-                  <option val="000080">Navy</option>
-                  <option val="FF00FF">Fuchsia</option>
-                  <option val="800080">Purple</option>
-                </select>
+                <div id="cp3" class="input-group colorpicker-component">
+                  <input type="text" value="#00AABB" class="form-control" />
+                  <span class="input-group-addon"><i></i></span>
+                </div>
               </div>
           </form>
         </div>
@@ -2131,6 +2122,13 @@ function saveChangesLamp(){
     document.getElementById("lamp-change-brightness").value = "";
     $("#device-blinds").modal("hide");
 }
+
+$(function() {
+    $('#cp3').colorpicker({
+       color: '#AA3399',
+        format: 'hex',
+    });
+});
 
 </script>
 </body>
