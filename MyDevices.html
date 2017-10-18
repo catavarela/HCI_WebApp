@@ -417,6 +417,11 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.trampa{
+  color:white;
+}
 
  </style>
 </head>
@@ -621,16 +626,16 @@ input:checked + .slider:before {
               </div>
               <label for="blinds-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="blinds-change-name" placeholder="Enter new name" name="blinds-change-name">
+                <input type="text" class="form-control" id="blinds-newName" placeholder="Enter new name" name="blinds-change-name">
               </div>
               <br>
               <label for="blinds-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
               <div class="col-sm-8">
-                <p class="form-control-static" id="blinds-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
+                <p class="form-control-static" id="blinds-description" style="text-align: left" id="blinds-description"> </p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
               </div>
               <label for="blinds-change-description" class="control-label col-sm-4" style="text-align: right">Change description:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="blinds-change-description" placeholder="Enter new description" name="blinds-change-description">
+                <input type="text" class="form-control" placeholder="Enter new description" name="blinds-change-description" id="blinds-newDescription">
               </div>
               <br>
               <label for="blinds-status" class="control-label col-sm-4" style="text-align: right">Current status:</label>
@@ -642,7 +647,7 @@ input:checked + .slider:before {
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" >Accept </button>
+          <button type="submit" class="btn btn-primary" onclick="saveChangesBlinds()">Accept </button>
           <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>  
@@ -682,17 +687,18 @@ input:checked + .slider:before {
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="lamp-change-description" placeholder="Enter new description" name="lamp-change-description">
               </div>
+              <p class="trampa">a</p>
               <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Current status:</label>
               <div class="col-sm-8">
                 <label class="switch">
-                  <input type="checkbox">
+                  <input type="checkbox" id="lamp-switch">
                   <span class="slider round"></span>
                 </label>
-              </div>
+              </div>      
               <br>
               <label for="lamp-brightness" class="control-label col-sm-4" style="text-align: right">Current brightness:</label>
               <div class="col-sm-8">
-                <p class="form-control-static" id="lamp-brightness" style="text-align: left"></p> <!--hay que poner el brillo actual-->
+                <p class="form-control-static" id="lamp-brightness" style="text-align: left">asd</p> <!--hay que poner el brillo actual-->
               </div>
               <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Change brightness:</label>
               <div class="col-sm-8">
@@ -727,7 +733,7 @@ input:checked + .slider:before {
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveChangesLamp()">Accept</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>
@@ -804,6 +810,7 @@ api.room = class {
       method: "POST",
       dataType: "json",
       timeout: api.timeout,
+      async: false,
       data: room
     }); 
   }
@@ -814,6 +821,7 @@ api.room = class {
       method: "PUT",
       dataType: "json",
       timeout: api.timeout,
+      async: false,
       data: room
     }); 
   }
@@ -823,6 +831,7 @@ api.room = class {
       url: api.room.url + id,
       method: "DELETE",
       dataType: "json",
+      async: false,
       timeout: api.timeout,
     }); 
   }
@@ -832,6 +841,7 @@ api.room = class {
       url: api.room.url + id,
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -841,6 +851,7 @@ api.room = class {
       url: api.room.url + id + "/devices",
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -851,6 +862,7 @@ api.room = class {
   	  url: "http://127.0.0.1:8080/api/rooms",
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -867,6 +879,7 @@ api.device = class {
       method: "POST",
       dataType: "json",
       timeout: api.timeout,
+      async: false,
       data: device
     }); 
   }
@@ -877,6 +890,7 @@ api.device = class {
       method: "PUT",
       dataType: "json",
       timeout: api.timeout,
+      async: false,
       data:device
     }); 
   }
@@ -886,6 +900,7 @@ api.device = class {
       url: api.device.url + id,
       method: "DELETE",
       dataType: "json",
+      async: false,
       timeout: api.timeout,
     }); 
   }
@@ -895,6 +910,7 @@ api.device = class {
       url: api.device.url + id,
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -904,6 +920,7 @@ api.device = class {
       url: "http://127.0.0.1:8080/api" + /devices/+ idDevice + /rooms/ + idRoom,
       method: "POST",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -913,6 +930,7 @@ api.device = class {
   	  url: "http://127.0.0.1:8080/api/devices",
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -922,6 +940,7 @@ api.device = class {
       url: "http://127.0.0.1:8080/api/devicetypes",
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -931,37 +950,90 @@ api.device = class {
       url: "http://127.0.0.1:8080/api/devicetypes/" + id,
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
 
-  static getState(deviceID,action){
+  static getState(deviceID){
     return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + getState,
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/getState",
       method: "PUT",
       dataType: "json",
+      async: false,
       timeout: api.timeout,
-      data: action
     });
   }
 }
 
-api.device.bind = class{
-  static up(deviceID){
+api.blind = class{
+
+  constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+
+  up(deviceID){
     return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + up,
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "up",
       method: "PUT",
       dataType: "json",
+      async: false,
       timeout: api.timeout,
     });
   }
 
-  static up(deviceID){
+  down(deviceID){
     return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + down,
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "down",
       method: "PUT",
       dataType: "json",
+      async: false,
       timeout: api.timeout,
+    });
+  }
+
+}
+
+api.lamp = class {
+
+    constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+    turnOn(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOn",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+    turnOff(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOff",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+    
+    changeBrightness(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "changeBrightness",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
     });
   }
 
@@ -994,8 +1066,9 @@ api.model.device = class {
 }
 
 api.model.action = class{
-    constructor(name) {
+    constructor(name,params) {
      this.name = name;
+     this.params = params;
   }
 }
 
@@ -1393,132 +1466,69 @@ function createDevice(){
   var comboBoxTypeDevices = document.getElementById("comboBoxTypeDevices")
   var deviceTypeId = comboBoxTypeDevices.options[comboBoxTypeDevices.selectedIndex].value
   var deviceName = document.getElementById("device-name").value;
+  var deviceDesc = document.getElementById("device-description").value
   if(deviceTypeId == "none"){
     alert("You have not selected a device type");
     return;
   }
   
   if(deviceName.length < 3){
-    alert("The room name must have at least 3 characters");
+    alert("The device name must have at least 3 characters");
     return;
   }
 
-	var info = document.getElementById("device");
-	var idDevicesContainer = info.getAttribute("type") //esto me da el id del devices-container
-	var devicesContainer = document.getElementById(idDevicesContainer);
-	var deviceContainer = document.createElement("div");
-	var deviceDesc =document.getElementById("device-description").value;
-	var description = "{ Description: " + deviceDesc + " }";
-	deviceContainer.classList.add("device-container");
-	deviceContainer.setAttribute("data-name",deviceName)
-	deviceContainer.setAttribute("data-desc",deviceDesc)
-  deviceContainer.setAttribute("data-typeID",deviceTypeId)
-  deviceContainer.setAttribute("data-ID",device.id)
-	var buttonDevice = document.createElement("button");
-  buttonDevice.classList.add("new-device-button");
-	setDeviceImage(buttonDevice, deviceTypeId)
-  buttonDevice.setAttribute("onclick","viewState(this)");
-  buttonDevice.classList.add("new-device-button");
-  buttonDevice.setAttribute("data-name",device.name)
-  buttonDevice.setAttribute("data-desc",device.meta)
-  buttonDevice.setAttribute("data-typeID",device.typeId)
-  buttonDevice.setAttribute("data-ID",device.id)
-	deviceContainer.appendChild(buttonDevice);
-	devicesContainer.appendChild(deviceContainer);
-	var newDeviceButton = document.getElementById(actualRoomName + "new-device");
-	var parentNewDeviceButton = newDeviceButton.parentNode
-	parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
-	devicesContainer.appendChild(parentNewDeviceButton);
+  if(deviceDesc == ""){
+    deviceDesc = "None"
+  }
+
+	var description = deviceDesc;
 	var newDevice = new api.model.device(deviceTypeId, deviceName, description);
-	api.device.add(newDevice);
-	addDeviceToRoom(actualRoomName,deviceName);
+  api.device.add(newDevice)
+  .done(function (data) {
+    addDeviceToRoom(actualRoomName,data.device.id,data.device,1);
+  })
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed: Fallo al agregar el device' + textStatus);
+  })
 	document.getElementById("device-name").value = "";
 	document.getElementById("device-description").value = "";
   comboBoxTypeDevices.selectedIndex = "0";
 	$("#device").modal("hide") 
 }
 
-function setDeviceImage(buttonDevice,deviceTypeId){
-  api.device.getType(deviceTypeId)
-  .done(function (data) {
-    switch(data.device.name) {
-    case "blinds":
-        buttonDevice.style.backgroundImage = "url('Blinds.png')";
-        buttonDevice.setAttribute("data-type","blinds")
-        break;
-    case "lamp":
-        buttonDevice.style.backgroundImage = "url('Lamp.png')";
-        buttonDevice.setAttribute("data-type","lamp")
-        break;
-    case "oven":
-        buttonDevice.style.backgroundImage = "url('Oven.png')";
-        buttonDevice.setAttribute("data-type","oven")
-        break;
-    case "ac":
-        buttonDevice.style.backgroundImage = "url('Ac.png')";
-        buttonDevice.setAttribute("data-type","ac")
-        break;
-    case "alarm":
-        buttonDevice.style.backgroundImage = "url('Alarm.png')";
-        buttonDevice.setAttribute("data-type","alarm")
-        break;
-    case "timer":
-        buttonDevice.style.backgroundImage = "url('Timer.png')";
-        buttonDevice.setAttribute("data-type","timer")
-        break;
-    case "door":
-        buttonDevice.style.backgroundImage = "url('Door.png')";
-        buttonDevice.setAttribute("data-type","door")
-        break;
-    case "refrigerator":
-        buttonDevice.style.backgroundImage = "url('Fridge.png')";
-        buttonDevice.setAttribute("data-type","refrigerator")
-        break;
-    default:
-        buttonDevice.style.backgroundImage = "url('Default.png')";
-}
-  })
-  .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
-  })
-}
 
-function addDeviceToRoom(roomName,deviceName){
+
+function addDeviceToRoom(roomName,deviceID,device,boolean){
   api.room.getAll()
   .done(function (data) {
-    findRoomForDevice(data,roomName,deviceName)
+    findRoomForDevice(data,roomName,deviceID,device,boolean)
   })
   .fail(function (jqXHR, textStatus) {
     alert ('Request failed:' + textStatus);
   })
+  
 }
 
-function findRoomForDevice(dato,roomName,deviceName){
+function findRoomForDevice(dato,roomName,deviceID,device,boolean){
 	var allRooms = dato;
 	var idRoom;
+  var room;
 	for (var i = 0; i < allRooms.rooms.length; i++) {
     	if(roomName == allRooms.rooms[i].name){
     		idRoom = allRooms.rooms[i].id;
+        room = allRooms.rooms[i];
     	}
 	}
-  api.device.getAll()
+
+  api.device.linkToRoom(deviceID,idRoom)
   .done(function (data) {
-    findDeviceForRoom(data,idRoom,deviceName)
+    if(boolean == 1)
+      chargeDevice(device,room)
   })
   .fail(function (jqXHR, textStatus) {
     alert ('Request failed:' + textStatus);
   })
-}
 
-function findDeviceForRoom(data,idRoom,deviceName){
-	var allDevices = data;
-	var idDevice;
-	for (var i = 0; i < allDevices.devices.length; i++) {
-    	if(deviceName == allDevices.devices[i].name){
-    		idDevice = allDevices.devices[i].id;
-    	}
-	}
-	api.device.linkToRoom(idDevice,idRoom);
 }
 
 function loadDevices(data){
@@ -1557,12 +1567,12 @@ function chargeDevice(device,room){
   deviceContainer.setAttribute("data-ID",device.id)
 	var buttonDevice = document.createElement("button");
   setDeviceImage(buttonDevice, device.typeId)
-  buttonDevice.setAttribute("onclick","viewState(this)");
 	buttonDevice.classList.add("new-device-button");
   buttonDevice.setAttribute("data-name",device.name)
   buttonDevice.setAttribute("data-desc",device.meta)
   buttonDevice.setAttribute("data-typeID",device.typeId)
   buttonDevice.setAttribute("data-ID",device.id)
+  buttonDevice.setAttribute("id", device.name + "-" + device.typeId)
 	deviceContainer.appendChild(buttonDevice);
 	devicesContainer.appendChild(deviceContainer);
 	var newDeviceButton = document.getElementById(room.name + "new-device");
@@ -1570,6 +1580,54 @@ function chargeDevice(device,room){
 	parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
 	devicesContainer.appendChild(parentNewDeviceButton);
 }
+
+function setDeviceImage(buttonDevice,deviceTypeId){
+  api.device.getType(deviceTypeId)
+  .done(function (data) {
+    switch(data.device.name) {
+    case "blind":
+        buttonDevice.style.backgroundImage = "url('Blinds.png')";
+        buttonDevice.setAttribute("data-type","blinds")
+        buttonDevice.setAttribute("onclick","viewBlindState(this)");
+        break;
+    case "lamp":
+        buttonDevice.style.backgroundImage = "url('Lamp.png')";
+        buttonDevice.setAttribute("data-type","lamp")
+        buttonDevice.setAttribute("onclick","viewLampState(this)");
+        break;
+    case "oven":
+        buttonDevice.style.backgroundImage = "url('Oven.png')";
+        buttonDevice.setAttribute("data-type","oven")
+        break;
+    case "ac":
+        buttonDevice.style.backgroundImage = "url('Ac.png')";
+        buttonDevice.setAttribute("data-type","ac")
+        break;
+    case "alarm":
+        buttonDevice.style.backgroundImage = "url('Alarm.png')";
+        buttonDevice.setAttribute("data-type","alarm")
+        break;
+    case "timer":
+        buttonDevice.style.backgroundImage = "url('Timer.png')";
+        buttonDevice.setAttribute("data-type","timer")
+        break;
+    case "door":
+        buttonDevice.style.backgroundImage = "url('Door.png')";
+        buttonDevice.setAttribute("data-type","door")
+        break;
+    case "refrigerator":
+        buttonDevice.style.backgroundImage = "url('Fridge.png')";
+        buttonDevice.setAttribute("data-type","refrigerator")
+        break;
+    default:
+        buttonDevice.style.backgroundImage = "url('Default.png')";
+}
+  })
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed: error en setDeviceImage' + textStatus);
+  })
+}
+
 
 function updateNewDeviceModal(data){
   var allDevicesTypes = data;
@@ -1584,15 +1642,139 @@ function updateNewDeviceModal(data){
   }
 }
 
-function viewState(button){
-   var modalId = "#device-" + button.getAttribute("data-type")
-   updateDeviceModal(button)
-   $(modalId).modal();
+function viewBlindState(button){
+   document.getElementById("device-blinds").setAttribute("data-device",button.getAttribute("id"))
+   updateDeviceBlindModal(button)
+   $("#device-blinds").modal();
 }
 
-function updateDeviceModal(button){
-  document.getElementById("blinds-device-name").innerHTML = "Device name: " +  button.getAttribute("data-name")
+function updateDeviceBlindModal(button){
+  document.getElementById("blinds-name").innerHTML = button.getAttribute("data-name");
+  document.getElementById("blinds-description").innerHTML = button.getAttribute("data-desc");
+  api.device.getState(button.getAttribute("data-ID"))
+  .done(function (data) {
+      updateBlindState(button,data)
+  })
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed: al cargar el status de cortina' + textStatus);
+  })
 }
+
+
+function saveChangesBlinds(){
+    var blind = new api.blind(null,null,null,null)
+    modifyDevice("device-blinds","blinds-newName","blinds-newDescription",blind)
+    if(document.getElementById("blinds-open").checked == true){
+      blind.up(blind.id)
+    }
+    else{
+      blind.down(blind.id)
+    }
+    $("#device-blinds").modal("hide");
+}
+
+function modifyDevice(modalID,newNameID,newDescID,deviceObj){
+   var device = document.getElementById(document.getElementById(modalID).getAttribute("data-device"));
+   deviceObj.id = device.getAttribute("data-ID")
+   deviceObj.name = document.getElementById(newNameID).value;
+   deviceObj.description = document.getElementById(newDescID).value;
+   deviceObj.typeId = device.getAttribute("data-typeID")
+   if(deviceObj.name.length != 0 && deviceObj.name.length < 3){
+    alert("The device name must have at least 3 characters")
+    return;
+   }
+   if(deviceObj.name.length != 0 || deviceObj.description.length != 0){
+     if(deviceObj.description == "")
+      deviceObj.description = device.getAttribute("data-desc");
+     if(deviceObj.name  == "")
+      deviceObj.name = device.getAttribute("data-name")
+     api.device.get(deviceObj.id)
+      .done(function (data) {
+        data.device.name = deviceObj.name
+        data.device.meta = deviceObj.description
+        api.device.modify(data.device)
+        .done(function (boolean){
+          addDeviceToRoom(actualRoomName,data.device.id,data.device,0)
+        })
+      .fail(function (jqXHR, textStatus) {
+        alert ('Request failed:' + textStatus);
+        })
+      })
+      .fail(function (jqXHR, textStatus) {
+      alert ('Request failed:' + textStatus);
+      })
+    }
+
+  device.setAttribute("data-name",deviceObj.name)
+  device.setAttribute("data-desc",deviceObj.description)
+  document.getElementById(newDescID).value = "";
+  document.getElementById(newNameID).value = "";
+}
+
+function updateBlindState(button,data){
+  var status = data.result.status
+  if(status == "opened" || status == "opening")
+    document.getElementById("blinds-open").checked = true
+  else
+    document.getElementById("blinds-closed").checked = true
+}
+
+function viewLampState(button){
+   document.getElementById("device-lamp").setAttribute("data-device",button.getAttribute("id"))
+   updateDeviceLampModal(button)
+   $("#device-lamp").modal();
+}
+
+function updateDeviceLampModal(button){
+  document.getElementById("lamp-name").innerHTML = button.getAttribute("data-name");
+  document.getElementById("lamp-description").innerHTML = button.getAttribute("data-desc");
+  api.device.getState(button.getAttribute("data-ID"))
+  .done(function (data) {
+      updateLampState(button,data)
+  })
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed: al cargar el status de cortina' + textStatus);
+  })
+}
+
+function updateLampState(button,data){
+  var status = data.result.status
+  if(status == "on"){
+    document.getElementById("lamp-switch").checked = true;
+    document.getElementById("lamp-brightness").innerHTML = data.result.brightness;
+    document.getElementById("lamp-color").innerHTML = data.result.color;
+  }
+  else{
+    document.getElementById("lamp-switch").checked = false
+    document.getElementById("lamp-brightness").innerHTML = "";
+    document.getElementById("lamp-color").innerHTML = "";
+  }
+}
+
+
+function saveChangesLamp(){
+    var lamp = new api.lamp(null,null,null,null)
+    modifyDevice("device-lamp","lamp-change-name","lamp-change-description",lamp)
+    var newBrightness = document.getElementById("lamp-change-brightness").value;
+    var newBrightnessJSON={"0":newBrightness}; //si fueran 2 parametros seria {"0":newBrightness,"1":segundaParam}
+    var parameter = JSON.stringify(newBrightnessJSON)
+    var action = new api.model.action("changeColor", ["FFFFF"])
+    if(document.getElementById("lamp-switch").checked == true){
+      lamp.turnOn(lamp.id)
+      .done(function (data) {
+        lamp.changeBrightness(lamp.id,parameter)
+        })
+      .fail(function (jqXHR, textStatus) {
+        alert ('Request failed:' + textStatus);
+        })
+    }
+    else{
+      lamp.turnOff(lamp.id)
+    }
+    $("#device-blinds").modal("hide");
+
+}
+
 </script>
 </body>
 </html>
