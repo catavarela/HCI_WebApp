@@ -331,7 +331,7 @@ body{
 }
 
 .new-device-button{
-	  position:relative;
+    position:relative;
     top:25%;
     width:100%;
     height:100%;
@@ -1210,8 +1210,8 @@ api.room = class {
 
 
   static getAll(){
-  	return $.ajax({
-  	  url: "http://127.0.0.1:8080/api/rooms",
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/rooms",
       method: "GET",
       dataType: "json",
       async: false,
@@ -1268,7 +1268,7 @@ api.device = class {
   }
 
   static linkToRoom(idDevice,idRoom){
-  	  return $.ajax({
+      return $.ajax({
       url: "http://127.0.0.1:8080/api" + /devices/+ idDevice + /rooms/ + idRoom,
       method: "POST",
       dataType: "json",
@@ -1278,8 +1278,8 @@ api.device = class {
   }
 
   static getAll(){
-  	return $.ajax({
-  	  url: "http://127.0.0.1:8080/api/devices",
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices",
       method: "GET",
       dataType: "json",
       async: false,
@@ -1434,8 +1434,8 @@ function getNameRoom(){
 
 function createRoom(){
 if(! isAlphaNumeric(getNameRoom())){
-	alert("The room name must contain only letters or numbers")
-	return;
+  alert("The room name must contain only letters or numbers")
+  return;
 }
 
 if( document.getElementById(getNameRoom())){
@@ -1515,48 +1515,48 @@ function loadAll(){
 }
 
 function loadRooms(data){
-	var allRooms = data;
-	for (var i = 0; i < allRooms.rooms.length; i++) {
-    	loadRoom(allRooms.rooms[i])
-	}
+  var allRooms = data;
+  for (var i = 0; i < allRooms.rooms.length; i++) {
+      loadRoom(allRooms.rooms[i])
+  }
 }
 
 function loadRoom(room){
-	var roomName = room.name
-	var div = document.createElement("div");
-	div.classList.add("span-a");
-	var para = document.createElement("a");//Creo el tipo de elemento
-	para.setAttribute("id", roomName + "room");
-	var node = document.createTextNode(roomName); //le digo su contenido
-	para.setAttribute("type", roomName);
-	para.setAttribute("onclick", "showDevicesRoom(this);");
-	para.setAttribute("href","#");
-	para.appendChild(node);
-	para.className = "chargeDiv";
-	var button = document.createElement("button");
-	button.setAttribute("onclick", "modifyRoom(this);");
-	button.setAttribute("id", roomName);
-	button.classList.add("mod-room");
-	button.classList.add("mod-room-pencil");
-	var span = document.createElement("span");
-	span.classList.add("glyphicon");
-	span.classList.add("glyphicon-pencil");
-	var button1 = document.createElement("button");
-	button1.setAttribute("onclick", "confirmDelete(this);");
-	button1.setAttribute("id", roomName + "trash");
-	button1.setAttribute("data-info",roomName);
-	button1.classList.add("mod-room");
-	var span1 = document.createElement("span");
-	span1.classList.add("glyphicon");
-	span1.classList.add("glyphicon-trash");
-	button.appendChild(span);
-	button1.appendChild(span1);
-	div.appendChild(para);
-	div.appendChild(button);
-	div.appendChild(button1);
-	var element = document.getElementById("ver-menu");
-	element.appendChild(div);
-	createRightContainer(roomName);
+  var roomName = room.name
+  var div = document.createElement("div");
+  div.classList.add("span-a");
+  var para = document.createElement("a");//Creo el tipo de elemento
+  para.setAttribute("id", roomName + "room");
+  var node = document.createTextNode(roomName); //le digo su contenido
+  para.setAttribute("type", roomName);
+  para.setAttribute("onclick", "showDevicesRoom(this);");
+  para.setAttribute("href","#");
+  para.appendChild(node);
+  para.className = "chargeDiv";
+  var button = document.createElement("button");
+  button.setAttribute("onclick", "modifyRoom(this);");
+  button.setAttribute("id", roomName);
+  button.classList.add("mod-room");
+  button.classList.add("mod-room-pencil");
+  var span = document.createElement("span");
+  span.classList.add("glyphicon");
+  span.classList.add("glyphicon-pencil");
+  var button1 = document.createElement("button");
+  button1.setAttribute("onclick", "confirmDelete(this);");
+  button1.setAttribute("id", roomName + "trash");
+  button1.setAttribute("data-info",roomName);
+  button1.classList.add("mod-room");
+  var span1 = document.createElement("span");
+  span1.classList.add("glyphicon");
+  span1.classList.add("glyphicon-trash");
+  button.appendChild(span);
+  button1.appendChild(span1);
+  div.appendChild(para);
+  div.appendChild(button);
+  div.appendChild(button1);
+  var element = document.getElementById("ver-menu");
+  element.appendChild(div);
+  createRightContainer(roomName);
 }
 
 
@@ -1569,7 +1569,7 @@ function isAlphaNumeric(str) {
     if (!(code > 47 && code < 58) && // numeric (0-9)
         !(code > 64 && code < 91) && // upper alpha (A-Z)
         !(code > 96 && code < 123) && // lower alpha (a-z)
-        !(code == '-')) { 			  // '-'
+        !(code == '-')) {         // '-'
       return false;
     }
   }
@@ -1658,10 +1658,10 @@ function getNewNameRoom(){
 }
 
 function changeName(){
-	if(! isAlphaNumeric(getNewNameRoom())){
-		alert("The room name must contain only letters or numbers")
-		return;
-	}
+  if(! isAlphaNumeric(getNewNameRoom())){
+    alert("The room name must contain only letters or numbers")
+    return;
+  }
 
     if( document.getElementById(getNewNameRoom())){
     alert("Name already exists");
@@ -1678,8 +1678,8 @@ if(getNewNameRoom().length < 3){
   return;
 }
 
-	var info = document.getElementById("modify-room-header");
-	var oldName = info.getAttribute("type")
+  var info = document.getElementById("modify-room-header");
+  var oldName = info.getAttribute("type")
     var trashButton = document.getElementById(info.getAttribute("type") + "trash");
     var rightContainer = document.getElementById(info.getAttribute("type") + "holder")
     var idroom = info.getAttribute("type") + "room";
@@ -1703,9 +1703,9 @@ if(getNewNameRoom().length < 3){
     rightContainer.setAttribute("id" , getNewNameRoom() + "holder")
     room.innerHTML = getNewNameRoom();
     if(actualRoomName == info.getAttribute("type")){
-    	actualRoomName = getNewNameRoom();
-    	var modalDevice = document.getElementById("device");
-    	modalDevice.setAttribute("type", devCont.getAttribute("id"));
+      actualRoomName = getNewNameRoom();
+      var modalDevice = document.getElementById("device");
+      modalDevice.setAttribute("type", devCont.getAttribute("id"));
 
     }
     var newName = getNewNameRoom()
@@ -1717,7 +1717,7 @@ if(getNewNameRoom().length < 3){
 }
 
 function modifyRoomFromDB(roomName, newRoomName){
-	api.room.getAll()
+  api.room.getAll()
   .done(function (data) {
     findAndUpdate(data,roomName,newRoomName)
   })
@@ -1727,15 +1727,15 @@ function modifyRoomFromDB(roomName, newRoomName){
 }
 
 function findAndUpdate(data,roomName,newRoomName){
-	var allRooms = data;
-	var idRoom;
-	for (var i = 0; i < allRooms.rooms.length; i++) {
-    	if(roomName == allRooms.rooms[i].name){
-    		idRoom = allRooms.rooms[i].id;
-    	}
-	}
-	var modifiedRoom = new api.model.room(idRoom, newRoomName, "{ size: \"9m2\" }");
-	api.room.modify(modifiedRoom)
+  var allRooms = data;
+  var idRoom;
+  for (var i = 0; i < allRooms.rooms.length; i++) {
+      if(roomName == allRooms.rooms[i].name){
+        idRoom = allRooms.rooms[i].id;
+      }
+  }
+  var modifiedRoom = new api.model.room(idRoom, newRoomName, "{ size: \"9m2\" }");
+  api.room.modify(modifiedRoom)
 }
 
 function confirmDelete(roomName){
@@ -1763,16 +1763,16 @@ function removeRoom(){
     var parentRoom = room.parentNode
     parentRoom.parentNode.removeChild(parentRoom);
     if(actualRoomName == info.getAttribute("type")){
-    	showInitialDevicesRoom();
-   	}
-   	document.getElementById("hidden-div").appendChild(rightContainer);
-   	rightContainer.parentNode.removeChild(rightContainer);
+      showInitialDevicesRoom();
+    }
+    document.getElementById("hidden-div").appendChild(rightContainer);
+    rightContainer.parentNode.removeChild(rightContainer);
     $("#confirmation-Delete").modal("hide");
     removeRoomFromDB(info.getAttribute("type"))
 }
 
 function removeRoomFromDB(roomName){
-	api.room.getAll()
+  api.room.getAll()
   .done(function (data) {
     findAndDelete(data,roomName)
   })
@@ -1782,19 +1782,19 @@ function removeRoomFromDB(roomName){
 }
 
 function findAndDelete(data,roomName){
-	var allRooms = data;
-	var idRoom;
-	for (var i = 0; i < allRooms.rooms.length; i++) {
-    	if(roomName == allRooms.rooms[i].name){
-    		idRoom = allRooms.rooms[i].id;
-    		deleteAllDevicesOfRoom(allRooms.rooms[i])
-    	}
-	}
-	api.room.delete(idRoom)
+  var allRooms = data;
+  var idRoom;
+  for (var i = 0; i < allRooms.rooms.length; i++) {
+      if(roomName == allRooms.rooms[i].name){
+        idRoom = allRooms.rooms[i].id;
+        deleteAllDevicesOfRoom(allRooms.rooms[i])
+      }
+  }
+  api.room.delete(idRoom)
 }
 
 function deleteAllDevicesOfRoom(room){
-	api.room.getRoomDevices(room.id)
+  api.room.getRoomDevices(room.id)
   .done(function (data) {
     deleteAllDevices(data,room)
   })
@@ -1804,14 +1804,14 @@ function deleteAllDevicesOfRoom(room){
 }
 
 function deleteAllDevices(data,room){
-	var allDevices = data;
-	for (var i = 0; i < allDevices.devices.length; i++){
-		api.device.delete(allDevices.devices[i].id)
-	}
+  var allDevices = data;
+  for (var i = 0; i < allDevices.devices.length; i++){
+    api.device.delete(allDevices.devices[i].id)
+  }
 }
 
 function openCreateDeviceModal(){
-	$("#device").modal()  
+  $("#device").modal()  
 }
 
 function createDevice(){
@@ -1833,8 +1833,8 @@ function createDevice(){
     deviceDesc = "None"
   }
 
-	var description = deviceDesc;
-	var newDevice = new api.model.device(deviceTypeId, deviceName, description);
+  var description = deviceDesc;
+  var newDevice = new api.model.device(deviceTypeId, deviceName, description);
   api.device.add(newDevice)
   .done(function (data) {
     addDeviceToRoom(actualRoomName,data.device.id,data.device,1);
@@ -1842,10 +1842,10 @@ function createDevice(){
   .fail(function (jqXHR, textStatus) {
     alert ('Request failed: Fallo al agregar el device' + textStatus);
   })
-	document.getElementById("device-name").value = "";
-	document.getElementById("device-description").value = "";
+  document.getElementById("device-name").value = "";
+  document.getElementById("device-description").value = "";
   comboBoxTypeDevices.selectedIndex = "0";
-	$("#device").modal("hide") 
+  $("#device").modal("hide") 
 }
 
 
@@ -1862,15 +1862,15 @@ function addDeviceToRoom(roomName,deviceID,device,boolean){
 }
 
 function findRoomForDevice(dato,roomName,deviceID,device,boolean){
-	var allRooms = dato;
-	var idRoom;
+  var allRooms = dato;
+  var idRoom;
   var room;
-	for (var i = 0; i < allRooms.rooms.length; i++) {
-    	if(roomName == allRooms.rooms[i].name){
-    		idRoom = allRooms.rooms[i].id;
+  for (var i = 0; i < allRooms.rooms.length; i++) {
+      if(roomName == allRooms.rooms[i].name){
+        idRoom = allRooms.rooms[i].id;
         room = allRooms.rooms[i];
-    	}
-	}
+      }
+  }
 
   api.device.linkToRoom(deviceID,idRoom)
   .done(function (data) {
@@ -1884,53 +1884,53 @@ function findRoomForDevice(dato,roomName,deviceID,device,boolean){
 }
 
 function loadDevices(data){
-	var allRooms = data;
-	for (var i = 0; i < allRooms.rooms.length; i++) {
-		getDevices(allRooms.rooms[i])
-	}
+  var allRooms = data;
+  for (var i = 0; i < allRooms.rooms.length; i++) {
+    getDevices(allRooms.rooms[i])
+  }
 }
 
 function getDevices(room){
-	api.room.getRoomDevices(room.id)
-	.done(function (data) {
-    	chargeDevices(data,room)
+  api.room.getRoomDevices(room.id)
+  .done(function (data) {
+      chargeDevices(data,room)
   })
-	.fail(function (jqXHR, textStatus) {
-    	alert ('Request failed:' + textStatus);
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed:' + textStatus);
   })
 }
 
 function chargeDevices(data,room){
-	var allDevices = data;
-	for (var i = 0; i < allDevices.devices.length; i++){
-		chargeDevice(allDevices.devices[i],room)
-	}
-	
+  var allDevices = data;
+  for (var i = 0; i < allDevices.devices.length; i++){
+    chargeDevice(allDevices.devices[i],room)
+  }
+  
 }
 
 function chargeDevice(device,room){
-	var idDevicesContainer = room.name + "devices-container"
-	var devicesContainer = document.getElementById(idDevicesContainer);
-	var deviceContainer = document.createElement("div");
-	deviceContainer.classList.add("device-container");
-	deviceContainer.setAttribute("data-name",device.name)
-	deviceContainer.setAttribute("data-desc",device.meta)
+  var idDevicesContainer = room.name + "devices-container"
+  var devicesContainer = document.getElementById(idDevicesContainer);
+  var deviceContainer = document.createElement("div");
+  deviceContainer.classList.add("device-container");
+  deviceContainer.setAttribute("data-name",device.name)
+  deviceContainer.setAttribute("data-desc",device.meta)
   deviceContainer.setAttribute("data-typeID",device.typeId)
   deviceContainer.setAttribute("data-ID",device.id)
-	var buttonDevice = document.createElement("button");
+  var buttonDevice = document.createElement("button");
   setDeviceImage(buttonDevice, device.typeId)
-	buttonDevice.classList.add("new-device-button");
+  buttonDevice.classList.add("new-device-button");
   buttonDevice.setAttribute("data-name",device.name)
   buttonDevice.setAttribute("data-desc",device.meta)
   buttonDevice.setAttribute("data-typeID",device.typeId)
   buttonDevice.setAttribute("data-ID",device.id)
   buttonDevice.setAttribute("id", device.name + "-" + device.typeId)
-	deviceContainer.appendChild(buttonDevice);
-	devicesContainer.appendChild(deviceContainer);
-	var newDeviceButton = document.getElementById(room.name + "new-device");
-	var parentNewDeviceButton = newDeviceButton.parentNode
-	parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
-	devicesContainer.appendChild(parentNewDeviceButton);
+  deviceContainer.appendChild(buttonDevice);
+  devicesContainer.appendChild(deviceContainer);
+  var newDeviceButton = document.getElementById(room.name + "new-device");
+  var parentNewDeviceButton = newDeviceButton.parentNode
+  parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
+  devicesContainer.appendChild(parentNewDeviceButton);
 }
 
 function setDeviceImage(buttonDevice,deviceTypeId){
@@ -2055,6 +2055,9 @@ function modifyDevice(modalID,newNameID,newDescID,deviceObj){
       .fail(function (jqXHR, textStatus) {
       alert ('Request failed:' + textStatus);
       })
+    }else{
+      deviceObj.description = device.getAttribute("data-desc");
+      deviceObj.name = device.getAttribute("data-name")
     }
 
   device.setAttribute("data-name",deviceObj.name)
@@ -2108,6 +2111,8 @@ function saveChangesLamp(){
     var lamp = new api.lamp(null,null,null,null)
     modifyDevice("device-lamp","lamp-change-name","lamp-change-description",lamp)
     var newBrightness = document.getElementById("lamp-change-brightness").value;
+    if(newBrightness == "")
+      newBrightness = 100;
     var newBrightnessJSON={"0":newBrightness}; //si fueran 2 parametros seria {"0":newBrightness,"1":segundaParam}
     var parameter = JSON.stringify(newBrightnessJSON)
     var action = new api.model.action("changeColor", ["FFFFF"])
@@ -2123,8 +2128,8 @@ function saveChangesLamp(){
     else{
       lamp.turnOff(lamp.id)
     }
+    document.getElementById("lamp-change-brightness").value = "";
     $("#device-blinds").modal("hide");
-
 }
 
 </script>
