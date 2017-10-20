@@ -1904,9 +1904,6 @@ function loadRoom(room){
   createRightContainer(roomName);
 }
 
-
-
-
 function isAlphaNumeric(str) {
   var code, i, len;
   for (i = 0, len = str.length; i < len; i++) {
@@ -1919,7 +1916,7 @@ function isAlphaNumeric(str) {
     }
   }
   return true;
-};
+}
 
 function createRightContainer(roomName){
 
@@ -2328,23 +2325,23 @@ function setDeviceImage(buttonDevice,deviceTypeId){
     switch(deviceTypeId) {
     case "eu0v2xgprrhhg41g":
         buttonDevice.style.backgroundImage = "url('Blinds.png')";
-        buttonDevice.setAttribute("data-type","blinds")
+        buttonDevice.setAttribute("data-type","blinds");
         buttonDevice.setAttribute("onclick","viewBlindState(this)");
         break;
     case "go46xmbqeomjrsjr":
         buttonDevice.style.backgroundImage = "url('Lamp.png')";
-        buttonDevice.setAttribute("data-type","lamp")
+        buttonDevice.setAttribute("data-type","lamp");
         buttonDevice.setAttribute("onclick","viewLampState(this)");
         break;
     case "im77xxyulpegfmv8":
         buttonDevice.style.backgroundImage = "url('Oven.png')";
-        buttonDevice.setAttribute("data-type","oven")
-        buttonDevice.setAttribute("onclick","viewOvenState(this)")
+        buttonDevice.setAttribute("data-type","oven");
+        buttonDevice.setAttribute("onclick","viewOvenState(this)");
         break;
     case "li6cbv5sdlatti0j":
         buttonDevice.style.backgroundImage = "url('Ac.png')";
-        buttonDevice.setAttribute("data-type","ac")
-        buttonDevice.setAttribute("onclick","viewAcState(this)")
+        buttonDevice.setAttribute("data-type","ac");
+        buttonDevice.setAttribute("onclick","viewAcState(this)");
         break;
     case "lsf78ly0eqrjbz91":
         buttonDevice.style.backgroundImage = "url('Door.png')";
@@ -2353,8 +2350,8 @@ function setDeviceImage(buttonDevice,deviceTypeId){
         break;
     case "rnizejqr2di0okho":
         buttonDevice.style.backgroundImage = "url('Fridge.png')";
-        buttonDevice.setAttribute("data-type","refrigerator")
-        buttonDevice.setAttribute("onclick","viewRefrigeratorState(this)")
+        buttonDevice.setAttribute("data-type","refrigerator");
+        buttonDevice.setAttribute("onclick","viewRefrigeratorState(this)");
         break;
     default:
         buttonDevice.style.backgroundImage = "url('Default.png')";
