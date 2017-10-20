@@ -44,6 +44,9 @@ body{
     width:100%;
 }
 
+.my-display-topleft{position:absolute;left:0;top:0; margin-top: 22.5%} /* agregado por cata */
+.my-black{color:#fff!important;background-color:#000!important} /* agregado por cata */
+.my-padding{padding:8px 16px!important} /* agregado por cata */
 
  .logo{
  background-image:url("smart_house_logo.png");
@@ -342,7 +345,7 @@ body{
     top:25%;
     width:100%;
     height:100%;
-    background-image:url("https://i.imgur.com/RkNu2T3.jpg");
+    background-color: white; 
     background-size: 100% 100%;
     background-repeat: no-repeat;
     border-color:transparent;
@@ -428,6 +431,12 @@ input:checked + .slider:before {
 
 .trampa{
   color:white;
+}
+
+.error{
+  color:red;
+  font-size:75%;
+  display:none;
 }
 
  </style>
@@ -516,6 +525,8 @@ input:checked + .slider:before {
             <div class="form-group">
               <label for="room-name"><span class="glyphicon glyphicon-home"></span>Name:</label>
               <input type="text" class="form-control" id="room-name" placeholder="Enter name" name="room-name">
+              <p class="error" id="error-nameRoomLength">Your name room must have between 3 and 30 characters </p>
+              <p class="error" id="error-nameRoomExist">This name already exists</p>
               <label for="room-description">Description (optional):</label>
               <input type="text" class="form-control" id="room-description" placeholder="Enter description" name="room-description">
             </div>
@@ -543,6 +554,7 @@ input:checked + .slider:before {
             <div class="form-group">
               <label for="usrname">Name:</label>
               <input type="text" class="form-control" id="device-name" placeholder="Enter name" name="usrname">
+              <p class="error" id="error-nameDeviceLength">Your name room must have between 3 and 30 characters </p>
               <label for="descr">Description (optional):</label>
               <input type="text" class="form-control" id="device-description" placeholder="Enter description" name="descr">
             </div>
@@ -552,6 +564,7 @@ input:checked + .slider:before {
             <option value="none"></option>
            </select>
          </p>
+         <p class="error" id="error-deviceType">You have not select a device type</p>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" onclick="createDevice();">Accept </button>
@@ -578,6 +591,8 @@ input:checked + .slider:before {
               <p class="room-description-modal form-control-static" id="actual-room-description"></p>                           <!--hay que poner la descripcion actual-->
               <label for="new-room-name"><span class="glyphicon glyphicon-home"></span> Change name:</label>
               <input type="text" class="form-control" id="new-room-name" placeholder="Enter new name" name="new-room-name">
+              <p class="error" id="error-nameNewRoomLength">Your name room must have between 3 and 30 characters </p>
+              <p class="error" id="error-nameNewRoomExist">This name already exists</p>
               <label for="new-room-description">Change description:</label>                                                     <!--hay que updatear la descripcion tambien-->
               <input type="text" class="form-control" id="new-room-description" placeholder="Enter new description" name="new-room-description">
             </div>
@@ -634,6 +649,8 @@ input:checked + .slider:before {
               <label for="blinds-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="blinds-change-name" placeholder="Enter new name" name="blinds-change-name">
+                <p class="error" id="error-name-blind">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-blind">This name already exists</p>
               </div>
               <br>
               <label for="blinds-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
@@ -684,6 +701,8 @@ input:checked + .slider:before {
               <label for="lamp-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="lamp-change-name" placeholder="Enter new name" name="lamp-change-name">
+                <p class="error" id="error-name-lamp">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-lamp">This name already exists</p>
               </div>
               <br>
               <label for="lamp-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
@@ -698,36 +717,30 @@ input:checked + .slider:before {
               <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Current status:</label>
               <div class="col-sm-8">
                 <label class="switch">
-                  <input type="checkbox" id="lamp-switch">
+                  <input type="checkbox" id="lamp-switch" onclick="DisableLampOptions(this)">
                   <span class="slider round"></span>
                 </label>
               </div>      
               <br>
-              <label for="lamp-brightness" class="control-label col-sm-4" style="text-align: right">Current brightness:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="lamp-brightness" style="text-align: left">asd</p> <!--hay que poner el brillo actual-->
-              </div>
               <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Change brightness:</label>
               <div class="col-sm-8">
                 <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter new brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
+                <p class="error" id="error-lamp-brightness">The brightness must be between 0 and 100</p>
               </div>
-              <br>
-              <label for="lamp-color" class="control-label col-sm-4" style="text-align: right">Current color:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="lamp-color" style="text-align: left"></p> <!--hay que poner el color actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select new color:</label>
               <div class="col-sm-8">
                 <div id="cp3" class="input-group colorpicker-component">
-                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color"/>
+                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color">
                   <span class="input-group-addon"><i></i></span>
                 </div>
+                <p class="error" id="error-lamp-color">The color must be between #000000 and #FFFFFF</p>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveChangesLamp()">Accept</button>
+          <button type="button" class="btn btn-primary" onclick="saveChangesLamp()">Accept</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>
@@ -757,6 +770,8 @@ input:checked + .slider:before {
               <label for="oven-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="oven-change-name" placeholder="Enter new name" name="oven-change-name">
+                <p class="error" id="error-name-oven">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-oven">This name already exists</p>
               </div>
               <br>
               <label for="oven-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
@@ -777,19 +792,13 @@ input:checked + .slider:before {
                 </label>
               </div> 
               <br>
-              <label for="oven-temperature" class="control-label col-sm-6" style="text-align: right">Current temperature (in centigrades):</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="oven-temperature" style="text-align: left;"></p>       <!--hay que poner la temperatura actual-->
-              </div>
               <label for="oven-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
               <div class="col-sm-6">
                 <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter new temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
+                <p class="error" id="error-oven-temperature">The temperature must be between 90 and 230</p>
               </div>
               <br>
-              <label for="oven-heatmode" class="control-label col-sm-6" style="text-align: right;">Current heat mode:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="oven-heatmode" style="text-align: left;"></p>        <!--hay que poner el heat mode actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="oven-change-heatmode" class="control-label col-sm-6" style="text-align: right;">Change heat mode:</label>
               <div class="col-sm-6">
                 <select class="form-control" id="oven-change-heatmode">
@@ -797,12 +806,10 @@ input:checked + .slider:before {
                     <option val="bottom">Bottom</option>
                     <option val="top">Top</option>
                   </select>
+                  <p class="error" id="error-oven-heatmode">You must select an option</p>
               </div>
               <br>
-              <label for="oven-grillmode" class="control-label col-sm-6" style="text-align: right;">Current grill mode:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="oven-grillmode" style="text-align: left;"></p>        <!--hay que poner el grill mode actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="oven-change-grillmode" class="control-label col-sm-6" style="text-align: right;">Change grill mode:</label>
               <div class="col-sm-6">
                 <select class="form-control" id="oven-change-grillmode">
@@ -810,12 +817,10 @@ input:checked + .slider:before {
                     <option val="eco">Eco</option>
                     <option val="off">Off</option>
                   </select>
+                  <p class="error" id="error-oven-grillmode">You must select an option</p>
               </div>
               <br>
-              <label for="oven-convectionmode" class="control-label col-sm-6" style="text-align: right;">Current convection mode:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="oven-convectionmode" style="text-align: left;"></p>        <!--hay que poner el convection mode actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="oven-change-convectionmode" class="control-label col-sm-6" style="text-align: right;">Change convection mode:</label>
               <div class="col-sm-6">
                 <select class="form-control" id="oven-change-convectionmode">
@@ -823,6 +828,7 @@ input:checked + .slider:before {
                     <option val="eco">Eco</option>
                     <option val="off">Off</option>
                   </select>
+                  <p class="error" id="error-oven-convectionmode">You must select an option</p>
               </div>
             </div> 
           </form>
@@ -857,6 +863,8 @@ input:checked + .slider:before {
               <label for="ac-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="ac-change-name" placeholder="Enter new name" name="ac-change-name">
+                <p class="error" id="error-name-ac">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-ac">This name already exists</p>
               </div>
               <br>
               <label for="ac-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
@@ -877,19 +885,13 @@ input:checked + .slider:before {
                 </label>
               </div> 
               <br>
-              <label for="ac-temperature" class="control-label col-sm-6" style="text-align: right">Current temperature (in centigrades):</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="ac-temperature" style="text-align: left;"></p>       <!--hay que poner la temperatura actual-->
-              </div>
               <label for="ac-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
               <div class="col-sm-6">
                 <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter new temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
+                <p class="error" id="error-ac-temperature">The temperature must be between 18 and 38</p>
               </div>
               <br>
-              <label for="ac-mode" class="control-label col-sm-6" style="text-align: right;">Current mode:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="ac-mode" style="text-align: left;"></p>        <!--hay que poner el mode actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="ac-change-mode" class="control-label col-sm-6" style="text-align: right;">Change mode:</label>
               <div class="col-sm-6">
                 <select class="form-control" id="ac-change-mode">
@@ -897,12 +899,10 @@ input:checked + .slider:before {
                     <option val="heat">Heat</option>
                     <option val="fan">Fan</option>
                   </select>
+                  <p class="error" id="error-ac-mode">You must select an option</p>
               </div>
               <br>
-              <label for="ac-verticalswing" class="control-label col-sm-6" style="text-align: right;">Current vertical swing:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="ac-verticalswing" style="text-align: left;"></p>        <!--hay que poner el vertical swing actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="ac-change-verticalswing" class="control-label col-sm-6" style="text-align: right;">Change vertical swing:</label>
               <div class="col-sm-6">
                 <select class="form-control" id="ac-change-verticalswing">
@@ -912,12 +912,10 @@ input:checked + .slider:before {
                     <option val="67">67°</option>
                     <option val="90">90°</option>
                   </select>
+                  <p class="error" id="error-ac-verticalswing">You must select an option</p>
               </div>
               <br>
-              <label for="ac-horizontalswing" class="control-label col-sm-6" style="text-align: right;">Current horizontal swing:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="ac-horizontalswing" style="text-align: left;"></p>        <!--hay que poner el horizontal swing actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="ac-change-horizontalswing" class="control-label col-sm-6" style="text-align: right;">Change horizontal swing:</label>
               <div class="col-sm-6">
                 <select class="form-control" id="ac-change-horizontalswing">
@@ -928,12 +926,10 @@ input:checked + .slider:before {
                     <option val="45">45°</option>
                     <option val="90">90°</option>
                   </select>
+                  <p class="error" id="error-ac-horizontalswing">You must select an option</p>
               </div>
               <br>
-              <label for="ac-fanspeed" class="control-label col-sm-6" style="text-align: right;">Current fan speed:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="ac-fanspeed" style="text-align: left;"></p>        <!--hay que poner el fan speed actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="ac-change-fanspeed" class="control-label col-sm-6" style="text-align: right;">Change fan speed:</label>
               <div class="col-sm-6">
                 <select class="form-control" id="ac-change-fanspeed">
@@ -943,6 +939,7 @@ input:checked + .slider:before {
                     <option val="75">75</option>
                     <option val="100">100</option>
                   </select>
+                  <p class="error" id="error-ac-fanspeed">You must select an option</p>
               </div>
             </div> 
           </form>
@@ -977,6 +974,8 @@ input:checked + .slider:before {
               <label for="door-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="door-change-name" placeholder="Enter new name" name="door-change-name">
+                <p class="error" id="error-name-door">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-door">This name already exists</p>
               </div>
               <br>
               <label for="door-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
@@ -1036,6 +1035,8 @@ input:checked + .slider:before {
               <label for="refrigerator-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="refrigerator-change-name" placeholder="Enter new name" name="refrigerator-change-name">
+                <p class="error" id="error-name-refrigerator">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-refrigerator">This name already exists</p>
               </div>
               <br>
               <label for="refrigerator-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
@@ -1047,28 +1048,21 @@ input:checked + .slider:before {
                 <input type="text" class="form-control" id="refrigerator-change-description" placeholder="Enter new description" name="refrigerator-change-description">
               </div>
               <br>
-              <label for="refrigerator-temperature" class="control-label col-sm-6" style="text-align: right">Current temperature (in centigrades):</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="refrigerator-temperature" style="text-align: left;"></p>       <!--hay que poner la temperatura actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="refrigerator-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
               <div class="col-sm-6">
                 <input type="number" class="form-control" id="refrigerator-change-temperature" placeholder="Enter new temperature (2 - 8)" name="refrigerator-change-temperature" min="2" max="8">
+                <p class="error" id="error-refrigerator-temperature">The temperature must be between 2 and 8</p>
               </div>
               <br>
-              <label for="refrigerator-freezertemperature" class="control-label col-sm-6" style="text-align: right">Current freezer temperature (in centigrades):</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="refrigerator-freezertemperature" style="text-align: left;"></p>       <!--hay que poner la temperatura del freezer actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="refrigerator-change-freezertemperature" class="control-label col-sm-6" style="text-align: right;">Change freezer temperature:</label>
               <div class="col-sm-6">
                 <input type="number" class="form-control" id="refrigerator-change-freezertemperature" placeholder="Enter new temperature ((-20) - (-8))" name="refrigerator-change-freezertemperature" min="-20" max="-8">
+                <p class="error" id="error-refrigerator-freezertemperature">The freezer temperature must be between -20 and -8</p>
               </div>
               <br>
-              <label for="refrigerator-mode" class="control-label col-sm-6" style="text-align: right;">Current mode:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="refrigerator-mode" style="text-align: left;"></p>        <!--hay que poner el mode actual-->
-              </div>
+              <p class="trampa">a</p>
               <label for="refrigerator-change-mode" class="control-label col-sm-6" style="text-align: right;">Change mode:</label>
               <div class="col-sm-6">
                 <select class="form-control" id="refrigerator-change-mode">
@@ -1076,6 +1070,7 @@ input:checked + .slider:before {
                     <option val="vacation">Vacation</option>
                     <option val="party">Party</option>
                   </select>
+                  <p class="error" id="error-refrigerator-mode">You must select an option</p>
               </div>
             </div> 
           </form>
@@ -1097,6 +1092,8 @@ var actualRoomName;
 $(document).ready(function(){
     $("#new-room").click(function(){
         document.getElementById("room-name").value = "";
+        document.getElementById("room-description").value = "";
+        cleanAllErrors();
         $("#room").modal();
     });
 });
@@ -1104,7 +1101,6 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#close-create-room").click(function(){
         $("#room").modal("hide");
-        document.getElementById("room-name").value = "";
     });
 });
 
@@ -1704,25 +1700,23 @@ function getNameRoom(){
 
 
 function createRoom(){
+cleanAllErrors()
 if(! isAlphaNumeric(getNameRoom())){
   alert("The room name must contain only letters or numbers")
   return;
 }
 
 if( document.getElementById(getNameRoom())){
-    alert("Name already exists");
+    document.getElementById("error-nameRoomExist").style.display = "block"
     return;
 }
 
-if(getNameRoom() == ""){
-    alert("Please put a name for the room");
+if(getNameRoom() == "" || getNameRoom().length < 3 || getNameRoom().length > 30){
+    document.getElementById("error-nameRoomLength").style.display = "block";
     return;
 }
 
-if(getNameRoom().length < 3){
-  alert("The room name must have at least 3 characters");
-  return;
-}
+
 var div = document.createElement("div");
 div.classList.add("span-a");
 var para = document.createElement("a");//Creo el tipo de elemento
@@ -1757,9 +1751,48 @@ div.appendChild(button1);
 var element = document.getElementById("ver-menu");
 element.appendChild(div);
 createRightContainer(getNameRoom());
-var room = new api.model.room(null, getNameRoom(), "{ size: 9 metros }");
+var roomDesc = document.getElementById("room-description").value
+if(roomDesc == "")
+  roomDesc = "None"
+button.setAttribute("data-desc", roomDesc)
+var room = new api.model.room(null, getNameRoom(), roomDesc);
 api.room.add(room)
 $("#room").modal("hide");
+}
+
+function cleanAllErrors(){
+    document.getElementById("error-nameRoomLength").style.display = "none";  
+    document.getElementById("error-nameRoomExist").style.display = "none";
+    document.getElementById("error-nameDeviceLength").style.display = "none";
+    document.getElementById("error-nameNewRoomExist").style.display = "none";
+    document.getElementById("error-nameNewRoomLength").style.display = "none";
+    document.getElementById("error-deviceType").style.display = "none"
+    document.getElementById("error-name-blind").style.display = "none"
+    document.getElementById("error-name-lamp").style.display = "none"
+    document.getElementById("error-name-oven").style.display = "none"
+    document.getElementById("error-name-ac").style.display = "none"
+    document.getElementById("error-name-door").style.display = "none"
+    document.getElementById("error-name-refrigerator").style.display = "none"
+    document.getElementById("error-nameExist-blind").style.display = "none"
+    document.getElementById("error-nameExist-lamp").style.display = "none"
+    document.getElementById("error-nameExist-oven").style.display = "none"
+    document.getElementById("error-nameExist-ac").style.display = "none"
+    document.getElementById("error-nameExist-door").style.display = "none"
+    document.getElementById("error-nameExist-refrigerator").style.display = "none"
+    document.getElementById("error-lamp-color").style.display = "none"
+    document.getElementById("error-lamp-brightness").style.display = "none"
+    document.getElementById("error-oven-temperature").style.display = "none"
+    document.getElementById("error-oven-heatmode").style.display = "none"
+    document.getElementById("error-oven-grillmode").style.display = "none"
+    document.getElementById("error-oven-convectionmode").style.display = "none"
+    document.getElementById("error-ac-temperature").style.display = "none"
+    document.getElementById("error-ac-mode").style.display = "none"
+    document.getElementById("error-ac-verticalswing").style.display = "none"
+    document.getElementById("error-ac-horizontalswing").style.display = "none"
+    document.getElementById("error-ac-fanspeed").style.display = "none"
+    document.getElementById("error-refrigerator-temperature").style.display = "none"
+    document.getElementById("error-refrigerator-freezertemperature").style.display = "none"
+    document.getElementById("error-refrigerator-mode").style.display = "none"
 }
 
 
@@ -1780,8 +1813,7 @@ function loadAll(){
   })
   .fail(function (jqXHR, textStatus) {
     alert ('Request failed:' + textStatus);
-  }) 
-    
+  })  
   
 }
 
@@ -1794,6 +1826,7 @@ function loadRooms(data){
 
 function loadRoom(room){
   var roomName = room.name
+  var roomDesc = room.meta
   var div = document.createElement("div");
   div.classList.add("span-a");
   var para = document.createElement("a");//Creo el tipo de elemento
@@ -1807,6 +1840,7 @@ function loadRoom(room){
   var button = document.createElement("button");
   button.setAttribute("onclick", "modifyRoom(this);");
   button.setAttribute("id", roomName);
+  button.setAttribute("data-desc", room.meta)
   button.classList.add("mod-room");
   button.classList.add("mod-room-pencil");
   var span = document.createElement("span");
@@ -1876,6 +1910,11 @@ function createRightContainer(roomName){
     var button = document.createElement("button");
     button.classList.add("create-device");
     button.setAttribute("onclick","openCreateDeviceModal();");
+    var tag = document.createElement("div");
+    tag.classList.add("my-display-topleft");
+    tag.classList.add("my-black");
+    tag.classList.add("my-padding");
+    tag.innerHTML = "Add Device";
     var idButtonName = roomName + "new-device";
     button.setAttribute("id", idButtonName);
     
@@ -1891,6 +1930,7 @@ function createRightContainer(roomName){
     div4.appendChild(div5);
     
     div5.appendChild(button);
+    div5.appendChild(tag);
 
 }
 
@@ -1909,6 +1949,15 @@ function showDevicesRoom(nameRoom){
   $(requiredDiv).replaceWith($(idName));
 }
 
+function createTag(deviceName){
+    var tag = document.createElement("div");
+    tag.classList.add("my-display-topleft");
+    tag.classList.add("my-black");
+    tag.classList.add("my-padding");
+    tag.innerHTML = deviceName;
+    return tag;
+}
+
 function showInitialDevicesRoom(){
   var hiddenDiv = document.getElementById("hidden-div")
   var mainDiv = document.getElementById("main-container");
@@ -1917,9 +1966,15 @@ function showInitialDevicesRoom(){
 }
 
 function modifyRoom(button){
+ document.getElementById("new-room-name").value = ""
+ document.getElementById("new-room-description").value = ""
  document.getElementById("modify-room-header").setAttribute("type",button.getAttribute('id'));
+ document.getElementById("modify-room-header").setAttribute("type-desc",button.getAttribute("data-desc"))
  var roomName = button.getAttribute('id');
+ var roomDesc = button.getAttribute("data-desc")
  document.getElementById("actual-room-name").innerHTML = roomName;
+ document.getElementById("actual-room-description").innerHTML = roomDesc;
+ cleanAllErrors()
  $("#modify-room").modal();
 }
 
@@ -1929,28 +1984,29 @@ function getNewNameRoom(){
 }
 
 function changeName(){
-  if(! isAlphaNumeric(getNewNameRoom())){
+  cleanAllErrors()
+  var newName = getNewNameRoom()
+  if(! isAlphaNumeric(newName)){
     alert("The room name must contain only letters or numbers")
     return;
   }
 
-    if( document.getElementById(getNewNameRoom())){
-    alert("Name already exists");
+if((newName == "" && getNewDescRoom() == "") || (newName.length < 3 && newName.length != 0) || newName.length > 30){
+    document.getElementById("error-nameNewRoomLength").style.display = "block";
     return;
 }
 
-    if(getNewNameRoom() == ""){
-        alert("Please put a name to change the room name");
-        return;
+if( document.getElementById(newName)){
+    document.getElementById("error-nameNewRoomExist").style.display = "block"
+    return;
 }
 
-if(getNewNameRoom().length < 3){
-  alert("The room name must have at least 3 characters");
-  return;
-}
-
-  var info = document.getElementById("modify-room-header");
-  var oldName = info.getAttribute("type")
+    var info = document.getElementById("modify-room-header");
+    if(newName.length == 0){
+     newName = info.getAttribute("type")
+     alert(newName + "sisi")
+    }
+    var oldName = info.getAttribute("type")
     var trashButton = document.getElementById(info.getAttribute("type") + "trash");
     var rightContainer = document.getElementById(info.getAttribute("type") + "holder")
     var idroom = info.getAttribute("type") + "room";
@@ -1958,36 +2014,42 @@ if(getNewNameRoom().length < 3){
     var editButton = document.getElementById(idbutton);
     var titleId = "title-room-" + info.getAttribute("type");
     var title = document.getElementById(titleId);
-    var newTitle = getNewNameRoom();
+    var newTitle = newName;
     var newDeviceButton = document.getElementById(info.getAttribute("type") + "new-device");
     title.innerHTML = newTitle;
     var room = document.getElementById(idroom);
     var devCont = document.getElementById(info.getAttribute("type") + "devices-container");
-    devCont.setAttribute("id", getNewNameRoom() + "devices-container");
-    newDeviceButton.setAttribute("id", getNewNameRoom() + "new-device")
-    room.setAttribute("id",getNewNameRoom() + "room");
-    room.setAttribute("type", getNewNameRoom());
+    devCont.setAttribute("id", newName + "devices-container");
+    newDeviceButton.setAttribute("id", newName + "new-device")
+    room.setAttribute("id",newName + "room");
+    room.setAttribute("type", newName);
     title.setAttribute("id", "title-room-" + newTitle);
-    editButton.setAttribute("id",getNewNameRoom());
-    trashButton.setAttribute("data-info",getNewNameRoom());
-    trashButton.setAttribute("id", getNewNameRoom() + "trash")
-    rightContainer.setAttribute("id" , getNewNameRoom() + "holder")
-    room.innerHTML = getNewNameRoom();
+    editButton.setAttribute("id",newName);
+    trashButton.setAttribute("data-info",newName);
+    trashButton.setAttribute("id", newName + "trash")
+    rightContainer.setAttribute("id" , newName + "holder")
+    room.innerHTML = newName;
     if(actualRoomName == info.getAttribute("type")){
-      actualRoomName = getNewNameRoom();
+      actualRoomName = newName
       var modalDevice = document.getElementById("device");
       modalDevice.setAttribute("type", devCont.getAttribute("id"));
-
     }
-    var newName = getNewNameRoom()
     document.getElementById("new-room-name").value = "";
-    info.setAttribute("type", getNewNameRoom());
+    info.setAttribute("type", newName);
+    if(document.getElementById("new-room-description").value.length != 0)
+      editButton.setAttribute("data-desc", document.getElementById("new-room-description").value)
     modifyRoomFromDB(oldName,newName)
+    document.getElementById("new-room-description").value = "";
     $("#modify-room").modal("hide");
 
 }
 
+function getNewDescRoom(){
+  return document.getElementById("new-room-description").value
+}
+
 function modifyRoomFromDB(roomName, newRoomName){
+
   api.room.getAll()
   .done(function (data) {
     findAndUpdate(data,roomName,newRoomName)
@@ -2000,12 +2062,19 @@ function modifyRoomFromDB(roomName, newRoomName){
 function findAndUpdate(data,roomName,newRoomName){
   var allRooms = data;
   var idRoom;
+  var actualDescRoom;
   for (var i = 0; i < allRooms.rooms.length; i++) {
       if(roomName == allRooms.rooms[i].name){
         idRoom = allRooms.rooms[i].id;
+        actualDescRoom = allRooms.rooms[i].meta
       }
   }
-  var modifiedRoom = new api.model.room(idRoom, newRoomName, "{ size: \"9m2\" }");
+  var roomDesc = getNewDescRoom();
+  alert("Desc: " + roomDesc)
+  if(roomDesc == "")
+    roomDesc = actualDescRoom
+  alert("Desc: " + roomDesc)
+  var modifiedRoom = new api.model.room(idRoom, newRoomName, roomDesc);
   api.room.modify(modifiedRoom)
 }
 
@@ -2082,21 +2151,28 @@ function deleteAllDevices(data,room){
 }
 
 function openCreateDeviceModal(){
+  cleanAllErrors()
   $("#device").modal()  
 }
 
 function createDevice(){
+  cleanAllErrors()
   var comboBoxTypeDevices = document.getElementById("comboBoxTypeDevices")
   var deviceTypeId = comboBoxTypeDevices.options[comboBoxTypeDevices.selectedIndex].value
   var deviceName = document.getElementById("device-name").value;
   var deviceDesc = document.getElementById("device-description").value
+  if(deviceTypeId == "none" && (deviceName.length < 3 || deviceName.length == 0 || deviceName.length > 30)){
+    document.getElementById("error-deviceType").style.display = "block"
+    document.getElementById("error-nameDeviceLength").style.display = "block"
+  }
+
   if(deviceTypeId == "none"){
-    alert("You have not selected a device type");
+    document.getElementById("error-deviceType").style.display = "block"
     return;
   }
   
-  if(deviceName.length < 3){
-    alert("The device name must have at least 3 characters");
+  if(deviceName.length < 3 || deviceName.length == 0 || deviceName.length > 30){
+    document.getElementById("error-nameDeviceLength").style.display = "block"
     return;
   }
 
@@ -2142,7 +2218,7 @@ function findRoomForDevice(dato,roomName,deviceID,device,boolean){
         room = allRooms.rooms[i];
       }
   }
-
+  alert("Linking: " + deviceID + " a "+ roomName)
   api.device.linkToRoom(deviceID,idRoom)
   .done(function (data) {
     if(boolean == 1)
@@ -2195,13 +2271,11 @@ function chargeDevice(device,room){
   buttonDevice.setAttribute("data-desc",device.meta)
   buttonDevice.setAttribute("data-typeID",device.typeId)
   buttonDevice.setAttribute("data-ID",device.id)
-  buttonDevice.setAttribute("id", device.name + "-" + device.typeId)
+  buttonDevice.setAttribute("id",device.id)
   deviceContainer.appendChild(buttonDevice);
+  var deviceTag = createTag(device.name);
+  deviceContainer.appendChild(deviceTag);
   devicesContainer.appendChild(deviceContainer);
-  var newDeviceButton = document.getElementById(room.name + "new-device");
-  var parentNewDeviceButton = newDeviceButton.parentNode
-  parentNewDeviceButton.parentNode.removeChild(parentNewDeviceButton);
-  devicesContainer.appendChild(parentNewDeviceButton);
 }
 
 function setDeviceImage(buttonDevice,deviceTypeId){
@@ -2255,6 +2329,22 @@ function setDeviceImage(buttonDevice,deviceTypeId){
   })
 }
 
+function deviceNameExist(deviceName,errorElement){
+  var boolean = false;
+  api.device.getAll()
+  .done(function (data){
+      for(var i=0; i < data.devices.length ; i++){
+        if(data.devices[i].name == deviceName){
+            errorElement.style.display = "block"
+            boolean = true;
+        }
+      }
+  })
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed:' + textStatus);
+  })
+  return boolean;
+}
 
 function updateNewDeviceModal(data){
   var allDevicesTypes = data;
@@ -2269,7 +2359,10 @@ function updateNewDeviceModal(data){
   }
 }
 
+
+
 function viewBlindState(button){
+   cleanAllErrors()
    document.getElementById("device-blinds").setAttribute("data-device",button.getAttribute("id"))
    updateDeviceBlindModal(button)
    $("#device-blinds").modal();
@@ -2289,8 +2382,12 @@ function updateDeviceBlindModal(button){
 
 
 function saveChangesBlinds(){
+    cleanAllErrors()
     var blind = new api.blind(null,null,null,null)
-    modifyDevice("device-blinds","blinds-change-name","blinds-change-description",blind)
+    if(modifyDevice("device-blinds","blinds-change-name","blinds-change-description",blind,"blind") == false){
+      return;
+    }
+    updateDevice(blind)
     if(document.getElementById("blinds-open").checked == true){
       blind.up(blind.id)
     }
@@ -2300,36 +2397,28 @@ function saveChangesBlinds(){
     $("#device-blinds").modal("hide");
 }
 
-function modifyDevice(modalID,newNameID,newDescID,deviceObj){
+function modifyDevice(modalID,newNameID,newDescID,deviceObj,deviceType){
    var device = document.getElementById(document.getElementById(modalID).getAttribute("data-device"));
    deviceObj.id = device.getAttribute("data-ID")
    deviceObj.name = document.getElementById(newNameID).value;
    deviceObj.description = document.getElementById(newDescID).value;
    deviceObj.typeId = device.getAttribute("data-typeID")
-   if(deviceObj.name.length != 0 && deviceObj.name.length < 3){
-    alert("The device name must have at least 3 characters")
-    return;
+   var errorName = document.getElementById("error-name-" + deviceType)
+   var errorExistName = document.getElementById("error-nameExist-" + deviceType)
+   if( (deviceObj.name.length != 0 && deviceObj.name.length < 3) || deviceObj.name.length > 30){
+    errorName.style.display = "block";
+    document.getElementById(newNameID).value = ""
+    return false;
+   }
+   if(deviceNameExist(deviceObj.name,errorExistName)){
+    document.getElementById(newNameID).value = ""
+    return false;
    }
    if(deviceObj.name.length != 0 || deviceObj.description.length != 0){
      if(deviceObj.description == "")
       deviceObj.description = device.getAttribute("data-desc");
      if(deviceObj.name  == "")
       deviceObj.name = device.getAttribute("data-name")
-     api.device.get(deviceObj.id)
-      .done(function (data) {
-        data.device.name = deviceObj.name
-        data.device.meta = deviceObj.description
-        api.device.modify(data.device)
-        .done(function (boolean){
-          addDeviceToRoom(actualRoomName,data.device.id,data.device,0)
-        })
-      .fail(function (jqXHR, textStatus) {
-        alert ('Request failed:' + textStatus);
-        })
-      })
-      .fail(function (jqXHR, textStatus) {
-      alert ('Request failed:' + textStatus);
-      })
     }else{
       deviceObj.description = device.getAttribute("data-desc");
       deviceObj.name = device.getAttribute("data-name")
@@ -2339,6 +2428,25 @@ function modifyDevice(modalID,newNameID,newDescID,deviceObj){
   device.setAttribute("data-desc",deviceObj.description)
   document.getElementById(newDescID).value = "";
   document.getElementById(newNameID).value = "";
+  return true;
+}
+
+function updateDevice(deviceObj){
+    api.device.get(deviceObj.id)
+    .done(function (data) {
+        data.device.name = deviceObj.name
+        data.device.meta = deviceObj.description
+        api.device.modify(data.device)
+        .done(function (boolean){
+          addDeviceToRoom(actualRoomName,data.device.id,data.device,0)
+        })
+        .fail(function (jqXHR, textStatus) {
+        alert ('Request failed:' + textStatus);
+        })
+      })
+    .fail(function (jqXHR, textStatus) {
+      alert ('Request failed:' + textStatus);
+      })
 }
 
 function updateBlindState(button,data){
@@ -2350,9 +2458,20 @@ function updateBlindState(button,data){
 }
 
 function viewLampState(button){
+   cleanAllErrors()
    document.getElementById("device-lamp").setAttribute("data-device",button.getAttribute("id"))
    updateDeviceLampModal(button)
    $("#device-lamp").modal();
+}
+
+function DisableLampOptions(button){
+  if( button.checked == true){
+    document.getElementById("lamp-change-brightness").disabled = false
+    document.getElementById("lamp-change-color").disabled = false
+  }else{
+    document.getElementById("lamp-change-brightness").disabled = true
+    document.getElementById("lamp-change-color").disabled = true
+  }
 }
 
 function updateDeviceLampModal(button){
@@ -2369,30 +2488,49 @@ function updateDeviceLampModal(button){
 
 function updateLampState(button,data){
   var status = data.result.status
+  DisableLampOptions(document.getElementById("lamp-switch"))
   if(status == "on"){
     document.getElementById("lamp-switch").checked = true;
-    document.getElementById("lamp-brightness").innerHTML = data.result.brightness;
-    document.getElementById("lamp-color").innerHTML = data.result.color;
+    document.getElementById("lamp-change-brightness").disabled = false
+    document.getElementById("lamp-change-color").disabled = false
   }
   else{
     document.getElementById("lamp-switch").checked = false
-    document.getElementById("lamp-brightness").innerHTML = "";
-    document.getElementById("lamp-color").value = "";
+    document.getElementById("lamp-change-brightness").disabled = true
+    document.getElementById("lamp-change-color").disabled = true
   }
-  document.getElementById("lamp-change-brightness").value = "";
-  document.getElementById("lamp-change-color").value = "";
+  document.getElementById("lamp-change-brightness").value = data.result.brightness;
+  document.getElementById("lamp-change-color").value = data.result.color;
+  button.setAttribute("data-brightness", data.result.brightness);
+  button.setAttribute("data-color", data.result.color);
 }
 
 
+
 function saveChangesLamp(){
+    cleanAllErrors()
+    var fieldError = false;
     var lamp = new api.lamp(null,null,null,null)
-    modifyDevice("device-lamp","lamp-change-name","lamp-change-description",lamp)
+    if(modifyDevice("device-lamp","lamp-change-name","lamp-change-description",lamp,"lamp") == false){
+      fieldError = true;
+    }
     var newBrightness = document.getElementById("lamp-change-brightness").value;
-    if(newBrightness == ""){
-      newBrightness = 100;
+    if(newBrightness > 100 || newBrightness < 0){
+      document.getElementById("error-lamp-brightness").style.display = "block"
+      document.getElementById("lamp-change-brightness").value = document.getElementById(lamp.id).getAttribute("data-brightness")
+      fieldError = true;
     }
     var newColor = document.getElementById("lamp-change-color").value;
     newColor = newColor.substring(1);
+    if(! isColor(newColor)){
+      document.getElementById("lamp-change-brightness").value = document.getElementById(lamp.id).getAttribute("data-color")
+      document.getElementById("error-lamp-color").style.display = "block"
+      fieldError = true;
+    }
+    if(fieldError){
+      return;
+    }
+    updateDevice(lamp)
     var newBrightnessJSON={"0":newBrightness}; //si fueran 2 parametros seria {"0":newBrightness,"1":segundaParam}
     var newColorJSON={"0":newColor}
     var parameterBrightness = JSON.stringify(newBrightnessJSON)
@@ -2415,6 +2553,7 @@ function saveChangesLamp(){
 }
 
   function viewOvenState(button){
+    cleanAllErrors()
     document.getElementById("device-oven").setAttribute("data-device",button.getAttribute("id"))
     updateDeviceOvenModal(button)
     $("#device-oven").modal();
@@ -2436,28 +2575,35 @@ function saveChangesLamp(){
     var status = data.result.status
     if(status == "on"){
       document.getElementById("oven-switch").checked = true;
-      document.getElementById("oven-temperature").innerHTML = data.result.temperature;
-      document.getElementById("oven-heatmode").innerHTML = data.result.heat;
-      document.getElementById("oven-grillmode").innerHTML = data.result.grill;
-      document.getElementById("oven-convectionmode").innerHTML = data.result.convection;
     }
     else{
       document.getElementById("oven-switch").checked = false;
-      document.getElementById("oven-temperature").innerHTML = "";
-      document.getElementById("oven-heatmode").innerHTML = "";
-      document.getElementById("oven-grillmode").innerHTML = "";
-      document.getElementById("oven-convectionmode").innerHTML = "";
     }
-    document.getElementById("oven-change-temperature").value = "";
-    document.getElementById("oven-change-heatmode").value = "";
-    document.getElementById("oven-change-grillmode").value = "";
-    document.getElementById("oven-change-convectionmode").value = "";
+    document.getElementById("oven-change-temperature").value = data.result.temperature;
+    document.getElementById("oven-change-heatmode").value = data.result.heat;
+    document.getElementById("oven-change-grillmode").value = data.result.grill;
+    document.getElementById("oven-change-convectionmode").value = data.result.convection;
+    button.setAttribute("data-temperature", data.result.temperature);
+    button.setAttribute("data-heatmode", data.result.heat);
+    button.setAttribute("data-grillmode", data.result.grill);
+    button.setAttribute("data-convectionmode", data.result.convection);
+
 }
 
 function saveChangesOven(){
+    cleanAllErrors()
+    var fieldError = false;
     var oven = new api.oven(null,null,null,null)
-    modifyDevice("device-oven","oven-change-name","oven-change-description",oven)
+    if(modifyDevice("device-oven","oven-change-name","oven-change-description",oven,"oven") == false){
+      fieldError = true
+    }
+
     var newTemperature = document.getElementById("oven-change-temperature").value;
+    if(newTemperature < 90 || newTemperature > 230){
+      document.getElementById("error-oven-temperature").style.display = "block"
+      document.getElementById("oven-change-temperature").value = document.getElementById(oven.id).getAttribute("data-temperature")
+      fieldError = true
+    }
     var newTemperatureJSON={"0":newTemperature}
     var parameterTemperature = JSON.stringify(newTemperatureJSON)
     var newHeatMode = document.getElementById("oven-change-heatmode").value;
@@ -2467,6 +2613,25 @@ function saveChangesOven(){
     var newGrillModeJSON={"0":newGrillMode}
     var parameterGrillMode = JSON.stringify(newGrillModeJSON)
     var newConvectionMode = document.getElementById("oven-change-convectionmode").value;
+    
+    if(newHeatMode == ""){
+      document.getElementById("error-oven-heatmode").style.display = "block"
+      document.getElementById("oven-change-heatmode").value = document.getElementById(oven.id).getAttribute("data-heatmode")
+      fieldError = true;
+    }
+    if(newGrillMode == ""){
+      document.getElementById("error-oven-grillmode").style.display = "block"
+      document.getElementById("oven-change-grillmode").value = document.getElementById(oven.id).getAttribute("data-grillmode")
+      fieldError = true;
+    }
+    if(newConvectionMode == ""){
+      document.getElementById("error-oven-convectionmode").style.display = "block"
+      document.getElementById("oven-change-convectionmode").value = document.getElementById(oven.id).getAttribute("data-convectionmode")
+      fieldError = true;
+    }
+    if(fieldError)
+      return;
+    updateDevice(oven)
     var newConvectionModeJSON={"0":newConvectionMode}
     var parameterConvectionMode = JSON.stringify(newConvectionModeJSON)
 
@@ -2493,6 +2658,7 @@ function saveChangesOven(){
 }
 
   function viewAcState(button){
+    cleanAllErrors()
     document.getElementById("device-ac").setAttribute("data-device",button.getAttribute("id"))
     updateDeviceAcModal(button)
     $("#device-ac").modal();
@@ -2514,32 +2680,36 @@ function saveChangesOven(){
     var status = data.result.status
     if(status == "on"){
     document.getElementById("ac-switch").checked = true;
-    document.getElementById("ac-temperature").innerHTML = data.result.temperature;
-    document.getElementById("ac-mode").innerHTML = data.result.mode;
-    document.getElementById("ac-verticalswing").innerHTML = data.result.verticalSwing;
-    document.getElementById("ac-horizontalswing").innerHTML = data.result.horizontalSwing;
-    document.getElementById("ac-fanspeed").innerHTML = data.result.fanSpeed;
     }else{
     document.getElementById("ac-switch").checked = false;
-    document.getElementById("ac-temperature").innerHTML = "";
-    document.getElementById("ac-mode").innerHTML = "";
-    document.getElementById("ac-verticalswing").innerHTML = "";
-    document.getElementById("ac-horizontalswing").innerHTML = "";
-    document.getElementById("ac-fanspeed").innerHTML = "";
     }
-    document.getElementById("ac-change-temperature").value = "";
-    document.getElementById("ac-change-mode").value = "";
-    document.getElementById("ac-change-verticalswing").value = "";
-    document.getElementById("ac-change-horizontalswing").value = "";
-    document.getElementById("ac-change-fanspeed").value = "";
+    document.getElementById("ac-change-temperature").value = data.result.temperature;
+    document.getElementById("ac-change-mode").value = data.result.mode;
+    document.getElementById("ac-change-verticalswing").value = data.result.verticalSwing;
+    document.getElementById("ac-change-horizontalswing").value = data.result.horizontalSwing;
+    document.getElementById("ac-change-fanspeed").value = data.result.fanSpeed;
+    button.setAttribute("data-temperature", data.result.temperature);
+    button.setAttribute("data-verticalswing", data.result.verticalSwing);
+    button.setAttribute("data-horizontalswing", data.result.horizontalSwing);
+    button.setAttribute("data-mode", data.result.mode);
+    button.setAttribute("data-fanspeed", data.result.fanSpeed);
 }
 
 function saveChangesAc(){
+    cleanAllErrors()
+    var fieldError = false;
     var ac = new api.ac(null,null,null,null)
-    modifyDevice("device-ac","ac-change-name","ac-change-description",ac)
+    if(modifyDevice("device-ac","ac-change-name","ac-change-description",ac,"ac") == false){
+      fieldError = true;
+    }
     var newTemperature = document.getElementById("ac-change-temperature").value;
     var newTemperatureJSON={"0":newTemperature}
     var parameterTemperature = JSON.stringify(newTemperatureJSON)
+    if(newTemperature < 18 || newTemperature > 38){
+      fieldError = true;
+      document.getElementById("error-ac-temperature").style.display = "block"
+      document.getElementById("ac-change-temperature").value = document.getElementById(ac.id).getAttribute("data-temperature");
+    }
     var newMode = document.getElementById("ac-change-mode").value;
     var newModeJSON={"0":newMode}
     var parameterMode = JSON.stringify(newModeJSON)
@@ -2552,6 +2722,34 @@ function saveChangesAc(){
     var newFanspeed = document.getElementById("ac-change-fanspeed").value;
     var newFanspeedJSON={"0":newFanspeed}
     var parameterFanspeed = JSON.stringify(newFanspeedJSON)
+
+    if(newMode == ""){
+      fieldError = true;
+      document.getElementById("error-ac-mode").style.display = "block"
+      document.getElementById("ac-change-mode").value = document.getElementById(ac.id).getAttribute("data-mode");
+    }
+
+    if(newVerticalswing == ""){
+      fieldError = true;
+      document.getElementById("error-ac-verticalswing").style.display = "block"
+      document.getElementById("ac-change-verticalswing").value = document.getElementById(ac.id).getAttribute("data-verticalswing");
+    }
+
+    if(newHorizontalswing == ""){
+      fieldError = true;
+      document.getElementById("error-ac-horizontalswing").style.display = "block"
+      document.getElementById("ac-change-horizontalswing").value = document.getElementById(ac.id).getAttribute("data-horizontalswing");
+    }
+
+    if(newFanspeed == ""){
+      fieldError = true;
+      document.getElementById("error-ac-fanspeed").style.display = "block"
+      document.getElementById("ac-change-fanspeed").value = document.getElementById(ac.id).getAttribute("data-fanspeed");
+    }
+
+    if(fieldError)
+      return;
+    updateDevice(ac)
     if(document.getElementById("ac-switch").checked == true){
       ac.turnOn(ac.id)
       .done(function (data) {
@@ -2578,6 +2776,7 @@ function saveChangesAc(){
 
 
   function viewDoorState(button){
+    cleanAllErrors()
     document.getElementById("device-door").setAttribute("data-device",button.getAttribute("id"))
     updateDeviceDoorModal(button)
     $("#device-door").modal();
@@ -2611,8 +2810,12 @@ function saveChangesAc(){
 }
 
 function saveChangesDoor(){
+    cleanAllErrors()
     var door = new api.door(null,null,null,null)
-    modifyDevice("device-door","door-change-name","door-change-description",door)
+    if(modifyDevice("device-door","door-change-name","door-change-description",door,"door") == false)
+      return;
+
+    updateDevice(door)
     if(document.getElementById("door-open").checked == true){
       door.open(door.id)
     }
@@ -2634,6 +2837,7 @@ function saveChangesDoor(){
 
 
 function viewRefrigeratorState(button){
+    cleanAllErrors()
     document.getElementById("device-refrigerator").setAttribute("data-device",button.getAttribute("id"))
     updateDeviceRefrigeratorModal(button)
     $("#device-refrigerator").modal();
@@ -2652,28 +2856,49 @@ function updateDeviceRefrigeratorModal(button){
 }
 
 function updateRefrigeratorState(button,data){
-    document.getElementById("refrigerator-mode").innerHTML = data.result.mode;
-    document.getElementById("refrigerator-freezertemperature").innerHTML = data.result.freezerTemperature;
-    document.getElementById("refrigerator-temperature").innerHTML = data.result.temperature;
-
-    document.getElementById("refrigerator-change-freezertemperature").value = "";
-    document.getElementById("refrigerator-change-temperature").value = "";
-    document.getElementById("refrigerator-change-mode").value = "";
+    document.getElementById("refrigerator-change-freezertemperature").value = data.result.freezerTemperature;
+    document.getElementById("refrigerator-change-temperature").value = data.result.temperature;
+    document.getElementById("refrigerator-change-mode").value = data.result.mode;
+    button.setAttribute("data-temperature",data.result.temperature)
+    button.setAttribute("data-freezertemperature",data.result.freezerTemperature)
+    button.setAttribute("data-mode",data.result.mode)
 }
 
 function saveChangesRefrigerator(){
+    cleanAllErrors()
+    var fieldError = false;
     var refrigerator = new api.refrigerator(null,null,null,null)
-    alert("asd")
-    modifyDevice("device-refrigerator","refrigerator-change-name","refrigerator-change-description",refrigerator)
+    if(modifyDevice("device-refrigerator","refrigerator-change-name","refrigerator-change-description",refrigerator,"refrigerator") == false){
+      fieldError = true;
+    }
     var newTemperature = document.getElementById("refrigerator-change-temperature").value;
     var newTemperatureJSON={"0":newTemperature}
     var parameterTemperature = JSON.stringify(newTemperatureJSON)
+    if(newTemperature < 2 || newTemperature > 8){
+      fieldError = true;
+      document.getElementById("error-refrigerator-temperature").style.display = "block"
+      document.getElementById("refrigerator-change-temperature").value = document.getElementById(refrigerator.id).getAttribute("data-temperature");
+    }
     var newFreezerTemperature = document.getElementById("refrigerator-change-freezertemperature").value;
     var newFreezerTemperatureJSON={"0":newFreezerTemperature}
     var parameterFreezerTemperature = JSON.stringify(newFreezerTemperatureJSON)
+    if(newFreezerTemperature > -2 || newFreezerTemperature < -20){
+      fieldError = true;
+      document.getElementById("error-refrigerator-freezertemperature").style.display = "block"
+      document.getElementById("refrigerator-change-freezertemperature").value = document.getElementById(refrigerator.id).getAttribute("data-freezertemperature");
+    }
     var newMode = document.getElementById("refrigerator-change-mode").value;
     var newModeJSON={"0":newMode}
     var parameterMode = JSON.stringify(newModeJSON)
+    if(newMode == ""){
+      fieldError = true;
+      document.getElementById("error-refrigerator-mode").style.display = "block"
+      document.getElementById("refrigerator-change-mode").value = document.getElementById(refrigerator.id).getAttribute("data-mode");
+    }
+    if(fieldError){
+      return;
+    }
+    updateDevice(refrigerator)
     refrigerator.setFreezerTemperature(refrigerator.id,parameterFreezerTemperature)
     refrigerator.setTemperature(refrigerator.id,parameterTemperature)
     refrigerator.setMode(refrigerator.id,parameterMode)
@@ -2689,6 +2914,14 @@ $(function() {
 });
 
 
+function isColor(color){
+  for (var i = 0; i < color.length; i++) {
+    var c = color.charAt(i);
+    if( (c < '0' || c > '9') && ( c < 'a' || c > 'z') && ( c < 'A' || c > 'Z'))
+      return false;
+  }
+  return true;
+}
 
 
 
