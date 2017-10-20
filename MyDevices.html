@@ -11,6 +11,10 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/css/bootstrap-colorpicker.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/js/bootstrap-colorpicker.js"></script>
 
@@ -44,7 +48,7 @@ body{
     width:100%;
 }
 
-.my-display-topleft{position:absolute;left:0;top:0; margin-top: 22.5%} /* agregado por cata */
+.my-display-topleft{position:absolute;left:0;top:0; margin-top: 20%} /* agregado por cata */
 .my-black{color:#fff!important;background-color:#000!important} /* agregado por cata */
 .my-padding{padding:8px 16px!important} /* agregado por cata */
 
@@ -370,18 +374,18 @@ body{
   font-size:200%;
 }
 
-/* The switch - the box around the slider */
+/* The switch - the box around the slider 
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
-
-/* Hide default HTML checkbox */
+*/
+/* Hide default HTML checkbox 
 .switch input {display:none;}
-
-/* The slider */
+*/
+/* The slider 
 .slider {
   position: absolute;
   cursor: pointer;
@@ -419,15 +423,15 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-
-/* Rounded sliders */
+*/
+/* Rounded sliders 
 .slider.round {
   border-radius: 34px;
 }
 
 .slider.round:before {
   border-radius: 50%;
-}
+}*/
 
 .trampa{
   color:white;
@@ -525,7 +529,7 @@ input:checked + .slider:before {
             <div class="form-group">
               <label for="room-name"><span class="glyphicon glyphicon-home"></span>Name:</label>
               <input type="text" class="form-control" id="room-name" placeholder="Enter name" name="room-name">
-              <p class="error" id="error-nameRoomLength">Your name room must have between 3 and 30 characters </p>
+              <p class="error" id="error-nameRoomLength">The name must have between 3 and 30 characters </p>
               <p class="error" id="error-nameRoomExist">This name already exists</p>
               <label for="room-description">Description (optional):</label>
               <input type="text" class="form-control" id="room-description" placeholder="Enter description" name="room-description">
@@ -554,7 +558,7 @@ input:checked + .slider:before {
             <div class="form-group">
               <label for="usrname">Name:</label>
               <input type="text" class="form-control" id="device-name" placeholder="Enter name" name="usrname">
-              <p class="error" id="error-nameDeviceLength">Your name room must have between 3 and 30 characters </p>
+              <p class="error" id="error-nameDeviceLength">The name must have between 3 and 30 characters </p>
               <label for="descr">Description (optional):</label>
               <input type="text" class="form-control" id="device-description" placeholder="Enter description" name="descr">
             </div>
@@ -585,13 +589,13 @@ input:checked + .slider:before {
         <div class="modal-body">
            <form role="form">
             <div class="form-group">
-              <label for="actual-room-name" class="control-label">Current name:</label>
+              <label for="actual-room-name" class="control-label">Name:</label>
               <p class="room-name-modal form-control-static" id="actual-room-name"></p>
-              <label for="actual-room-description" class="control-label">Current description:</label>
+              <label for="actual-room-description" class="control-label">Description:</label>
               <p class="room-description-modal form-control-static" id="actual-room-description"></p>                           <!--hay que poner la descripcion actual-->
               <label for="new-room-name"><span class="glyphicon glyphicon-home"></span> Change name:</label>
               <input type="text" class="form-control" id="new-room-name" placeholder="Enter new name" name="new-room-name">
-              <p class="error" id="error-nameNewRoomLength">Your name room must have between 3 and 30 characters </p>
+              <p class="error" id="error-nameNewRoomLength">The name must have between 3 and 30 characters </p>
               <p class="error" id="error-nameNewRoomExist">This name already exists</p>
               <label for="new-room-description">Change description:</label>                                                     <!--hay que updatear la descripcion tambien-->
               <input type="text" class="form-control" id="new-room-description" placeholder="Enter new description" name="new-room-description">
@@ -649,7 +653,7 @@ input:checked + .slider:before {
               <label for="blinds-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="blinds-change-name" placeholder="Enter new name" name="blinds-change-name">
-                <p class="error" id="error-name-blind">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-name-blind">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-blind">This name already exists</p>
               </div>
               <br>
@@ -662,10 +666,12 @@ input:checked + .slider:before {
                 <input type="text" class="form-control" placeholder="Enter new description" name="blinds-change-description" id="blinds-change-description">
               </div>
               <br>
-              <label for="blinds-status" class="control-label col-sm-4" style="text-align: right">Current status:</label>
+              <label for="blinds-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
               <div class="col-sm-8">
-                <label class="radio-inline"><input type="radio" name="optradio" id="blinds-open">Open</label>
-                <label class="radio-inline"><input type="radio" name="optradio" id="blinds-closed" checked>Closed</label>
+                <!--agregado por cata (comentado)-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" id="blinds-open">Open</label>
+                <label class="radio-inline"><input type="radio" name="optradio" id="blinds-closed" checked>Closed</label>--><!--agregado por cata (comentado)-->
+                <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed"  id="blinds-switch" data-width="82"><!--agregado por cata -->
               </div>
             </div>
           </form>
@@ -701,7 +707,7 @@ input:checked + .slider:before {
               <label for="lamp-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="lamp-change-name" placeholder="Enter new name" name="lamp-change-name">
-                <p class="error" id="error-name-lamp">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-name-lamp">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-lamp">This name already exists</p>
               </div>
               <br>
@@ -714,12 +720,14 @@ input:checked + .slider:before {
                 <input type="text" class="form-control" id="lamp-change-description" placeholder="Enter new description" name="lamp-change-description">
               </div>
               <p class="trampa">a</p>
-              <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Current status:</label>
+              <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
               <div class="col-sm-8">
-                <label class="switch">
-                  <input type="checkbox" id="lamp-switch" onclick="DisableLampOptions(this)">
+                <!--agregado por cata (comentado)-->
+                <!--<label class="switch">
+                  <input type="checkbox" id="lamp-switch">
                   <span class="slider round"></span>
-                </label>
+                </label>--><!--agregado por cata (comentado)-->
+                <input type="checkbox" data-toggle="toggle" id="lamp-switch"><!--agregado por cata -->
               </div>      
               <br>
               <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Change brightness:</label>
@@ -770,7 +778,7 @@ input:checked + .slider:before {
               <label for="oven-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="oven-change-name" placeholder="Enter new name" name="oven-change-name">
-                <p class="error" id="error-name-oven">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-name-oven">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-oven">This name already exists</p>
               </div>
               <br>
@@ -784,12 +792,14 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-status" class="control-label col-sm-6" style="text-align: right">Current status:</label>
+              <label for="oven-status" class="control-label col-sm-6" style="text-align: right">Status:</label>
               <div class="col-sm-6">
-                <label class="switch">
+                <!--agregado por cata (comentado)-->
+                <!--<label class="switch">
                   <input type="checkbox" id="oven-switch">
                   <span class="slider round"></span>
-                </label>
+                </label>--><!--agregado por cata (comentado)-->
+                <input type="checkbox" data-toggle="toggle" id="oven-switch"><!--agregado por cata -->
               </div> 
               <br>
               <label for="oven-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
@@ -863,7 +873,7 @@ input:checked + .slider:before {
               <label for="ac-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="ac-change-name" placeholder="Enter new name" name="ac-change-name">
-                <p class="error" id="error-name-ac">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-name-ac">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-ac">This name already exists</p>
               </div>
               <br>
@@ -877,12 +887,14 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-status" class="control-label col-sm-6" style="text-align: right">Current status:</label>
+              <label for="ac-status" class="control-label col-sm-6" style="text-align: right">Status:</label>
               <div class="col-sm-6">
-                <label class="switch">
+                <!--agregado por cata (comentado)-->
+                <!--<label class="switch">
                   <input type="checkbox" id="ac-switch">
                   <span class="slider round"></span>
-                </label>
+                </label>--><!--agregado por cata (comentado)-->
+                <input type="checkbox" data-toggle="toggle" id="ac-switch"><!--agregado por cata -->
               </div> 
               <br>
               <label for="ac-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
@@ -974,7 +986,7 @@ input:checked + .slider:before {
               <label for="door-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="door-change-name" placeholder="Enter new name" name="door-change-name">
-                <p class="error" id="error-name-door">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-name-door">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-door">This name already exists</p>
               </div>
               <br>
@@ -987,20 +999,24 @@ input:checked + .slider:before {
                 <input type="text" class="form-control" placeholder="Enter new description" name="door-change-description" id="door-change-description">
               </div>
               <br>
-              <label for="door-status" class="control-label col-sm-4" style="text-align: right">Current status:</label>
+              <label for="door-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
               <div class="col-sm-8">
-                <fieldset id="door-status-check">  
+                <!--agregado por cata(comentado) -->
+                <!--<fieldset id="door-status-check">  
                   <label class="radio-inline"><input type="radio" name="door-status-check" id="door-open">Open</label>
                   <label class="radio-inline"><input type="radio" name="door-status-check" id="door-closed" checked>Closed</label>
-                </fieldset>
+                </fieldset>--><!--agregado por cata (comentado)-->
+                <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed" id="door-switch" data-width="82"><!--agregado por cata -->
               </div>
               <br>
-              <label for="door-lock" class="control-label col-sm-4" style="text-align: right">Current lock:</label>
+              <label for="door-lock" class="control-label col-sm-4" style="text-align: right">Lock state:</label>
               <div class="col-sm-8">
-                <fieldset id="door-lock-check">  
-                  <label class="radio-inline"><input type="radio" name="door-lock-check" id="door-locked">Locked</label>                <!--esto hay que ponerlo en disabled si la puerta esta abierta-->
+                <!--agregado por cata (comentado)-->
+                <!--<fieldset id="door-lock-check">  
+                  <label class="radio-inline"><input type="radio" name="door-lock-check" id="door-locked">Locked</label>                esto hay que ponerlo en disabled si la puerta esta abierta
                   <label class="radio-inline"><input type="radio" name="door-lock-check" id="door-unlocked" checked>Unlocked</label>      
-                </fieldset>
+                </fieldset>--><!--agregado por cata (comentado)-->
+                <input type="checkbox" data-toggle="toggle" data-on="Locked" data-off="Unlocked" id="lock-switch" data-width="100"><!--agregado por cata -->
               </div>
             </div>
           </form>
@@ -1035,7 +1051,7 @@ input:checked + .slider:before {
               <label for="refrigerator-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
               <div class="col-sm-6">
                 <input type="text" class="form-control" id="refrigerator-change-name" placeholder="Enter new name" name="refrigerator-change-name">
-                <p class="error" id="error-name-refrigerator">Your name room must have between 3 and 30 characters </p>
+                <p class="error" id="error-name-refrigerator">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-refrigerator">This name already exists</p>
               </div>
               <br>
@@ -1954,7 +1970,12 @@ function createTag(deviceName){
     tag.classList.add("my-display-topleft");
     tag.classList.add("my-black");
     tag.classList.add("my-padding");
-    tag.innerHTML = deviceName;
+
+    if(deviceName.length > 23){
+      tag.innerHTML = deviceName.substring(0, 21) + "...";
+    }else
+      tag.innerHTML = deviceName;
+      
     return tag;
 }
 
@@ -2279,54 +2300,40 @@ function chargeDevice(device,room){
 }
 
 function setDeviceImage(buttonDevice,deviceTypeId){
-  api.device.getType(deviceTypeId)
-  .done(function (data) {
-    switch(data.device.name) {
-    case "blind":
+    switch(deviceTypeId) {
+    case "eu0v2xgprrhhg41g":
         buttonDevice.style.backgroundImage = "url('Blinds.png')";
         buttonDevice.setAttribute("data-type","blinds")
         buttonDevice.setAttribute("onclick","viewBlindState(this)");
         break;
-    case "lamp":
+    case "go46xmbqeomjrsjr":
         buttonDevice.style.backgroundImage = "url('Lamp.png')";
         buttonDevice.setAttribute("data-type","lamp")
         buttonDevice.setAttribute("onclick","viewLampState(this)");
         break;
-    case "oven":
+    case "im77xxyulpegfmv8":
         buttonDevice.style.backgroundImage = "url('Oven.png')";
         buttonDevice.setAttribute("data-type","oven")
         buttonDevice.setAttribute("onclick","viewOvenState(this)")
         break;
-    case "ac":
+    case "li6cbv5sdlatti0j":
         buttonDevice.style.backgroundImage = "url('Ac.png')";
         buttonDevice.setAttribute("data-type","ac")
         buttonDevice.setAttribute("onclick","viewAcState(this)")
         break;
-    case "alarm":
-        buttonDevice.style.backgroundImage = "url('Alarm.png')";
-        buttonDevice.setAttribute("data-type","alarm")
-        break;
-    case "timer":
-        buttonDevice.style.backgroundImage = "url('Timer.png')";
-        buttonDevice.setAttribute("data-type","timer")
-        break;
-    case "door":
+    case "lsf78ly0eqrjbz91":
         buttonDevice.style.backgroundImage = "url('Door.png')";
         buttonDevice.setAttribute("data-type","door");
         buttonDevice.setAttribute("onclick","viewDoorState(this)");
         break;
-    case "refrigerator":
+    case "rnizejqr2di0okho":
         buttonDevice.style.backgroundImage = "url('Fridge.png')";
         buttonDevice.setAttribute("data-type","refrigerator")
         buttonDevice.setAttribute("onclick","viewRefrigeratorState(this)")
         break;
     default:
         buttonDevice.style.backgroundImage = "url('Default.png')";
-}
-  })
-  .fail(function (jqXHR, textStatus) {
-    alert ('Request failed: error en setDeviceImage' + textStatus);
-  })
+  }
 }
 
 function deviceNameExist(deviceName,errorElement){
@@ -2350,16 +2357,16 @@ function updateNewDeviceModal(data){
   var allDevicesTypes = data;
   var typeName;
   for (var i = 0; i < allDevicesTypes.devices.length; i++){
-    typeName = allDevicesTypes.devices[i].name
-    var select = document.getElementById("comboBoxTypeDevices")
-    var option = document.createElement("option")
-    option.setAttribute("value",allDevicesTypes.devices[i].id)
-    option.innerHTML = typeName
-    select.appendChild(option)
+    if((allDevicesTypes.devices[i].id != "ofglvd9gqX8yfl3l") && (allDevicesTypes.devices[i].id != "mxztsyjzsrq7iaqc")){//si no es una alarma ni un timer sigo
+      typeName = allDevicesTypes.devices[i].name
+      var select = document.getElementById("comboBoxTypeDevices")
+      var option = document.createElement("option")
+      option.setAttribute("value",allDevicesTypes.devices[i].id)
+      option.innerHTML = typeName
+      select.appendChild(option)
+    }
   }
 }
-
-
 
 function viewBlindState(button){
    cleanAllErrors()
@@ -2379,8 +2386,7 @@ function updateDeviceBlindModal(button){
       alert ('Request failed: al cargar el status de cortina' + textStatus);
   })
 }
-
-
+//
 function saveChangesBlinds(){
     cleanAllErrors()
     var blind = new api.blind(null,null,null,null)
@@ -2388,7 +2394,7 @@ function saveChangesBlinds(){
       return;
     }
     updateDevice(blind)
-    if(document.getElementById("blinds-open").checked == true){
+    if(document.getElementById("blinds-switch").checked == true){
       blind.up(blind.id)
     }
     else{
@@ -2451,10 +2457,12 @@ function updateDevice(deviceObj){
 
 function updateBlindState(button,data){
   var status = data.result.status
-  if(status == "opened" || status == "opening")
-    document.getElementById("blinds-open").checked = true
-  else
-    document.getElementById("blinds-closed").checked = true
+  if(status == "opened" || status == "opening"){
+    document.getElementById("blinds-switch").checked = true;
+  }
+  else{
+    document.getElementById("blinds-switch").checked = false;
+  }
 }
 
 function viewLampState(button){
@@ -2798,14 +2806,14 @@ function saveChangesAc(){
     var status = data.result.status
     var lock = data.result.lock
     if(status == "opened"){
-      document.getElementById("door-open").checked = true;
+      document.getElementById("door-switch").checked = true;
     }else{
-      document.getElementById("door-closed").checked = true;
+      document.getElementById("door-switch").checked = false;
     }
     if(lock == "unlocked"){
-      document.getElementById("door-unlocked").checked = true;
+      document.getElementById("lock-switch").checked = false;
     }else{
-      document.getElementById("door-locked").checked = true;
+      document.getElementById("lock-switch").checked = true;
     }
 }
 
@@ -2816,13 +2824,13 @@ function saveChangesDoor(){
       return;
 
     updateDevice(door)
-    if(document.getElementById("door-open").checked == true){
+    if(document.getElementById("door-switch").checked == true){
       door.open(door.id)
     }
     else{
       door.close(door.id)
       .done(function (data) {
-        if(document.getElementById("door-locked").checked == true){
+        if(document.getElementById("lock-switch").checked == true){
           door.lock(door.id)
         }else{
           door.unlock(door.id)
