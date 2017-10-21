@@ -799,15 +799,15 @@ input:checked + .slider:before {
               <p class="trampa">a</p>
               <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Set brightness:</label>
               <div class="col-sm-8">
-                <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter new brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
+                <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
                 <p class="error" id="error-lamp-brightness">The brightness must be between 0 and 100</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select new color:</label>
+              <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select color:</label>
               <div class="col-sm-8">
                 <div id="cp3" class="input-group colorpicker-component">
-                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color">
+                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color" placeholder="Enter hexadecimal color">
                   <span class="input-group-addon"><i></i></span>
                 </div>
                 <p class="error" id="error-lamp-color">The color must be between #000000 and #FFFFFF</p>
@@ -823,7 +823,6 @@ input:checked + .slider:before {
       </div>
     </div>
   </div>
-
 
       <!-- Modal de oven -->
   <div class="modal fade" id="device-oven" role="dialog">
@@ -864,12 +863,12 @@ input:checked + .slider:before {
               <p class="trampa">a</p>
               <label for="oven-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
               <div class="col-sm-7">
-                <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter new temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
+                <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
                 <p class="error" id="error-oven-temperature">The temperature must be between 90 and 230</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-heatmode" class="control-label col-sm-5" style="text-align: right;">Set heat mode:</label>
+              <label for="oven-change-heatmode" class="control-label col-sm-5" style="text-align: right;">Select heat mode:</label>
               <div class="col-sm-7">
                 <select class="form-control" id="oven-change-heatmode">
                     <option val="conventional">Conventional</option>
@@ -880,7 +879,7 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-grillmode" class="control-label col-sm-5" style="text-align: right;">Set grill mode:</label>
+              <label for="oven-change-grillmode" class="control-label col-sm-5" style="text-align: right;">Select grill mode:</label>
               <div class="col-sm-7">
                 <select class="form-control" id="oven-change-grillmode">
                     <option val="large">Large</option>
@@ -891,7 +890,7 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-convectionmode" class="control-label col-sm-5" style="text-align: right;">Set convection mode:</label>
+              <label for="oven-change-convectionmode" class="control-label col-sm-5" style="text-align: right;">Select convection mode:</label>
               <div class="col-sm-7">
                 <select class="form-control" id="oven-change-convectionmode">
                     <option val="normal">Normal</option>
@@ -951,12 +950,12 @@ input:checked + .slider:before {
               <p class="trampa">a</p>
               <label for="ac-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
               <div class="col-sm-7">
-                <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter new temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
+                <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
                 <p class="error" id="error-ac-temperature">The temperature must be between 18 and 38</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-mode" class="control-label col-sm-5" style="text-align: right;">Set mode:</label>
+              <label for="ac-change-mode" class="control-label col-sm-5" style="text-align: right;">Select mode:</label>
               <div class="col-sm-7">
                 <select class="form-control" id="ac-change-mode">
                     <option val="cool">Cool</option>
@@ -967,7 +966,7 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-verticalswing" class="control-label col-sm-5" style="text-align: right;">Set vertical swing:</label>
+              <label for="ac-change-verticalswing" class="control-label col-sm-5" style="text-align: right;">Select vertical swing:</label>
               <div class="col-sm-7">
                 <select class="form-control" id="ac-change-verticalswing">
                     <option val="auto">Auto</option>
@@ -980,7 +979,7 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-horizontalswing" class="control-label col-sm-5" style="text-align: right;">Set horizontal swing:</label>
+              <label for="ac-change-horizontalswing" class="control-label col-sm-5" style="text-align: right;">Select horizontal swing:</label>
               <div class="col-sm-7">
                 <select class="form-control" id="ac-change-horizontalswing">
                     <option val="auto">Auto</option>
@@ -994,7 +993,7 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-fanspeed" class="control-label col-sm-5" style="text-align: right;">Set fan speed:</label>
+              <label for="ac-change-fanspeed" class="control-label col-sm-5" style="text-align: right;">Select fan speed:</label>
               <div class="col-sm-7">
                 <select class="form-control" id="ac-change-fanspeed">
                     <option val="auto">Auto</option>
@@ -1103,19 +1102,19 @@ input:checked + .slider:before {
               <p class="trampa">a</p>
               <label for="refrigerator-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
               <div class="col-sm-7">
-                <input type="number" class="form-control" id="refrigerator-change-temperature" placeholder="Enter new temperature (2 - 8)" name="refrigerator-change-temperature" min="2" max="8">
+                <input type="number" class="form-control" id="refrigerator-change-temperature" placeholder="Enter temperature (2 - 8)" name="refrigerator-change-temperature" min="2" max="8">
                 <p class="error" id="error-refrigerator-temperature">The temperature must be between 2 and 8</p>
               </div>
               <br>
               <p class="trampa">a</p>
               <label for="refrigerator-change-freezertemperature" class="control-label col-sm-5" style="text-align: right;">Set freezer temperature:</label>
               <div class="col-sm-7">
-                <input type="number" class="form-control" id="refrigerator-change-freezertemperature" placeholder="Enter new temperature ((-20) - (-8))" name="refrigerator-change-freezertemperature" min="-20" max="-8">
+                <input type="number" class="form-control" id="refrigerator-change-freezertemperature" placeholder="Enter temperature ((-20) - (-8))" name="refrigerator-change-freezertemperature" min="-20" max="-8">
                 <p class="error" id="error-refrigerator-freezertemperature">The freezer temperature must be between -20 and -8</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="refrigerator-change-mode" class="control-label col-sm-5" style="text-align: right;">Set mode:</label>
+              <label for="refrigerator-change-mode" class="control-label col-sm-5" style="text-align: right;">Select mode:</label>
               <div class="col-sm-7">
                 <select class="form-control" id="refrigerator-change-mode">
                     <option val="default">Default</option>
