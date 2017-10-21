@@ -1083,7 +1083,7 @@ function moveAllUp(row){
   var num = childNumber(row, rowContainer);
   var nextChild;
 
-  while((num < rowContainer.childNodes.length - 1) && nextRowHasDevices(rowContainer.children[num + 1])){
+  while((num < rowContainer.childNodes.length) && nextRowHasDevices(rowContainer.children[num + 1])){
     nextChild = next(rowContainer.children[num + 1]);
 
     rowContainer.children[num].appendChild(nextChild);
@@ -1094,7 +1094,7 @@ function moveAllUp(row){
 function childNumber(row, rowContainer){
   var i = 1;
 
-  while(i < rowContainer.children.length - 1){
+  while(i < rowContainer.children.length){
     if (row === rowContainer.children[i])
       return i;
     i++;
