@@ -8,7 +8,17 @@
   <link rel="stylesheet" href="animate.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/css/bootstrap-colorpicker.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/js/bootstrap-colorpicker.js"></script>
+<style>
   
   /* W3.CSS 4.04 Apr 2017 by Jan Egil and Borge Refsnes */
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
@@ -138,10 +148,33 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     <div class="my-col l3 m6 my-margin-bottom">
       <div class="my-display-container">
         <div class="my-display-topleft my-black my-padding">Add Combination</div>
-          <button class="btn btn-default" onclick="createCombination()">
+          <button class="btn btn-default" data-toggle="modal" data-target="#create-combo" onclick="createCombination()">
             <img src="Add Combo.png" alt="Agregar Combinacion" class="my-image">
           </button>
       </div>
+    </div>
+  </div>
+
+<!--modal-->
+  <div class="modal fade" id="create-combo" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">Add Combination</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <label class="control-label">Name: </label>
+            <input type="text" class="form-control" id="combination-name" placeholder="Enter name" name="combination-name">
+            <div class="form-group" id="append-here">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Accept </button>
+          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>  
     </div>
   </div>
  
@@ -317,6 +350,667 @@ function loadRoutine(data, i){
 function createCombination(){
 
 }
+
+function displayDevices(num){
+  if(document.getElementById("selectDevice" + num) != null){
+      var deviceDiv = document.getElementById("deviceDiv" + num);
+      deviceDiv.innerHTML = "";
+    }
+    
+    var deviceLabel = document.createElement("label");
+    deviceLabel.setAttribute("class", "control-label");
+    deviceLabel.setAttribute("id", "deviceLabel" + num);
+    deviceLabel.innerHTML = "Select Device: ";
+
+    var selectDevice = document.createElement("select");
+    selectDevice.setAttribute("id", "selectDevice" + num);
+    selectDevice.setAttribute("class", "form-control");
+    
+    var none = document.createElement("option");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    var op4 = document.createElement("option");
+    var op5 = document.createElement("option");
+    var op6 = document.createElement("option");
+    
+    none.setAttribute("value", "none");
+    op1.setAttribute("value", "blind");
+    op2.setAttribute("value", "lamp");
+    op3.setAttribute("value", "oven");
+    op4.setAttribute("value", "ac");
+    op5.setAttribute("value", "door");
+    op6.setAttribute("value", "refrigerator");
+    
+    none.innerHTML = "None";
+    op1.innerHTML = "Blinds";
+    op2.innerHTML = "Lamp";
+    op3.innerHTML = "Oven";
+    op4.innerHTML = "Ac";
+    op5.innerHTML = "Door";
+    op6.innerHTML = "Refrigerator";
+    
+    selectDevice.appendChild(none);
+    selectDevice.appendChild(op1);
+    selectDevice.appendChild(op2);
+    selectDevice.appendChild(op3);
+    selectDevice.appendChild(op4);
+    selectDevice.appendChild(op5);
+    selectDevice.appendChild(op6);
+    
+    document.getElementById("deviceDiv" + num).appendChild(deviceLabel);
+    document.getElementById("deviceDiv" + num).appendChild(selectDevice);
+    selectDevice.addEventListener("change", function handler(){displayActions(num);});
+}
+
+function displayActions(num) {
+  if(document.getElementById("selectAction" + num) != null){
+    var actionDiv = document.getElementById("actionDiv" + num);
+    actionDiv.innerHTML = " ";
+        
+    if(document.getElementById("inputParameter" + num) != null){
+      var parameterDiv = document.getElementById("parameterDiv" + num);
+      parameterDiv.innerHTML = " ";
+    }
+  }
+    
+    var actionLabel = document.createElement("label");
+    actionLabel.setAttribute("class", "control-label");
+    actionLabel.setAttribute("id", "actionLabel" + num);
+    actionLabel.innerHTML = "Select Action: ";
+
+    var val = document.getElementById("selectDevice" + num).value;
+    
+    if(val != "none"){
+      var selectAction = document.createElement("select");
+      selectAction.setAttribute("id", "selectAction" + num);
+      selectAction.setAttribute("class", "form-control");
+    
+    if(val == "blind"){
+      var empty = document.createElement("option");
+      var op1 = document.createElement("option");
+      var op2 = document.createElement("option");
+    
+      empty.setAttribute("value", "");
+      empty.setAttribute("disabled", "true");
+      empty.setAttribute("selected", "true");
+      op1.setAttribute("value", "blinds-open");
+      op2.setAttribute("value", "blinds-close");
+    
+      empty.innerHTML = "";    
+      op1.innerHTML = "Open";
+      op2.innerHTML = "Close";
+   
+      selectAction.appendChild(empty);
+      selectAction.appendChild(op1);
+      selectAction.appendChild(op2);
+    }
+    
+    if(val == "lamp"){
+      var empty = document.createElement("option");
+      var op1 = document.createElement("option");
+      var op2 = document.createElement("option");
+      var op3 = document.createElement("option");
+      var op4 = document.createElement("option");
+      
+      empty.setAttribute("value", "");
+      empty.setAttribute("disabled", "true");
+      empty.setAttribute("selected", "true");
+      op1.setAttribute("value", "lamp-on");
+      op2.setAttribute("value", "lamp-off");
+      op3.setAttribute("value", "lamp-brightness");
+      op4.setAttribute("value", "lamp-color");
+    
+      empty.innerHTML = "";
+      op1.innerHTML = "Turn on";
+      op2.innerHTML = "Turn off";
+      op3.innerHTML = "Set brightness";
+      op4.innerHTML = "Set color";
+      
+      selectAction.appendChild(empty);
+      selectAction.appendChild(op1);
+      selectAction.appendChild(op2);
+      selectAction.appendChild(op3);
+      selectAction.appendChild(op4);
+    }
+    
+    if(val == "door"){
+      var empty = document.createElement("option");
+      var op1 = document.createElement("option");
+      var op2 = document.createElement("option");
+      var op3 = document.createElement("option");
+      var op4 = document.createElement("option");
+    
+      empty.setAttribute("value", "");
+      empty.setAttribute("disabled", "true");
+      empty.setAttribute("selected", "true");
+      op1.setAttribute("value", "door-open");
+      op2.setAttribute("value", "door-close");
+      op3.setAttribute("value", "door-lock");
+      op4.setAttribute("value", "door-unlock");
+    
+      empty.innerHTML = "";
+      op1.innerHTML = "Open";
+      op2.innerHTML = "Close";
+      op3.innerHTML = "Lock";
+      op4.innerHTML = "Unlock";
+      
+      selectAction.appendChild(empty);
+      selectAction.appendChild(op1);
+      selectAction.appendChild(op2);
+      selectAction.appendChild(op3);
+      selectAction.appendChild(op4);
+    }
+    
+    if(val == "oven"){
+      var empty = document.createElement("option");
+      var op1 = document.createElement("option");
+      var op2 = document.createElement("option");
+      var op3 = document.createElement("option");
+      var op4 = document.createElement("option");
+      var op5 = document.createElement("option");
+      var op6 = document.createElement("option");
+    
+      empty.setAttribute("value", "");
+      empty.setAttribute("disabled", "true");
+      empty.setAttribute("selected", "true");
+      op1.setAttribute("value", "oven-on");
+      op2.setAttribute("value", "oven-off");
+      op3.setAttribute("value", "oven-temperature");
+      op4.setAttribute("value", "oven-heatmode");
+      op5.setAttribute("value", "oven-grillmode");
+      op6.setAttribute("value", "oven-convectionmode");
+    
+      empty.innerHTML = "";
+      op1.innerHTML = "Turn on";
+      op2.innerHTML = "Turn off";
+      op3.innerHTML = "Set temperature";
+      op4.innerHTML = "Set heat mode";
+      op5.innerHTML = "Set grill mode";
+      op6.innerHTML = "Set convection mode";
+      
+      selectAction.appendChild(empty);
+      selectAction.appendChild(op1);
+      selectAction.appendChild(op2);
+      selectAction.appendChild(op3);
+      selectAction.appendChild(op4);
+      selectAction.appendChild(op5);
+      selectAction.appendChild(op6);
+    }
+    
+    if(val == "refrigerator"){
+      var empty = document.createElement("option");
+      var op1 = document.createElement("option");
+      var op2 = document.createElement("option");
+      var op3 = document.createElement("option");
+    
+      empty.setAttribute("value", "");
+      empty.setAttribute("disabled", "true");
+      empty.setAttribute("selected", "true");
+      op1.setAttribute("value", "refrigerator-temperature");
+      op2.setAttribute("value", "refrigerator-freezertemperature");
+      op3.setAttribute("value", "refrigerator-mode");
+      
+      empty.innerHTML = "";
+      op1.innerHTML = "Set temperature";
+      op2.innerHTML = "Set freezer temperature";
+      op3.innerHTML = "Set refrigerator mode";
+    
+      selectAction.appendChild(empty);
+      selectAction.appendChild(op1);
+      selectAction.appendChild(op2);
+      selectAction.appendChild(op3);
+    }
+    
+    if(val == "ac"){
+      var empty = document.createElement("option");
+      var op1 = document.createElement("option");
+      var op2 = document.createElement("option");
+      var op3 = document.createElement("option");
+      var op4 = document.createElement("option");
+      var op5 = document.createElement("option");
+      var op6 = document.createElement("option");
+      var op7 = document.createElement("option");
+      
+      empty.setAttribute("value", "");
+      empty.setAttribute("disabled", "true");
+      empty.setAttribute("selected", "true");
+      op1.setAttribute("value", "ac-on");
+      op2.setAttribute("value", "ac-off");
+      op3.setAttribute("value", "ac-temperature");
+      op4.setAttribute("value", "ac-mode");
+      op5.setAttribute("value", "ac-verticalswing");
+      op6.setAttribute("value", "ac-horizontalswing");
+      op7.setAttribute("value", "ac-fanspeed");
+      
+      empty.innerHTML = "";
+      op1.innerHTML = "Turn on";
+      op2.innerHTML = "Turn off";
+      op3.innerHTML = "Set temperature";
+      op4.innerHTML = "Set mode";
+      op5.innerHTML = "Set vertical swing";
+      op6.innerHTML = "Set horizontal swing";
+      op7.innerHTML = "Set fan speed";
+      
+      selectAction.appendChild(empty);
+      selectAction.appendChild(op1);
+      selectAction.appendChild(op2);
+      selectAction.appendChild(op3);
+      selectAction.appendChild(op4);
+      selectAction.appendChild(op5);
+      selectAction.appendChild(op6);
+      selectAction.appendChild(op7);
+    }
+    
+    document.getElementById("actionDiv" + num).appendChild(actionLabel);
+    document.getElementById("actionDiv" + num).appendChild(selectAction);
+    selectAction.addEventListener("change", function handler(){inputParameters(num);});
+    }
+}
+
+function inputParameters(n){
+  if(document.getElementById("inputParameter" + n) != null){
+        var parameterDiv = document.getElementById("parameterDiv" + n);
+        parameterDiv.innerHTML = "";
+      }
+  
+  var val = document.getElementById("selectAction" + n).value;
+    
+    
+  if(val == "blinds-open" || val == "blinds-close" || val == "lamp-on" || val == "lamp-off" || val == "door-open" || val == "door-close" || val == "door-lock" || val == "door-unlock" || val =="oven-on" || val == "oven-off" || val == "ac-on" || val == "ac-off"){
+    createDivs(n + 1);
+  }
+    
+  var inputParameter;
+    
+  if(val == "oven-heatmode" || val == "oven-grillmode" || val == "oven-convectionmode" || val == "ac-mode" || val == "ac-verticalswing" || val == "ac-horizontalswing" || val == "ac-fanspeed" || val == "refrigerator-mode"){
+    inputParameter = document.createElement("select");
+    inputParameter.setAttribute("id", "inputParameter" + n);
+    inputParameter.setAttribute("class", "form-control");
+
+    var parameterLabel = document.createElement("label");
+    parameterLabel.setAttribute("class", "control-label");
+    parameterLabel.setAttribute("id", "parameterLabel" + n);
+
+    document.getElementById("parameterDiv" + n).appendChild(parameterLabel);
+    document.getElementById("parameterDiv" + n).appendChild(inputParameter);
+    inputParameter.addEventListener("change", function handler(){createDivs(n + 1);});
+  } else if(val != "blinds-open" && val != "blinds-close" && val != "lamp-on" && val != "lamp-off" && val != "door-open" && val != "door-close" && val != "door-lock" && val != "door-unlock" && val !="oven-on" && val != "oven-off" && val != "ac-on" && val != "ac-off"){
+    inputParameter = document.createElement("input");
+    inputParameter.setAttribute("id", "inputParameter" + n);
+
+    var parameterLabel = document.createElement("label");
+    parameterLabel.setAttribute("class", "control-label");
+    parameterLabel.setAttribute("id", "parameterLabel" + n);
+
+    document.getElementById("parameterDiv" + n).appendChild(parameterLabel);
+
+    if(val != "lamp-color"){
+      document.getElementById("parameterDiv" + n).appendChild(inputParameter);
+    }
+    inputParameter.addEventListener("change", function handler(){createDivs(n + 1);});
+  } 
+    
+  if(val == "lamp-brightness"){
+    inputParameter.setAttribute("type", "number");
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "lamp-brightness");
+    inputParameter.setAttribute("placeholder", "Enter brightness (0 - 100)");
+    inputParameter.setAttribute("name", "lamp-brightness");
+    inputParameter.setAttribute("min", "0");
+    inputParameter.setAttribute("max", "100");
+    
+    parameterLabel.innerHTML = "Change brightness: ";
+    
+  }
+    
+  if(val == "lamp-color"){
+    var div = document.createElement("div");
+    div.setAttribute("id", "cp3");
+    div.classList.add("input-group", "colorpicker-component");
+    inputParameter.setAttribute("type", "text");
+    inputParameter.setAttribute("value", "#00AABB");
+    inputParameter.setAttribute("class", "form-control");
+    //inputParameter.setAttribute("data-type", "lamp-color");
+    var span = document.createElement("span");
+    span.setAttribute("class", "input-group-addon");
+    var i = document.createElement("i");
+    span.appendChild(i);
+    div.appendChild(inputParameter);
+    div.appendChild(span);
+    document.getElementById("parameterDiv" + n).appendChild(div);
+
+    parameterLabel.innerHTML = "Select color: "
+  }
+    
+  if(val == "oven-temperature"){
+    inputParameter.setAttribute("type", "number");
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "oven-temperature");
+    inputParameter.setAttribute("placeholder", "Enter temperature (90 - 230)");
+    inputParameter.setAttribute("name", "oven-temperature");
+    inputParameter.setAttribute("min", "90");
+    inputParameter.setAttribute("max", "230");
+
+    parameterLabel.innerHTML = "Change temperature: ";
+  }
+    
+  if(val == "oven-heatmode"){
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "oven-heatmode");
+    var empty = document.createElement("empty");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    empty.setAttribute("value", "");
+    empty.setAttribute("disabled", "true");
+    empty.setAttribute("selected", "true");
+    empty.innerHTML = "";
+    op1.setAttribute("value", "conventional");
+    op1.innerHTML = "Conventional";
+    op2.setAttribute("value", "bottom");
+    op2.innerHTML = "Bottom";
+    op3.setAttribute("value", "top");
+    op3.innerHTML = "Top";
+    inputParameter.appendChild(empty);
+    inputParameter.appendChild(op1);
+    inputParameter.appendChild(op2);
+    inputParameter.appendChild(op3);
+
+    parameterLabel.innerHTML = "Change heat mode: ";
+  }
+    
+  if(val == "oven-grillmode"){
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "oven-grillmode");
+    var empty = document.createElement("empty");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    empty.setAttribute("value", "");
+    empty.setAttribute("disabled", "true");
+    empty.setAttribute("selected", "true");
+    empty.innerHTML = "";
+    op1.setAttribute("value", "large");
+    op1.innerHTML = "Large";
+    op2.setAttribute("value", "eco");
+    op2.innerHTML = "Eco";
+    op3.setAttribute("value", "Off");
+    op3.innerHTML = "Off";
+    inputParameter.appendChild(empty);
+    inputParameter.appendChild(op1);
+    inputParameter.appendChild(op2);
+    inputParameter.appendChild(op3);
+
+    parameterLabel.innerHTML = "Change grill mode: ";
+  }
+  
+  if(val == "oven-convectionmode"){
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "oven-convectionmode");
+    var empty = document.createElement("option");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    empty.setAttribute("value", "");
+    empty.setAttribute("disabled", "true");
+    empty.setAttribute("selected", "true");
+    empty.innerHTML = "";
+    op1.setAttribute("value", "eco");
+    op1.innerHTML = "Normal";
+    op2.setAttribute("value", "eco");
+    op2.innerHTML = "Eco";
+    op3.setAttribute("value", "Off");
+    op3.innerHTML = "Off";
+    inputParameter.appendChild(empty);
+    inputParameter.appendChild(op1);
+    inputParameter.appendChild(op2);
+    inputParameter.appendChild(op3);
+
+    parameterLabel.innerHTML = "Change convection mode: ";
+  }
+    
+  if(val == "refrigerator-temperature"){
+    inputParameter.setAttribute("type", "number");
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "refrigerator-temperature");
+    inputParameter.setAttribute("placeholder", "Enter temperature (2 - 8)");
+    inputParameter.setAttribute("name", "refrigerator-temperature");
+    inputParameter.setAttribute("min", "2");
+    inputParameter.setAttribute("max", "8");
+
+    parameterLabel.innerHTML = "Change temperature: ";
+  }
+    
+  if(val == "refrigerator-freezertemperature"){
+    inputParameter.setAttribute("type", "number");
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "refrigerator-freezertemperature");
+    inputParameter.setAttribute("placeholder", "Enter temperature ((-20) - (-8))");
+    inputParameter.setAttribute("name", "refrigerator-freezertemperature");
+    inputParameter.setAttribute("min", "-20");
+    inputParameter.setAttribute("max", "-8");
+
+    parameterLabel.innerHTML = "Change freezer temperature: ";
+  }
+    
+  if(val == "refrigerator-mode"){
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "refrigerator-mode");
+    var empty = document.createElement("option");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    empty.setAttribute("value", "");
+    empty.setAttribute("disabled", "true");
+    empty.setAttribute("selected", "true");
+    empty.innerHTML = "";
+    op1.setAttribute("value", "default");
+    op1.innerHTML = "Default";
+    op2.setAttribute("value", "vacation");
+    op2.innerHTML = "Vacation";
+    op3.setAttribute("value", "party");
+    op3.innerHTML = "Party";
+    inputParameter.appendChild(empty);
+    inputParameter.appendChild(op1);
+    inputParameter.appendChild(op2);
+    inputParameter.appendChild(op3);
+
+    parameterLabel.innerHTML = "Change mode: ";
+  }
+    
+  if(val == "ac-temperature"){
+    inputParameter.setAttribute("type", "number");
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "ac-temperature");
+    inputParameter.setAttribute("placeholder", "Enter temperature (18 - 38)");
+    inputParameter.setAttribute("name", "ac-temperature");
+    inputParameter.setAttribute("min", "18");
+    inputParameter.setAttribute("max", "38");
+
+    parameterLabel.innerHTML = "Change temperature: ";
+  }
+    
+  if(val == "ac-mode"){
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "ac-mode");
+    var empty = document.createElement("option");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    empty.setAttribute("value", "");
+    empty.setAttribute("disabled", "true");
+    empty.setAttribute("selected", "true");
+    empty.innerHTML = "";
+    op1.setAttribute("value", "cool");
+    op1.innerHTML = "Cool";
+    op2.setAttribute("value", "heat");
+    op2.innerHTML = "Heat";
+    op3.setAttribute("value", "fan");
+    op3.innerHTML = "Fan";
+    inputParameter.appendChild(empty);
+    inputParameter.appendChild(op1);
+    inputParameter.appendChild(op2);
+    inputParameter.appendChild(op3);
+
+    parameterLabel.innerHTML = "Change mode: ";
+  }
+    
+  if(val == "ac-verticalswing"){
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "ac-verticalswing");
+    var empty = document.createElement("option");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    var op4 = document.createElement("option");
+    var op5 = document.createElement("option");
+    empty.setAttribute("value", "");
+    empty.setAttribute("disabled", "true");
+    empty.setAttribute("selected", "true");
+    empty.innerHTML = "";
+    op1.setAttribute("value", "auto");
+    op1.innerHTML = "Auto";
+    op2.setAttribute("value", "22");
+    op2.innerHTML = "22°";
+    op3.setAttribute("value", "45");
+    op3.innerHTML = "45°";
+    op4.setAttribute("value", "67");
+    op4.innerHTML = "67°";
+    op5.setAttribute("value", "90");
+    op5.innerHTML = "90°";
+    inputParameter.appendChild(empty);
+    inputParameter.appendChild(op1);
+    inputParameter.appendChild(op2);
+    inputParameter.appendChild(op3);
+    inputParameter.appendChild(op4);
+    inputParameter.appendChild(op5);
+
+    parameterLabel.innerHTML = "Change vertical swing: ";
+  }
+    
+  if(val == "ac-horizontalswing"){
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "ac-horizontalswing");
+    var empty = document.createElement("option");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    var op4 = document.createElement("option");
+    var op5 = document.createElement("option");
+    var op6 = document.createElement("option");
+    empty.setAttribute("value", "");
+    empty.setAttribute("disabled", "true");
+    empty.setAttribute("selected", "true");
+    empty.innerHTML = "";
+    op1.setAttribute("value", "auto");
+    op1.innerHTML = "Auto";
+    op2.setAttribute("value", "-90");
+    op2.innerHTML = "-90°";
+    op3.setAttribute("value", "-45");
+    op3.innerHTML = "-45°";
+    op4.setAttribute("value", "0");
+    op4.innerHTML = "0°";
+    op5.setAttribute("value", "45");
+    op5.innerHTML = "45°";
+    op6.setAttribute("value", "90");
+    op6.innerHTML = "90°";
+    inputParameter.appendChild(empty);
+    inputParameter.appendChild(op1);
+    inputParameter.appendChild(op2);
+    inputParameter.appendChild(op3);
+    inputParameter.appendChild(op4);
+    inputParameter.appendChild(op5);
+    inputParameter.appendChild(op6);
+
+    parameterLabel.innerHTML = "Change horizontal swing: ";
+  }
+    
+  if(val == "ac-fanspeed"){
+    inputParameter.setAttribute("class", "form-control");
+    inputParameter.setAttribute("data-type", "ac-fanspeed");
+    var empty = document.createElement("option");
+    var op1 = document.createElement("option");
+    var op2 = document.createElement("option");
+    var op3 = document.createElement("option");
+    var op4 = document.createElement("option");
+    var op5 = document.createElement("option");
+    empty.setAttribute("value", "");
+    empty.setAttribute("disabled", "true");
+    empty.setAttribute("selected", "true");
+    empty.innerHTML = "";
+    op1.setAttribute("value", "auto");
+    op1.innerHTML = "Auto";
+    op2.setAttribute("value", "25");
+    op2.innerHTML = "25";
+    op3.setAttribute("value", "50");
+    op3.innerHTML = "50";
+    op4.setAttribute("value", "75");
+    op4.innerHTML = "75";
+    op5.setAttribute("value", "100");
+    op5.innerHTML = "100";
+    inputParameter.appendChild(empty);
+    inputParameter.appendChild(op1);
+    inputParameter.appendChild(op2);
+    inputParameter.appendChild(op3);
+    inputParameter.appendChild(op4);
+    inputParameter.appendChild(op5);
+
+    parameterLabel.innerHTML = "Change fan speed: ";
+  }
+}
+
+function createDivs(num){
+  if(document.getElementById("deviceDiv" + num) != null){
+    var deviceDiv = document.getElementById("deviceDiv" + num);
+    deviceDiv.parentNode.removeChild(deviceDiv);
+  }
+    
+  if(document.getElementById("actionDiv" + num) != null){
+    var actionDiv = document.getElementById("actionDiv" + num);
+    actionDiv.parentNode.removeChild(actionDiv);
+  }
+    
+  if(document.getElementById("parameterDiv" + num) != null){
+    var parameterDiv = document.getElementById("parameterDiv" + num);
+    parameterDiv.parentNode.removeChild(parameterDiv);
+  }
+
+  var deviceDiv = document.createElement("div");
+  var actionDiv = document.createElement("div");
+  var parameterDiv = document.createElement("div");
+   
+  deviceDiv.setAttribute("id", "deviceDiv" + num);
+  actionDiv.setAttribute("id", "actionDiv" + num);
+  parameterDiv.setAttribute("id", "parameterDiv" + num);
+  
+  document.getElementById("append-here").appendChild(deviceDiv);
+  document.getElementById("append-here").appendChild(actionDiv);
+  document.getElementById("append-here").appendChild(parameterDiv);
+    
+  displayDevices(num);
+}
+
+$("#create-combo").on('shown.bs.modal', function () {
+  createDivs(1);
+});
+
+$(function() {
+    $('#cp3').colorpicker({
+       color: '#AA3399',
+        format: 'hex',
+    });
+});
+
+function isColor(color){
+  for (var i = 0; i < color.length; i++) {
+    var c = color.charAt(i);
+    if( (c < '0' || c > '9') && ( c < 'a' || c > 'z') && ( c < 'A' || c > 'Z'))
+      return false;
+  }
+  return true;
+}
+
 
 </script>
 
