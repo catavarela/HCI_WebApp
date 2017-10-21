@@ -103,6 +103,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 }
 
 .trampa{
+  font-size: 1px;
   color:white;
 }
 
@@ -197,7 +198,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
   </div>
 </nav>
 
-   <!-- Confirmation modal delete device-->
+    <!-- Confirmation modal delete device-->
   <div class="modal fade" id="confirmation-Delete-device" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -217,61 +218,6 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 
 
   <!-- MODALS DE DEVICES-->
-
-  <!-- MODAL DE BLIND-->
-  <div class="modal fade" id="device-blinds" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title text-center">Blinds</h3>
-        </div>
-        <div class="modal-body">
-          <form class="form-horizontal">
-            <div class="form-group">
-              <label for="blinds-type" class="control-label col-sm-4" style="text-align: right">Type:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="blinds-type" style="text-align: left">Blinds</p>
-              </div>
-              <br>
-              <label for="blinds-name" class="control-label col-sm-4" style="text-align: right;">Name:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="blinds-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
-              </div>
-              <label for="blinds-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="blinds-change-name" placeholder="Enter new name" name="blinds-change-name">
-                <p class="error" id="error-name-blind">The name must have between 3 and 30 characters </p>
-                <p class="error" id="error-nameExist-blind">This name already exists</p>
-              </div>
-              <br>
-              <label for="blinds-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="blinds-description" style="text-align: left"> </p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
-              </div>
-              <label for="blinds-change-description" class="control-label col-sm-4" style="text-align: right">Change description:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" placeholder="Enter new description" name="blinds-change-description" id="blinds-change-description">
-              </div>
-              <br>
-              <label for="blinds-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
-              <div class="col-sm-8">
-                <!--agregado por cata (comentado)-->
-                <!--<label class="radio-inline"><input type="radio" name="optradio" id="blinds-open">Open</label>
-                <label class="radio-inline"><input type="radio" name="optradio" id="blinds-closed" checked>Closed</label>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed"  id="blinds-switch" data-width="82"><!--agregado por cata -->
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" onclick="saveChangesBlinds()">Accept </button>
-          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-default pull-left" onclick="deleteBlinds()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-        </div>
-      </div>  
-    </div>
-  </div>
-
     <!-- Modal de lamp -->
   <div class="modal fade" id="device-lamp" role="dialog">
     <div class="modal-dialog">
@@ -307,6 +253,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="lamp-change-description" placeholder="Enter new description" name="lamp-change-description">
               </div>
+              <br>
               <p class="trampa">a</p>
               <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
               <div class="col-sm-8">
@@ -318,11 +265,13 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
                 <input type="checkbox" data-toggle="toggle" id="lamp-switch"><!--agregado por cata -->
               </div>      
               <br>
+              <p class="trampa">a</p>
               <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Change brightness:</label>
               <div class="col-sm-8">
                 <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter new brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
                 <p class="error" id="error-lamp-brightness">The brightness must be between 0 and 100</p>
               </div>
+              <br>
               <p class="trampa">a</p>
               <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select new color:</label>
               <div class="col-sm-8">
@@ -391,6 +340,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
                 <input type="checkbox" data-toggle="toggle" id="oven-switch"><!--agregado por cata -->
               </div> 
               <br>
+              <p class="trampa">a</p>
               <label for="oven-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
               <div class="col-sm-6">
                 <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter new temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
@@ -487,6 +437,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
                 <input type="checkbox" data-toggle="toggle" id="ac-switch"><!--agregado por cata -->
               </div> 
               <br>
+              <p class="trampa">a</p>
               <label for="ac-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
               <div class="col-sm-6">
                 <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter new temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
@@ -554,157 +505,9 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
       </div>  
     </div>
   </div>
-      
-  <!-- MODAL DE DOOR-->
-  <div class="modal fade" id="device-door" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title text-center">Door</h3>
-        </div>
-        <div class="modal-body">
-          <form class="form-horizontal">
-            <div class="form-group">
-              <label for="door-type" class="control-label col-sm-4" style="text-align: right">Type:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="door-type" style="text-align: left">Door</p>
-              </div>
-              <br>
-              <label for="door-name" class="control-label col-sm-4" style="text-align: right;">Name:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="door-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
-              </div>
-              <label for="door-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="door-change-name" placeholder="Enter new name" name="door-change-name">
-                <p class="error" id="error-name-door">The name must have between 3 and 30 characters </p>
-                <p class="error" id="error-nameExist-door">This name already exists</p>
-              </div>
-              <br>
-              <label for="door-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="door-description" style="text-align: left" id="door-description"> </p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
-              </div>
-              <label for="door-change-description" class="control-label col-sm-4" style="text-align: right">Change description:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" placeholder="Enter new description" name="door-change-description" id="door-change-description">
-              </div>
-              <br>
-              <label for="door-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
-              <div class="col-sm-8">
-                <!--agregado por cata(comentado) -->
-                <!--<fieldset id="door-status-check">  
-                  <label class="radio-inline"><input type="radio" name="door-status-check" id="door-open">Open</label>
-                  <label class="radio-inline"><input type="radio" name="door-status-check" id="door-closed" checked>Closed</label>
-                </fieldset>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed" id="door-switch" data-width="82"><!--agregado por cata -->
-              </div>
-              <br>
-              <label for="door-lock" class="control-label col-sm-4" style="text-align: right">Lock state:</label>
-              <div class="col-sm-8">
-                <!--agregado por cata (comentado)-->
-                <!--<fieldset id="door-lock-check">  
-                  <label class="radio-inline"><input type="radio" name="door-lock-check" id="door-locked">Locked</label>                esto hay que ponerlo en disabled si la puerta esta abierta
-                  <label class="radio-inline"><input type="radio" name="door-lock-check" id="door-unlocked" checked>Unlocked</label>      
-                </fieldset>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" data-on="Locked" data-off="Unlocked" id="lock-switch" data-width="100"><!--agregado por cata -->
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" onclick="saveChangesDoor()">Accept </button>
-          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-default pull-left" onclick="deleteDoor()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-        </div>
-      </div>  
-    </div>
-  </div>
 
-  <!-- Modal de refrigerator-->
-  <div class="modal fade" id="device-refrigerator" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title text-center">Refrigerator</h3>
-        </div>
-        <div class="modal-body">
-          <form class="form-horizontal">
-            <div class="form-group">
-              <label for="refrigerator-type" class="control-label col-sm-6" style="text-align: right">Type:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="refrigerator-type" style="text-align: left">Refrigerator</p>
-              </div>
-              <br>
-              <label for="refrigerator-name" class="control-label col-sm-6" style="text-align: right;">Name:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="refrigerator-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
-              </div>
-              <label for="refrigerator-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="refrigerator-change-name" placeholder="Enter new name" name="refrigerator-change-name">
-                <p class="error" id="error-name-refrigerator">The name must have between 3 and 30 characters </p>
-                <p class="error" id="error-nameExist-refrigerator">This name already exists</p>
-              </div>
-              <br>
-              <label for="refrigerator-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="refrigerator-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
-              </div>
-              <label for="refrigerator-change-description" class="control-label col-sm-6" style="text-align: right">Change description:</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="refrigerator-change-description" placeholder="Enter new description" name="refrigerator-change-description">
-              </div>
-              <br>
-              <p class="trampa">a</p>
-              <label for="refrigerator-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="refrigerator-change-temperature" placeholder="Enter new temperature (2 - 8)" name="refrigerator-change-temperature" min="2" max="8">
-                <p class="error" id="error-refrigerator-temperature">The temperature must be between 2 and 8</p>
-              </div>
-              <br>
-              <p class="trampa">a</p>
-              <label for="refrigerator-change-freezertemperature" class="control-label col-sm-6" style="text-align: right;">Change freezer temperature:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="refrigerator-change-freezertemperature" placeholder="Enter new temperature ((-20) - (-8))" name="refrigerator-change-freezertemperature" min="-20" max="-8">
-                <p class="error" id="error-refrigerator-freezertemperature">The freezer temperature must be between -20 and -8</p>
-              </div>
-              <br>
-              <p class="trampa">a</p>
-              <label for="refrigerator-change-mode" class="control-label col-sm-6" style="text-align: right;">Change mode:</label>
-              <div class="col-sm-6">
-                <select class="form-control" id="refrigerator-change-mode">
-                    <option val="default">Default</option>
-                    <option val="vacation">Vacation</option>
-                    <option val="party">Party</option>
-                  </select>
-                  <p class="error" id="error-refrigerator-mode">You must select an option</p>
-              </div>
-            </div> 
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" onclick="saveChangesRefrigerator()">Accept </button>
-          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-default pull-left" onclick="deleteFridge()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
-        </div>
-      </div>  
-    </div>
-  </div>    
-
-
-<!-- Page content -->
-<div class="my-content my-padding" id="devicesContainer" style="max-width:1564px">
-
-  <!-- Project Section -->
-  <div class="my-container my-padding-0-32" id="SwitchedOn">
-    <h3 class="my-border-bottom my-padding-0-16">Switched On</h3>
-  </div>
-
-<!-- Aca estarian los dispositivos añadidos dinamicamente-->
-  
   <!-- Notification-->
-<div class="notification" id="notification">
+  <div class="notification" id="notification">
     <div class="header-notification">
         <p class="header-not">Notification</p>
     </div>
@@ -716,6 +519,18 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         </div>
     </div> 
 </div>
+
+
+<!-- Page content -->
+<div class="my-content my-padding" id="devicesContainer" style="max-width:1564px">
+
+  <!-- Project Section -->
+  <div class="my-container my-padding-0-32" id="SwitchedOn">
+    <h3 class="my-border-bottom my-padding-0-16">Switched On</h3>
+  </div>
+
+<!-- Aca estarian los dispositivos añadidos dinamicamente-->
+
 <!-- End page content -->
 </div>
 
@@ -738,12 +553,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#ac-switch').on('change', function () {
         DisableAcOptions()
-    });
-});
-
-$(document).ready(function () {
-    $('#door-switch').on('change', function () {
-        DisableDoorOptions()
     });
 });
 
@@ -921,37 +730,6 @@ api.device = class {
       timeout: api.timeout,
     });
   }
-}
-
-api.blind = class{
-
-  constructor(id,typeId,name,description){
-    this.id = id;
-    this.typeId = typeId;
-    this.name = name;
-    this.description = description;
-  }
-
-  up(deviceID){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "up",
-      method: "PUT",
-      dataType: "json",
-      async: false,
-      timeout: api.timeout,
-    });
-  }
-
-  down(deviceID){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "down",
-      method: "PUT",
-      dataType: "json",
-      async: false,
-      timeout: api.timeout,
-    });
-  }
-
 }
 
 api.lamp = class {
@@ -1174,104 +952,6 @@ api.lamp = class {
   }
 }
 
-  api.door = class {
-
-    constructor(id,typeId,name,description){
-    this.id = id;
-    this.typeId = typeId;
-    this.name = name;
-    this.description = description;
-  }
-    open(deviceID){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "open",
-      method: "PUT",
-      dataType: "json",
-      async: false,
-      timeout: api.timeout,
-    });
-  }
-
-    close(deviceID){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "close",
-      method: "PUT",
-      dataType: "json",
-      async: false,
-      timeout: api.timeout,
-    });
-  }
-    
-    lock(deviceID){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "lock",
-      method: "PUT",
-      dataType: "json",
-      contentType: "application/json",
-      timeout: api.timeout,
-      async: false,
-    });
-  }
-
-  unlock(deviceID){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "unlock",
-      method: "PUT",
-      dataType: "json",
-      contentType: "application/json",
-      timeout: api.timeout,
-      async: false,
-    });
-  }
-
-}
-  api.refrigerator = class {
-
-  constructor(id,typeId,name,description){
-    this.id = id;
-    this.typeId = typeId;
-    this.name = name;
-    this.description = description;
-  }
-  
-  setFreezerTemperature(deviceID,integer){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setFreezerTemperature",
-      method: "PUT",
-      dataType: "json",
-      contentType: "application/json",
-      timeout: api.timeout,
-      async: false,
-      data: integer
-    });
-  }
-
-  setTemperature(deviceID,integer){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setTemperature",
-      method: "PUT",
-      dataType: "json",
-      contentType: "application/json",
-      timeout: api.timeout,
-      async: false,
-      data: integer
-    });
-  }
-
-    setMode(deviceID,integer){
-    return $.ajax({
-      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setMode",
-      method: "PUT",
-      dataType: "json",
-      contentType: "application/json",
-      timeout: api.timeout,
-      async: false,
-      data: integer
-    });
-  }
-
-}
-
 api.model = api.model || {};
 
 api.model.room = class {
@@ -1308,14 +988,7 @@ api.model.action = class{
 
 function addAttributesOfDeviceButton(deviceButton, deviceImage){
 
-  switch(deviceButton.getAttribute("type")){
-
-    case "eu0v2xgprrhhg41g" :
-        deviceImage.setAttribute("src", "Blinds.png");
-        deviceButton.setAttribute("data-type","blinds");
-        buttonDevice.setAttribute("onclick","viewBlindState(this)");
-        break;
-
+  switch(deviceButton.getAttribute("data-typeID")){
     case "go46xmbqeomjrsjr":
         deviceImage.setAttribute("src", "Lamp.png");
         deviceButton.setAttribute("data-type","lamp");
@@ -1332,18 +1005,6 @@ function addAttributesOfDeviceButton(deviceButton, deviceImage){
         deviceImage.setAttribute("src", "Ac.png");
         deviceButton.setAttribute("data-type","ac");
         deviceButton.setAttribute("onclick","viewAcState(this)");
-        break;
-
-    case "lsf78ly0eqrjbz91":
-        deviceImage.setAttribute("src", "Door.png");
-        deviceButton.setAttribute("data-type","door");
-        deviceButton.setAttribute("onclick","viewDoorState(this)");
-        break;
-
-    case "rnizejqr2di0okho":
-        deviceImage.setAttribute("src", "Fridge.png");
-        deviceButton.setAttribute("data-type","refrigerator");
-        deviceButton.setAttribute("onclick","viewRefrigeratorState(this)");
         break;
 
     default:
@@ -1400,6 +1061,53 @@ function loadDevice(data, i){
   return deviceContainer;
 }
 
+function deleteFromDisplay(id){
+  var displayContainer = document.getElementById(id).parentElement;
+  var deviceContainer = displayContainer.parentElement;
+  var row = deviceContainer.parentElement;
+
+  var boolean = rowFull(row);
+
+  row.removeChild(deviceContainer);
+
+  if(boolean)
+    moveAllUp(row);
+}
+
+function rowFull(row){
+  return row.children.length == 4;
+}
+
+function moveAllUp(row){
+  var rowContainer = row.parentElement;
+  var num = childNumber(row, rowContainer);
+  var nextChild;
+
+  while((num < rowContainer.childNodes.length - 1) && nextRowHasDevices(rowContainer.children[num + 1])){
+    nextChild = next(rowContainer.children[num + 1]);
+
+    rowContainer.children[num].appendChild(nextChild);
+    rowContainer.children[num + 1].removeChild(nextChild);
+  }
+}
+
+function childNumber(row, rowContainer){
+  var i = 1;
+
+  while(i < rowContainer.children.length - 1){
+    if (row === rowContainer.children[i])
+      return i;
+    i++;
+  }
+}
+
+function next(row){
+  return row.children[0];
+}
+
+function nextRowHasDevices(row){
+  return row.children.length > 0;
+}
 
 function createRow(){
   var row = document.createElement("div");
@@ -1414,16 +1122,49 @@ function loadDevicesHTML(data){
   father = document.getElementById("devicesContainer");
 
   for(i = 0, j = 0; i < data.devices.length; i++){
- //   if(){
-      if((i % 4) == 0){
+    if(isOn(data, i)){
+      if((j % 4) == 0){
         currentRow = createRow();
         father.appendChild(currentRow);
       }
 
       currentRow.appendChild(loadDevice(data, i));
- //     j++;
- //   }
+      j++;
+    }
   }
+}
+
+function isOn(data, i){
+  switch(data.devices[i].typeId){
+    case "eu0v2xgprrhhg41g" : return false;
+
+    case "go46xmbqeomjrsjr": return isOnLOA(data, i);
+
+    case "im77xxyulpegfmv8": return isOnLOA(data, i);
+
+    case "li6cbv5sdlatti0j": return isOnLOA(data, i);
+
+    case "lsf78ly0eqrjbz91": return false;
+
+    case "rnizejqr2di0okho": return false;
+
+    default: return false;
+  }
+}
+
+function isOnLOA(data, i){
+  var boolean = false;
+
+  api.device.getState(data.devices[i].id)
+    .done(function (data) {
+        if(data.result.status == 'on')
+          boolean = true;
+    })
+    .fail(function (jqXHR, textStatus) {
+        alert ('Request failed: al chequear si la lampara estaba prendida' + textStatus);
+    })
+
+    return boolean;
 }
 
 function loadDevices(){
@@ -1439,100 +1180,10 @@ function loadDevices(){
   })
 }
 
-function viewBlindState(button){
-   cleanAllErrors()
-   document.getElementById("device-blinds").setAttribute("data-device",button.getAttribute("id"))
-   updateDeviceBlindModal(button)
-   $("#device-blinds").modal();
-}
-
-function updateDeviceBlindModal(button){
-  document.getElementById("blinds-name").innerHTML = button.getAttribute("data-name");
-  document.getElementById("blinds-description").innerHTML = button.getAttribute("data-desc");
-  api.device.getState(button.getAttribute("data-ID"))
-  .done(function (data) {
-      updateBlindState(button,data)
-  })
-  .fail(function (jqXHR, textStatus) {
-      alert ('Request failed: al cargar el status de cortina' + textStatus);
-  })
-}
-
-function updateBlindState(button,data){
-  var status = data.result.status
-  if(status == "opened" || status == "opening"){
-    document.getElementById("blinds-switch").checked = true;
-    $('#blinds-switch').bootstrapToggle('on')
-  }
-  else{
-    document.getElementById("blinds-switch").checked = false;
-    $('#blinds-switch').bootstrapToggle('off')
-  }
-  button.setAttribute("data-status", document.getElementById("blinds-switch").checked)
-}
-
-
-function saveChangesBlinds(){
-    cleanAllErrors()
-    var device = document.getElementById(document.getElementById("device-blinds").getAttribute("data-device"));
-    var blind = new api.blind(null,null,null,null)
-    var change = modifyDevice("device-blinds","blinds-change-name","blinds-change-description",blind,"blind")
-    var changeState = false;
-    if(change == false){
-      return;
-    }
-    if(change == true){
-      updateDevice(blind)
-  }
-
-  var currentState = document.getElementById("blinds-switch").checked
-  var previousState = device.getAttribute("data-status")
-  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
-    changeState = true;
-  }
-  if(changeState){
-    if(document.getElementById("blinds-switch").checked != device.getAttribute("data-status")){
-        if(document.getElementById("blinds-switch").checked == true){
-          blind.up(blind.id)
-        }
-        else{
-          blind.down(blind.id)
-        }
-    }
-  }
-  if(change == true || changeState == true){
-    showNotification()
-  }
-    $("#device-blinds").modal("hide");
-
-}
-
-function deleteBlinds(){
-  var device = document.getElementById(document.getElementById("device-blinds").getAttribute("data-device"));
-
-  $("#device-blinds").modal("hide");
-  $("#confirmation-Delete-device").modal();
-
-  document.getElementById("delete-modal-device-name").innerHTML = "Delete " + device.getAttribute("data-name") + "?";
-
-  document.getElementById("accept-delete-device").onclick = function() {deleteDevice(device)};
-}
-
 function deleteLamp(){
   var device = document.getElementById(document.getElementById("device-lamp").getAttribute("data-device"));
 
   $("#device-lamp").modal("hide");
-  $("#confirmation-Delete-device").modal();
-
-  document.getElementById("delete-modal-device-name").innerHTML = "Delete " + device.getAttribute("data-name") + "?";
-
-  document.getElementById("accept-delete-device").onclick = function() {deleteDevice(device)};
-}
-
-function deleteDoor(){
-  var device = document.getElementById(document.getElementById("device-door").getAttribute("data-device"));
-
-  $("#device-door").modal("hide");
   $("#confirmation-Delete-device").modal();
 
   document.getElementById("delete-modal-device-name").innerHTML = "Delete " + device.getAttribute("data-name") + "?";
@@ -1562,23 +1213,11 @@ function deleteOven(){
   document.getElementById("accept-delete-device").onclick = function() {deleteDevice(device)};
 }
 
-function deleteFridge(){
-  var device = document.getElementById(document.getElementById("device-refrigerator").getAttribute("data-device"));
-
-  $("#device-refrigerator").modal("hide");
-  $("#confirmation-Delete-device").modal();
-
-  document.getElementById("delete-modal-device-name").innerHTML = "Delete " + device.getAttribute("data-name") + "?";
-
-  document.getElementById("accept-delete-device").onclick = function() {deleteDevice(device)};
-}
-
 function deleteDevice(device){
   api.device.delete(device.getAttribute("data-ID"))
 
   .done(function(data){
-    var father = device.parentElement;
-    father.parentElement.removeChild(father);
+    deleteFromDisplay(device.getAttribute("data-ID"));
     $("#confirmation-Delete-device").modal("hide");
   })
 
@@ -1790,7 +1429,8 @@ function saveChangesLamp(){
           })
       }
       else{
-        lamp.turnOff(lamp.id)
+        lamp.turnOff(lamp.id);
+        deleteFromDisplay(lamp.id);
       }
   }
 
@@ -1800,23 +1440,23 @@ function saveChangesLamp(){
     $("#device-lamp").modal("hide");
 }
 
-  function viewOvenState(button){
-    cleanAllErrors()
-    document.getElementById("device-oven").setAttribute("data-device",button.getAttribute("id"))
-    updateDeviceOvenModal(button)
-    $("#device-oven").modal();
-  }
+function viewOvenState(button){
+  cleanAllErrors()
+  document.getElementById("device-oven").setAttribute("data-device",button.getAttribute("id"))
+  updateDeviceOvenModal(button)
+  $("#device-oven").modal();
+}
 
-  function updateDeviceOvenModal(button){
-    document.getElementById("oven-name").innerHTML = button.getAttribute("data-name");
-    document.getElementById("oven-description").innerHTML = button.getAttribute("data-desc");
-    api.device.getState(button.getAttribute("data-ID"))
-    .done(function (data) {
-        updateOvenState(button,data)
-    })
-    .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al cargar el status de cortina' + textStatus);
-    })
+function updateDeviceOvenModal(button){
+  document.getElementById("oven-name").innerHTML = button.getAttribute("data-name");
+  document.getElementById("oven-description").innerHTML = button.getAttribute("data-desc");
+  api.device.getState(button.getAttribute("data-ID"))
+  .done(function (data) {
+      updateOvenState(button,data)
+  })
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed: al cargar el status de cortina' + textStatus);
+  })
 }
 
   function updateOvenState(button,data){
@@ -1941,7 +1581,8 @@ function saveChangesOven(){
           })
       }
       else{
-        oven.turnOff(oven.id)
+        oven.turnOff(oven.id);
+        deleteFromDisplay(oven.id);
       }
   }
 
@@ -2104,207 +1745,14 @@ function saveChangesAc(){
           })
       }
       else{
-        ac.turnOff(ac.id)
+        ac.turnOff(ac.id);
+        deleteFromDisplay(ac.id);
       }
   }
   if(changes == true || changeNameOrDesc == true){
     showNotification()
   }
     $("#device-ac").modal("hide");
-}
-
-
-  function viewDoorState(button){
-    cleanAllErrors()
-    document.getElementById("device-door").setAttribute("data-device",button.getAttribute("id"))
-    updateDeviceDoorModal(button)
-    $("#device-door").modal();
-  }
-
-  function updateDeviceDoorModal(button){
-    document.getElementById("door-name").innerHTML = button.getAttribute("data-name");
-    document.getElementById("door-description").innerHTML = button.getAttribute("data-desc");
-    api.device.getState(button.getAttribute("data-ID"))
-    .done(function (data) {
-        updateDoorState(button,data)
-    })
-    .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al cargar el status de cortina' + textStatus);
-    })
-}
-
-  function updateDoorState(button,data){
-    var status = data.result.status
-    var lock = data.result.lock
-    if(status == "opened"){
-      document.getElementById("door-switch").checked = true;
-      $('#door-switch').bootstrapToggle('on')
-    }else{
-      document.getElementById("door-switch").checked = false;
-      $('#door-switch').bootstrapToggle('off')
-    }
-    if(lock == "unlocked"){
-      document.getElementById("lock-switch").checked = false;
-      $('#lock-switch').bootstrapToggle('off')
-    }else{
-      document.getElementById("lock-switch").checked = true;
-      $('#lock-switch').bootstrapToggle('on')
-    }
-    button.setAttribute("data-status", document.getElementById("door-switch").checked)
-    button.setAttribute("data-lock", document.getElementById("lock-switch").checked)
-    DisableDoorOptions()
-}
-
-function DisableDoorOptions(){
-  var switchDoor = document.getElementById("door-switch")
-  if(switchDoor.checked == true){
-    $('#lock-switch').bootstrapToggle('off')
-      $('#lock-switch').bootstrapToggle('disable')
-  }else{
-    $('#lock-switch').bootstrapToggle('enable')
-  }
-}
-
-
-function saveChangesDoor(){
-    cleanAllErrors()
-    var changeNameOrDesc = false;
-    var changes = false;
-    var door = new api.door(null,null,null,null)
-
-    changeNameOrDesc = modifyDevice("device-door","door-change-name","door-change-description",door,"door")
-    if( changeNameOrDesc == false)
-      return;
-
-    if(changeNameOrDesc == true){
-      updateDevice(door)
-    }
-
-  var currentState = document.getElementById("door-switch").checked
-  var previousState = document.getElementById(door.id).getAttribute("data-status")
-  var currentStateLock = document.getElementById("lock-switch").checked
-  var previousStateLock = document.getElementById(door.id).getAttribute("data-lock")
-
-  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
-    changes = true;
-  }
-
-  if((currentStateLock == true && previousStateLock == "false") || (currentStateLock == false && previousStateLock == "true")){
-    changes = true;
-  }
-  if(changes == true){
-      if(document.getElementById("door-switch").checked == true){
-        door.open(door.id)
-        door.unlock(door.id)
-      }
-      else{
-        door.close(door.id)
-        .done(function (data) {
-          if(document.getElementById("lock-switch").checked == true){
-            door.lock(door.id)
-          }else{
-            door.unlock(door.id)
-          }
-          })
-        .fail(function (jqXHR, textStatus) {
-          alert ('Request failed:' + textStatus);
-          })
-      }
-  }
-
-  if(changes == true || changeNameOrDesc == true){
-    showNotification()
-  }
-    $("#device-door").modal("hide");
-}
-
-
-function viewRefrigeratorState(button){
-    cleanAllErrors()
-    document.getElementById("device-refrigerator").setAttribute("data-device",button.getAttribute("id"))
-    updateDeviceRefrigeratorModal(button)
-    $("#device-refrigerator").modal();
-  }
-
-function updateDeviceRefrigeratorModal(button){
-    document.getElementById("refrigerator-name").innerHTML = button.getAttribute("data-name");
-    document.getElementById("refrigerator-description").innerHTML = button.getAttribute("data-desc");
-    api.device.getState(button.getAttribute("data-ID"))
-    .done(function (data) {
-        updateRefrigeratorState(button,data)
-    })
-    .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al cargar el status de cortina' + textStatus);
-    })
-}
-
-function updateRefrigeratorState(button,data){
-    document.getElementById("refrigerator-change-freezertemperature").value = data.result.freezerTemperature;
-    document.getElementById("refrigerator-change-temperature").value = data.result.temperature;
-    document.getElementById("refrigerator-change-mode").value = data.result.mode;
-    button.setAttribute("data-temperature",data.result.temperature)
-    button.setAttribute("data-freezertemperature",data.result.freezerTemperature)
-    button.setAttribute("data-mode",data.result.mode)
-}
-
-function saveChangesRefrigerator(){
-    cleanAllErrors()
-    var fieldError = false;
-    var changes = false;
-    var changeNameOrDesc = false;
-    var refrigerator = new api.refrigerator(null,null,null,null)
-
-    changeNameOrDesc = modifyDevice("device-refrigerator","refrigerator-change-name","refrigerator-change-description",refrigerator,"refrigerator")
-    if(changeNameOrDesc == false){
-      fieldError = true;
-    }
-    var newTemperature = document.getElementById("refrigerator-change-temperature").value;
-    var newTemperatureJSON={"0":newTemperature}
-    var parameterTemperature = JSON.stringify(newTemperatureJSON)
-    if(newTemperature < 2 || newTemperature > 8){
-      fieldError = true;
-      document.getElementById("error-refrigerator-temperature").style.display = "block"
-      document.getElementById("refrigerator-change-temperature").value = document.getElementById(refrigerator.id).getAttribute("data-temperature");
-    }
-    var newFreezerTemperature = document.getElementById("refrigerator-change-freezertemperature").value;
-    var newFreezerTemperatureJSON={"0":newFreezerTemperature}
-    var parameterFreezerTemperature = JSON.stringify(newFreezerTemperatureJSON)
-    if(newFreezerTemperature > -2 || newFreezerTemperature < -20){
-      fieldError = true;
-      document.getElementById("error-refrigerator-freezertemperature").style.display = "block"
-      document.getElementById("refrigerator-change-freezertemperature").value = document.getElementById(refrigerator.id).getAttribute("data-freezertemperature");
-    }
-    var newMode = document.getElementById("refrigerator-change-mode").value;
-    var newModeJSON={"0":newMode}
-    var parameterMode = JSON.stringify(newModeJSON)
-    if(newMode == ""){
-      fieldError = true;
-      document.getElementById("error-refrigerator-mode").style.display = "block"
-      document.getElementById("refrigerator-change-mode").value = document.getElementById(refrigerator.id).getAttribute("data-mode");
-    }
-    if(fieldError){
-      return;
-    }
-
-    if(newTemperature != document.getElementById(refrigerator.id).getAttribute("data-temperature") ||
-      newFreezerTemperature != document.getElementById(refrigerator.id).getAttribute("data-freezertemperature") ||
-      newMode != document.getElementById(refrigerator.id).getAttribute("data-mode")){
-        changes = true;
-    }
-    if(changeNameOrDesc == true){
-      updateDevice(refrigerator)
-    }
-    if(changes == true){
-      refrigerator.setFreezerTemperature(refrigerator.id,parameterFreezerTemperature)
-      refrigerator.setTemperature(refrigerator.id,parameterTemperature)
-      refrigerator.setMode(refrigerator.id,parameterMode)
-    }
-
-    if(changes == true || changeNameOrDesc == true){
-      showNotification()
-    }
-
-    $("#device-refrigerator").modal("hide");
 }
 
 function showNotification(){
@@ -2332,18 +1780,12 @@ function isColor(color){
 }
 
 function cleanAllErrors(){
-    document.getElementById("error-name-blind").style.display = "none"
     document.getElementById("error-name-lamp").style.display = "none"
     document.getElementById("error-name-oven").style.display = "none"
     document.getElementById("error-name-ac").style.display = "none"
-    document.getElementById("error-name-door").style.display = "none"
-    document.getElementById("error-name-refrigerator").style.display = "none"
-    document.getElementById("error-nameExist-blind").style.display = "none"
     document.getElementById("error-nameExist-lamp").style.display = "none"
     document.getElementById("error-nameExist-oven").style.display = "none"
     document.getElementById("error-nameExist-ac").style.display = "none"
-    document.getElementById("error-nameExist-door").style.display = "none"
-    document.getElementById("error-nameExist-refrigerator").style.display = "none"
     document.getElementById("error-lamp-color").style.display = "none"
     document.getElementById("error-lamp-brightness").style.display = "none"
     document.getElementById("error-oven-temperature").style.display = "none"
@@ -2355,9 +1797,6 @@ function cleanAllErrors(){
     document.getElementById("error-ac-verticalswing").style.display = "none"
     document.getElementById("error-ac-horizontalswing").style.display = "none"
     document.getElementById("error-ac-fanspeed").style.display = "none"
-    document.getElementById("error-refrigerator-temperature").style.display = "none"
-    document.getElementById("error-refrigerator-freezertemperature").style.display = "none"
-    document.getElementById("error-refrigerator-mode").style.display = "none"
 }
 </script>
 
