@@ -1067,9 +1067,7 @@ function deleteFromDisplay(id){
   var row = deviceContainer.parentElement;
 
   var boolean = rowFull(row);
-
   row.removeChild(deviceContainer);
-
   if(boolean)
     moveAllUp(row);
 }
@@ -1083,13 +1081,17 @@ function moveAllUp(row){
   var num = childNumber(row, rowContainer);
   var nextChild;
 
-  while((num < rowContainer.childNodes.length) && nextRowHasDevices(rowContainer.children[num + 1])){
+  while((num < rowContainer.children.length) && nextRowHasDevices(rowContainer.children[num + 1])){
     nextChild = next(rowContainer.children[num + 1]);
-
+    //alert(rowContainer.children[num + 1].children[0].children[0].children[1].getAttribute("data-name"))
+    rowContainer.children[num + 1].removeChild(rowContainer.children[num + 1].children[0])
     rowContainer.children[num].appendChild(nextChild);
-    rowContainer.children[num + 1].removeChild(nextChild);
+    num++;
   }
+  alert("finalize")
 }
+
+
 
 function childNumber(row, rowContainer){
   var i = 1;
@@ -1106,6 +1108,8 @@ function next(row){
 }
 
 function nextRowHasDevices(row){
+  if(row == null)
+    return false
   return row.children.length > 0;
 }
 
