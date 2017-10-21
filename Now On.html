@@ -112,6 +112,55 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
   display:none;
 }
 
+.notification{
+  width:300px;
+  height:150px;
+  background-color:black;
+  position: absolute;
+  top:15px;
+  right:15px;
+  display:none;
+}
+
+.header-notification{
+  width:100%;
+    height:20%;
+    background-color:#15993c;
+    text-align:center;
+    font-size:155%;
+    color:white;
+}
+
+.header-not{
+}
+
+.body-notification{
+  display: flex;
+    width:100%;
+    height:80%;
+    background-color:#75ff7c;
+}
+
+.img-not{
+  background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Checkmark_green.svg/417px-Checkmark_green.svg.png");
+ background-size: 100px 100px;
+ background-repeat: no-repeat;
+ width: 120px;
+ height: 100px;
+ margin-top:10px;
+ margin-right:10px;
+ margin-left:10px;
+ border-right: 2px solid #15993c;
+}
+
+.body-text{
+  font-size:140%;
+    text-align:center;
+    width:150px;
+    height:100%;
+    margin-top:32px;
+}
+
  </style>
 </head>
 <body onload="loadDevices()">
@@ -654,12 +703,49 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 
 <!-- Aca estarian los dispositivos añadidos dinamicamente-->
   
+  <!-- Notification-->
+<div class="notification" id="notification">
+    <div class="header-notification">
+        <p class="header-not">Notification</p>
+    </div>
+    <div class="body-notification">
+        <div class="img-not">
+        </div>
+        <div class="body-text-not">
+            <p class="body-text">Changes saved</p>
+        </div>
+    </div> 
+</div>
 <!-- End page content -->
 </div>
 
 
 
 <script>
+
+$(document).ready(function () {
+    $('#lamp-switch').on('change', function () {
+        DisableLampOptions()
+    });
+});
+
+$(document).ready(function () {
+    $('#oven-switch').on('change', function () {
+        DisableOvenOptions()
+    });
+});
+
+$(document).ready(function () {
+    $('#ac-switch').on('change', function () {
+        DisableAcOptions()
+    });
+});
+
+$(document).ready(function () {
+    $('#door-switch').on('change', function () {
+        DisableDoorOptions()
+    });
+});
 
 var api = class {
   static get baseUrl() {
@@ -668,6 +754,74 @@ var api = class {
 
   static get timeout() {
     return 60 * 1000;
+  }
+}
+api.room = class {
+  static get url() {
+    return api.baseUrl + "rooms/";
+  }
+
+  static add(room) {
+   return $.ajax({
+      url: api.room.url,
+      method: "POST",
+      dataType: "json",
+      timeout: api.timeout,
+      async: false,
+      data: room
+    }); 
+  }
+
+  static modify(room) {
+   return $.ajax({
+      url: api.room.url + room.id,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+      async: false,
+      data: room
+    }); 
+  }
+
+  static delete(id) {
+   return $.ajax({
+      url: api.room.url + id,
+      method: "DELETE",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    }); 
+  }
+
+  static get(id) {
+    return $.ajax({
+      url: api.room.url + id,
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+  static getRoomDevices(id) {
+    return $.ajax({
+      url: api.room.url + id + "/devices",
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+
+  static getAll(){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/rooms",
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
   }
 }
 
@@ -682,6 +836,7 @@ api.device = class {
       method: "POST",
       dataType: "json",
       timeout: api.timeout,
+      async: false,
       data: device
     }); 
   }
@@ -692,6 +847,7 @@ api.device = class {
       method: "PUT",
       dataType: "json",
       timeout: api.timeout,
+      async: false,
       data:device
     }); 
   }
@@ -701,6 +857,7 @@ api.device = class {
       url: api.device.url + id,
       method: "DELETE",
       dataType: "json",
+      async: false,
       timeout: api.timeout,
     }); 
   }
@@ -710,6 +867,7 @@ api.device = class {
       url: api.device.url + id,
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -719,6 +877,7 @@ api.device = class {
       url: "http://127.0.0.1:8080/api" + /devices/+ idDevice + /rooms/ + idRoom,
       method: "POST",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -728,6 +887,7 @@ api.device = class {
       url: "http://127.0.0.1:8080/api/devices",
       method: "GET",
       dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -737,6 +897,17 @@ api.device = class {
       url: "http://127.0.0.1:8080/api/devicetypes",
       method: "GET",
       dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+  static getType(id){
+      return $.ajax({
+      url: "http://127.0.0.1:8080/api/devicetypes/" + id,
+      method: "GET",
+      dataType: "json",
+      async: false,
       timeout: api.timeout
     });
   }
@@ -750,10 +921,370 @@ api.device = class {
       timeout: api.timeout,
     });
   }
+}
+
+api.blind = class{
+
+  constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+
+  up(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "up",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+  down(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "down",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+}
+
+api.lamp = class {
+
+    constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+    turnOn(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOn",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+    turnOff(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOff",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+    
+    changeBrightness(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "changeBrightness",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+
+    changeColor(deviceID,string){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "changeColor",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: string
+    });
+  }
+}
+  api.oven = class {
+
+    constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+    turnOn(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOn",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+    turnOff(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOff",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+    
+    setTemperature(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setTemperature",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setHeat(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setHeat",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setGrill(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setGrill",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setConvection(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setConvection",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+}
+
+  api.ac = class {
+
+    constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+    turnOn(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOn",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+    turnOff(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOff",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+    
+    setTemperature(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setTemperature",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setMode(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setMode",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setVerticalSwing(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setVerticalSwing",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setHorizontalSwing(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setHorizontalSwing",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+
+  setFanSpeed(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setFanSpeed",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+}
+
+  api.door = class {
+
+    constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+    open(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "open",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+    close(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "close",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+    
+    lock(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "lock",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+    });
+  }
+
+  unlock(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "unlock",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+    });
+  }
+
+}
+  api.refrigerator = class {
+
+  constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+  
+  setFreezerTemperature(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setFreezerTemperature",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setTemperature(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setTemperature",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+    setMode(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setMode",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
 
 }
 
 api.model = api.model || {};
+
+api.model.room = class {
+  constructor(id, name, meta) {
+    if (id) {
+      this.id = id;
+    } else {
+      delete(this.id);
+    }
+    this.name = name;
+    this.meta = meta;
+  }
+}
 
 api.model.device = class {
   constructor(typeId, name, meta) {
@@ -766,6 +1297,14 @@ api.model.device = class {
     this.meta = meta;
   }
 }
+
+api.model.action = class{
+    constructor(name,params) {
+     this.name = name;
+     this.params = params;
+  }
+}
+
 
 function addAttributesOfDeviceButton(deviceButton, deviceImage){
 
@@ -919,20 +1458,53 @@ function updateDeviceBlindModal(button){
   })
 }
 
+function updateBlindState(button,data){
+  var status = data.result.status
+  if(status == "opened" || status == "opening"){
+    document.getElementById("blinds-switch").checked = true;
+    $('#blinds-switch').bootstrapToggle('on')
+  }
+  else{
+    document.getElementById("blinds-switch").checked = false;
+    $('#blinds-switch').bootstrapToggle('off')
+  }
+  button.setAttribute("data-status", document.getElementById("blinds-switch").checked)
+}
+
+
 function saveChangesBlinds(){
     cleanAllErrors()
+    var device = document.getElementById(document.getElementById("device-blinds").getAttribute("data-device"));
     var blind = new api.blind(null,null,null,null)
-    if(modifyDevice("device-blinds","blinds-change-name","blinds-change-description",blind,"blind") == false){
+    var change = modifyDevice("device-blinds","blinds-change-name","blinds-change-description",blind,"blind")
+    var changeState = false;
+    if(change == false){
       return;
     }
-    updateDevice(blind)
-    if(document.getElementById("blinds-switch").checked == true){
-      blind.up(blind.id)
+    if(change == true){
+      updateDevice(blind)
+  }
+
+  var currentState = document.getElementById("blinds-switch").checked
+  var previousState = device.getAttribute("data-status")
+  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
+    changeState = true;
+  }
+  if(changeState){
+    if(document.getElementById("blinds-switch").checked != device.getAttribute("data-status")){
+        if(document.getElementById("blinds-switch").checked == true){
+          blind.up(blind.id)
+        }
+        else{
+          blind.down(blind.id)
+        }
     }
-    else{
-      blind.down(blind.id)
-    }
+  }
+  if(change == true || changeState == true){
+    showNotification()
+  }
     $("#device-blinds").modal("hide");
+
 }
 
 function deleteBlinds(){
@@ -1023,6 +1595,7 @@ function modifyDevice(modalID,newNameID,newDescID,deviceObj,deviceType){
    deviceObj.typeId = device.getAttribute("data-typeID")
    var errorName = document.getElementById("error-name-" + deviceType)
    var errorExistName = document.getElementById("error-nameExist-" + deviceType)
+
    if( (deviceObj.name.length != 0 && deviceObj.name.length < 3) || deviceObj.name.length > 30){
     errorName.style.display = "block";
     document.getElementById(newNameID).value = ""
@@ -1040,6 +1613,7 @@ function modifyDevice(modalID,newNameID,newDescID,deviceObj,deviceType){
     }else{
       deviceObj.description = device.getAttribute("data-desc");
       deviceObj.name = device.getAttribute("data-name")
+      return null;
     }
 
   device.setAttribute("data-name",deviceObj.name)
@@ -1049,6 +1623,23 @@ function modifyDevice(modalID,newNameID,newDescID,deviceObj,deviceType){
   return true;
 }
 
+function deviceNameExist(deviceName,errorElement){
+  var boolean = false;
+  api.device.getAll()
+  .done(function (data){
+      for(var i=0; i < data.devices.length ; i++){
+        if(data.devices[i].name == deviceName){
+            errorElement.style.display = "block"
+            boolean = true;
+        }
+      }
+  })
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed:' + textStatus);
+  })
+  return boolean;
+}
+
 function updateDevice(deviceObj){
     api.device.get(deviceObj.id)
     .done(function (data) {
@@ -1056,7 +1647,6 @@ function updateDevice(deviceObj){
         data.device.meta = deviceObj.description
         api.device.modify(data.device)
         .done(function (boolean){
-          addDeviceToRoom(actualRoomName,data.device.id,data.device,0)
         })
         .fail(function (jqXHR, textStatus) {
         alert ('Request failed:' + textStatus);
@@ -1065,16 +1655,26 @@ function updateDevice(deviceObj){
     .fail(function (jqXHR, textStatus) {
       alert ('Request failed:' + textStatus);
       })
+    var deviceTag = createTag(deviceObj.name);
+    var button = document.getElementById(deviceObj.id)
+    var deviceContainer = button.parentNode
+    var divToRemove = deviceContainer.children[0]
+    deviceContainer.removeChild(divToRemove)
+    deviceContainer.appendChild(deviceTag)
 }
 
-function updateBlindState(button,data){
-  var status = data.result.status
-  if(status == "opened" || status == "opening"){
-    document.getElementById("blinds-switch").checked = true;
-  }
-  else{
-    document.getElementById("blinds-switch").checked = false;
-  }
+function createTag(deviceName){
+    var tag = document.createElement("div");
+    tag.classList.add("my-display-topleft");
+    tag.classList.add("my-black");
+    tag.classList.add("my-padding");
+
+    if(deviceName.length > 23){
+      tag.innerHTML = deviceName.substring(0, 21) + "...";
+    }else
+      tag.innerHTML = deviceName;
+      
+    return tag;
 }
 
 function viewLampState(button){
@@ -1084,15 +1684,6 @@ function viewLampState(button){
    $("#device-lamp").modal();
 }
 
-function DisableLampOptions(button){
-  if( button.checked == true){
-    document.getElementById("lamp-change-brightness").disabled = false
-    document.getElementById("lamp-change-color").disabled = false
-  }else{
-    document.getElementById("lamp-change-brightness").disabled = true
-    document.getElementById("lamp-change-color").disabled = true
-  }
-}
 
 function updateDeviceLampModal(button){
   document.getElementById("lamp-name").innerHTML = button.getAttribute("data-name");
@@ -1108,21 +1699,34 @@ function updateDeviceLampModal(button){
 
 function updateLampState(button,data){
   var status = data.result.status
-  DisableLampOptions(document.getElementById("lamp-switch"))
   if(status == "on"){
     document.getElementById("lamp-switch").checked = true;
+    $('#lamp-switch').bootstrapToggle('on')
     document.getElementById("lamp-change-brightness").disabled = false
     document.getElementById("lamp-change-color").disabled = false
   }
   else{
     document.getElementById("lamp-switch").checked = false
+    $('#lamp-switch').bootstrapToggle('off')
     document.getElementById("lamp-change-brightness").disabled = true
     document.getElementById("lamp-change-color").disabled = true
   }
-  document.getElementById("lamp-change-brightness").value = data.result.brightness;
-  document.getElementById("lamp-change-color").value = data.result.color;
   button.setAttribute("data-brightness", data.result.brightness);
   button.setAttribute("data-color", data.result.color);
+  button.setAttribute("data-status", document.getElementById("lamp-switch").checked)
+  document.getElementById("lamp-change-brightness").value = data.result.brightness;
+  document.getElementById("lamp-change-color").value = data.result.color;
+}
+
+function DisableLampOptions(){
+  var switchLamp = document.getElementById("lamp-switch")
+  if(switchLamp.checked == true){
+    document.getElementById("lamp-change-brightness").disabled = false
+      document.getElementById("lamp-change-color").disabled = false
+  }else{
+    document.getElementById("lamp-change-brightness").disabled = true
+      document.getElementById("lamp-change-color").disabled = true
+  }
 }
 
 
@@ -1130,19 +1734,23 @@ function updateLampState(button,data){
 function saveChangesLamp(){
     cleanAllErrors()
     var fieldError = false;
+    var changeNameOrDesc = false
+    var changes = false;
     var lamp = new api.lamp(null,null,null,null)
-    if(modifyDevice("device-lamp","lamp-change-name","lamp-change-description",lamp,"lamp") == false){
+
+    changeNameOrDesc = modifyDevice("device-lamp","lamp-change-name","lamp-change-description",lamp,"lamp")
+    if( changeNameOrDesc == false){
       fieldError = true;
     }
     var newBrightness = document.getElementById("lamp-change-brightness").value;
-    if(newBrightness > 100 || newBrightness < 0){
+    if(newBrightness > 100 || newBrightness < 0 || newBrightness == ""){
       document.getElementById("error-lamp-brightness").style.display = "block"
       document.getElementById("lamp-change-brightness").value = document.getElementById(lamp.id).getAttribute("data-brightness")
       fieldError = true;
     }
     var newColor = document.getElementById("lamp-change-color").value;
     newColor = newColor.substring(1);
-    if(! isColor(newColor)){
+    if(! isColor(newColor) || newColor == ""){
       document.getElementById("lamp-change-brightness").value = document.getElementById(lamp.id).getAttribute("data-color")
       document.getElementById("error-lamp-color").style.display = "block"
       fieldError = true;
@@ -1150,25 +1758,45 @@ function saveChangesLamp(){
     if(fieldError){
       return;
     }
-    updateDevice(lamp)
-    var newBrightnessJSON={"0":newBrightness}; //si fueran 2 parametros seria {"0":newBrightness,"1":segundaParam}
-    var newColorJSON={"0":newColor}
-    var parameterBrightness = JSON.stringify(newBrightnessJSON)
-    var parameterColor = JSON.stringify(newColorJSON)
-    if(document.getElementById("lamp-switch").checked == true){
-      lamp.turnOn(lamp.id)
-      .done(function (data) {
-        lamp.changeBrightness(lamp.id,parameterBrightness)
-        lamp.changeColor(lamp.id,parameterColor)
-        })
-      .fail(function (jqXHR, textStatus) {
-        alert ('Request failed:' + textStatus);
-        })
-    }
-    else{
-      lamp.turnOff(lamp.id)
-    }
 
+    if((newBrightness != document.getElementById(lamp.id).getAttribute("data-brightness")) 
+        || newColor != document.getElementById(lamp.id).getAttribute("data-color")){
+      changes = true;
+  }
+
+  var currentState = document.getElementById("lamp-switch").checked
+  var previousState = document.getElementById(lamp.id).getAttribute("data-status")
+
+  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
+    changes = true;
+  }
+
+  if(changeNameOrDesc == true){
+      updateDevice(lamp)
+  }
+    if(changes){
+      var newBrightnessJSON={"0":newBrightness}; //si fueran 2 parametros seria {"0":newBrightness,"1":segundaParam}
+      var newColorJSON={"0":newColor}
+      var parameterBrightness = JSON.stringify(newBrightnessJSON)
+      var parameterColor = JSON.stringify(newColorJSON)
+      if(document.getElementById("lamp-switch").checked == true){
+        lamp.turnOn(lamp.id)
+        .done(function (data) {
+          lamp.changeBrightness(lamp.id,parameterBrightness)
+          lamp.changeColor(lamp.id,parameterColor)
+          })
+        .fail(function (jqXHR, textStatus) {
+          alert ('Request failed:' + textStatus);
+          })
+      }
+      else{
+        lamp.turnOff(lamp.id)
+      }
+  }
+
+  if(changeNameOrDesc == true || changes == true){
+    showNotification()
+  }
     $("#device-lamp").modal("hide");
 }
 
@@ -1182,8 +1810,8 @@ function saveChangesLamp(){
   function updateDeviceOvenModal(button){
     document.getElementById("oven-name").innerHTML = button.getAttribute("data-name");
     document.getElementById("oven-description").innerHTML = button.getAttribute("data-desc");
-    api.device.getState(button.getAttribute("id"))
-    .done(function(data) {
+    api.device.getState(button.getAttribute("data-ID"))
+    .done(function (data) {
         updateOvenState(button,data)
     })
     .fail(function (jqXHR, textStatus) {
@@ -1195,9 +1823,11 @@ function saveChangesLamp(){
     var status = data.result.status
     if(status == "on"){
       document.getElementById("oven-switch").checked = true;
+      $('#oven-switch').bootstrapToggle('on')
     }
     else{
       document.getElementById("oven-switch").checked = false;
+      $('#oven-switch').bootstrapToggle('off')
     }
     document.getElementById("oven-change-temperature").value = data.result.temperature;
     document.getElementById("oven-change-heatmode").value = data.result.heat;
@@ -1207,14 +1837,36 @@ function saveChangesLamp(){
     button.setAttribute("data-heatmode", data.result.heat);
     button.setAttribute("data-grillmode", data.result.grill);
     button.setAttribute("data-convectionmode", data.result.convection);
+    button.setAttribute("data-status", document.getElementById("oven-switch").checked)
+    DisableOvenOptions()
 
+}
+
+function DisableOvenOptions(){
+  var switchOven = document.getElementById("oven-switch")
+  if(switchOven.checked == true){
+      document.getElementById("oven-change-temperature").disabled = false;
+      document.getElementById("oven-change-heatmode").disabled = false;
+      document.getElementById("oven-change-grillmode").disabled = false;
+      document.getElementById("oven-change-convectionmode").disabled = false;
+  }else{
+      document.getElementById("oven-change-temperature").disabled = true;
+      document.getElementById("oven-change-heatmode").disabled = true;
+      document.getElementById("oven-change-grillmode").disabled = true;
+      document.getElementById("oven-change-convectionmode").disabled = true;
+  }
 }
 
 function saveChangesOven(){
     cleanAllErrors()
     var fieldError = false;
+    var changeNameOrDesc = false;
+    var changes = false;
     var oven = new api.oven(null,null,null,null)
-    if(modifyDevice("device-oven","oven-change-name","oven-change-description",oven,"oven") == false){
+    
+    changeNameOrDesc = modifyDevice("device-oven","oven-change-name","oven-change-description",oven,"oven")
+
+    if(changeNameOrDesc == false){
       fieldError = true
     }
 
@@ -1233,6 +1885,8 @@ function saveChangesOven(){
     var newGrillModeJSON={"0":newGrillMode}
     var parameterGrillMode = JSON.stringify(newGrillModeJSON)
     var newConvectionMode = document.getElementById("oven-change-convectionmode").value;
+    var newConvectionModeJSON={"0":newConvectionMode}
+    var parameterConvectionMode = JSON.stringify(newConvectionModeJSON)
     
     if(newHeatMode == ""){
       document.getElementById("error-oven-heatmode").style.display = "block"
@@ -1251,29 +1905,48 @@ function saveChangesOven(){
     }
     if(fieldError)
       return;
-    updateDevice(oven)
-    var newConvectionModeJSON={"0":newConvectionMode}
-    var parameterConvectionMode = JSON.stringify(newConvectionModeJSON)
 
-    if(document.getElementById("oven-switch").checked == true){
-      oven.turnOn(oven.id)
-      .done(function (data) {
-        if(newTemperature != "")
-          oven.setTemperature(oven.id,parameterTemperature)
-        if(newHeatMode != "")
-          oven.setHeat(oven.id,parameterHeatMode)
-        if(newGrillMode != "")
-          oven.setGrill(oven.id,parameterGrillMode)
-        if(newConvectionMode != "")
-          oven.setConvection(oven.id,parameterConvectionMode)
-        })
-      .fail(function (jqXHR, textStatus) {
-        alert ('Request failed:' + textStatus);
-        })
+    if(changeNameOrDesc == true){
+      updateDevice(oven)
     }
-    else{
-      oven.turnOff(oven.id)
+
+    if(newTemperature != document.getElementById(oven.id).getAttribute("data-temperature") ||
+      newHeatMode != document.getElementById(oven.id).getAttribute("data-heatmode") ||
+      newGrillMode != document.getElementById(oven.id).getAttribute("data-grillmode") ||
+      newConvectionMode != document.getElementById(oven.id).getAttribute("data-convectionmode")){
+        changes = true;
     }
+
+    var currentState = document.getElementById("oven-switch").checked
+  var previousState = document.getElementById(oven.id).getAttribute("data-status")
+
+  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
+    changes = true;
+  }
+  if(changes){
+      if(document.getElementById("oven-switch").checked == true){
+        oven.turnOn(oven.id)
+        .done(function (data) {
+          if(newTemperature != "")
+            oven.setTemperature(oven.id,parameterTemperature)
+          if(newHeatMode != "")
+            oven.setHeat(oven.id,parameterHeatMode)
+          if(newGrillMode != "")
+            oven.setGrill(oven.id,parameterGrillMode)
+          if(newConvectionMode != "")
+            oven.setConvection(oven.id,parameterConvectionMode)
+          })
+        .fail(function (jqXHR, textStatus) {
+          alert ('Request failed:' + textStatus);
+          })
+      }
+      else{
+        oven.turnOff(oven.id)
+      }
+  }
+
+  if(changes == true || changeNameOrDesc == true)
+    showNotification()
     $("#device-oven").modal("hide");
 }
 
@@ -1286,9 +1959,7 @@ function saveChangesOven(){
 
   function updateDeviceAcModal(button){
     document.getElementById("ac-name").innerHTML = button.getAttribute("data-name");
-    alert("asd")
     document.getElementById("ac-description").innerHTML = button.getAttribute("data-desc");
-
     api.device.getState(button.getAttribute("data-ID"))
     .done(function (data) {
         updateAcState(button,data)
@@ -1302,8 +1973,10 @@ function saveChangesOven(){
     var status = data.result.status
     if(status == "on"){
     document.getElementById("ac-switch").checked = true;
+    $('#ac-switch').bootstrapToggle('on')
     }else{
     document.getElementById("ac-switch").checked = false;
+    $('#ac-switch').bootstrapToggle('off')
     }
     document.getElementById("ac-change-temperature").value = data.result.temperature;
     document.getElementById("ac-change-mode").value = data.result.mode;
@@ -1315,13 +1988,35 @@ function saveChangesOven(){
     button.setAttribute("data-horizontalswing", data.result.horizontalSwing);
     button.setAttribute("data-mode", data.result.mode);
     button.setAttribute("data-fanspeed", data.result.fanSpeed);
+    button.setAttribute("data-status", document.getElementById("ac-switch").checked)
+    DisableAcOptions()
+}
+
+function DisableAcOptions(){
+  var switchAc = document.getElementById("ac-switch")
+  if(switchAc.checked == true){
+    document.getElementById("ac-change-temperature").disabled = false;
+    document.getElementById("ac-change-mode").disabled = false;
+    document.getElementById("ac-change-verticalswing").disabled = false;
+    document.getElementById("ac-change-horizontalswing").disabled = false;
+    document.getElementById("ac-change-fanspeed").disabled = false;
+  }else{
+    document.getElementById("ac-change-temperature").disabled = true;
+    document.getElementById("ac-change-mode").disabled = true;
+    document.getElementById("ac-change-verticalswing").disabled = true;
+    document.getElementById("ac-change-horizontalswing").disabled = true;
+    document.getElementById("ac-change-fanspeed").disabled = true;
+  }
 }
 
 function saveChangesAc(){
     cleanAllErrors()
     var fieldError = false;
     var ac = new api.ac(null,null,null,null)
-    if(modifyDevice("device-ac","ac-change-name","ac-change-description",ac,"ac") == false){
+    var changeNameOrDesc = false;
+    var changes = false;
+    changeNameOrDesc = modifyDevice("device-ac","ac-change-name","ac-change-description",ac,"ac")
+    if( changeNameOrDesc == false){
       fieldError = true;
     }
     var newTemperature = document.getElementById("ac-change-temperature").value;
@@ -1332,6 +2027,7 @@ function saveChangesAc(){
       document.getElementById("error-ac-temperature").style.display = "block"
       document.getElementById("ac-change-temperature").value = document.getElementById(ac.id).getAttribute("data-temperature");
     }
+    
     var newMode = document.getElementById("ac-change-mode").value;
     var newModeJSON={"0":newMode}
     var parameterMode = JSON.stringify(newModeJSON)
@@ -1344,7 +2040,6 @@ function saveChangesAc(){
     var newFanspeed = document.getElementById("ac-change-fanspeed").value;
     var newFanspeedJSON={"0":newFanspeed}
     var parameterFanspeed = JSON.stringify(newFanspeedJSON)
-
     if(newMode == ""){
       fieldError = true;
       document.getElementById("error-ac-mode").style.display = "block"
@@ -1371,28 +2066,50 @@ function saveChangesAc(){
 
     if(fieldError)
       return;
-    updateDevice(ac)
-    if(document.getElementById("ac-switch").checked == true){
-      ac.turnOn(ac.id)
-      .done(function (data) {
-        if(newTemperature != "")
-          ac.setTemperature(ac.id,parameterTemperature)
-        if(newMode != "")
-          ac.setMode(ac.id,parameterMode)
-        if(newVerticalswing != "")
-          ac.setVerticalSwing(ac.id,parameterVerticalswing)
-        if(newHorizontalswing != "")
-          ac.setHorizontalSwing(ac.id,parameterHorizontalswing)
-        if(newFanspeed != "")
-          ac.setFanSpeed(ac.id,parameterFanspeed)
-        })
-      .fail(function (jqXHR, textStatus) {
-        alert ('Request failed:' + textStatus);
-        })
+
+    if(newTemperature != document.getElementById(ac.id).getAttribute("data-temperature") ||
+      newMode != document.getElementById(ac.id).getAttribute("data-mode") ||
+      newVerticalswing != document.getElementById(ac.id).getAttribute("data-verticalswing") ||
+      newHorizontalswing != document.getElementById(ac.id).getAttribute("data-horizontalswing") ||
+      newFanspeed != document.getElementById(ac.id).getAttribute("data-fanspeed")){
+        changes = true;
     }
-    else{
-      ac.turnOff(ac.id)
-    }
+
+  var currentState = document.getElementById("ac-switch").checked
+  var previousState = document.getElementById(ac.id).getAttribute("data-status")
+
+  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
+    changes = true;
+  }
+  if(changeNameOrDesc == true){
+      updateDevice(ac)
+  }
+  if(changes == true){
+      if(document.getElementById("ac-switch").checked == true){
+        ac.turnOn(ac.id)
+        .done(function (data) {
+          if(newTemperature != "")
+            ac.setTemperature(ac.id,parameterTemperature)
+          if(newMode != "")
+            ac.setMode(ac.id,parameterMode)
+          if(newVerticalswing != "")
+            ac.setVerticalSwing(ac.id,parameterVerticalswing)
+          if(newHorizontalswing != "")
+            ac.setHorizontalSwing(ac.id,parameterHorizontalswing)
+          if(newFanspeed != "")
+            ac.setFanSpeed(ac.id,parameterFanspeed)
+          })
+        .fail(function (jqXHR, textStatus) {
+          alert ('Request failed:' + textStatus);
+          })
+      }
+      else{
+        ac.turnOff(ac.id)
+      }
+  }
+  if(changes == true || changeNameOrDesc == true){
+    showNotification()
+  }
     $("#device-ac").modal("hide");
 }
 
@@ -1421,39 +2138,83 @@ function saveChangesAc(){
     var lock = data.result.lock
     if(status == "opened"){
       document.getElementById("door-switch").checked = true;
+      $('#door-switch').bootstrapToggle('on')
     }else{
       document.getElementById("door-switch").checked = false;
+      $('#door-switch').bootstrapToggle('off')
     }
     if(lock == "unlocked"){
       document.getElementById("lock-switch").checked = false;
+      $('#lock-switch').bootstrapToggle('off')
     }else{
       document.getElementById("lock-switch").checked = true;
+      $('#lock-switch').bootstrapToggle('on')
     }
+    button.setAttribute("data-status", document.getElementById("door-switch").checked)
+    button.setAttribute("data-lock", document.getElementById("lock-switch").checked)
+    DisableDoorOptions()
 }
+
+function DisableDoorOptions(){
+  var switchDoor = document.getElementById("door-switch")
+  if(switchDoor.checked == true){
+    $('#lock-switch').bootstrapToggle('off')
+      $('#lock-switch').bootstrapToggle('disable')
+  }else{
+    $('#lock-switch').bootstrapToggle('enable')
+  }
+}
+
 
 function saveChangesDoor(){
     cleanAllErrors()
+    var changeNameOrDesc = false;
+    var changes = false;
     var door = new api.door(null,null,null,null)
-    if(modifyDevice("device-door","door-change-name","door-change-description",door,"door") == false)
+
+    changeNameOrDesc = modifyDevice("device-door","door-change-name","door-change-description",door,"door")
+    if( changeNameOrDesc == false)
       return;
 
-    updateDevice(door)
-    if(document.getElementById("door-switch").checked == true){
-      door.open(door.id)
+    if(changeNameOrDesc == true){
+      updateDevice(door)
     }
-    else{
-      door.close(door.id)
-      .done(function (data) {
-        if(document.getElementById("lock-switch").checked == true){
-          door.lock(door.id)
-        }else{
-          door.unlock(door.id)
-        }
-        })
-      .fail(function (jqXHR, textStatus) {
-        alert ('Request failed:' + textStatus);
-        })
-    }
+
+  var currentState = document.getElementById("door-switch").checked
+  var previousState = document.getElementById(door.id).getAttribute("data-status")
+  var currentStateLock = document.getElementById("lock-switch").checked
+  var previousStateLock = document.getElementById(door.id).getAttribute("data-lock")
+
+  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
+    changes = true;
+  }
+
+  if((currentStateLock == true && previousStateLock == "false") || (currentStateLock == false && previousStateLock == "true")){
+    changes = true;
+  }
+  if(changes == true){
+      if(document.getElementById("door-switch").checked == true){
+        door.open(door.id)
+        door.unlock(door.id)
+      }
+      else{
+        door.close(door.id)
+        .done(function (data) {
+          if(document.getElementById("lock-switch").checked == true){
+            door.lock(door.id)
+          }else{
+            door.unlock(door.id)
+          }
+          })
+        .fail(function (jqXHR, textStatus) {
+          alert ('Request failed:' + textStatus);
+          })
+      }
+  }
+
+  if(changes == true || changeNameOrDesc == true){
+    showNotification()
+  }
     $("#device-door").modal("hide");
 }
 
@@ -1489,8 +2250,12 @@ function updateRefrigeratorState(button,data){
 function saveChangesRefrigerator(){
     cleanAllErrors()
     var fieldError = false;
+    var changes = false;
+    var changeNameOrDesc = false;
     var refrigerator = new api.refrigerator(null,null,null,null)
-    if(modifyDevice("device-refrigerator","refrigerator-change-name","refrigerator-change-description",refrigerator,"refrigerator") == false){
+
+    changeNameOrDesc = modifyDevice("device-refrigerator","refrigerator-change-name","refrigerator-change-description",refrigerator,"refrigerator")
+    if(changeNameOrDesc == false){
       fieldError = true;
     }
     var newTemperature = document.getElementById("refrigerator-change-temperature").value;
@@ -1520,11 +2285,50 @@ function saveChangesRefrigerator(){
     if(fieldError){
       return;
     }
-    updateDevice(refrigerator)
-    refrigerator.setFreezerTemperature(refrigerator.id,parameterFreezerTemperature)
-    refrigerator.setTemperature(refrigerator.id,parameterTemperature)
-    refrigerator.setMode(refrigerator.id,parameterMode)
+
+    if(newTemperature != document.getElementById(refrigerator.id).getAttribute("data-temperature") ||
+      newFreezerTemperature != document.getElementById(refrigerator.id).getAttribute("data-freezertemperature") ||
+      newMode != document.getElementById(refrigerator.id).getAttribute("data-mode")){
+        changes = true;
+    }
+    if(changeNameOrDesc == true){
+      updateDevice(refrigerator)
+    }
+    if(changes == true){
+      refrigerator.setFreezerTemperature(refrigerator.id,parameterFreezerTemperature)
+      refrigerator.setTemperature(refrigerator.id,parameterTemperature)
+      refrigerator.setMode(refrigerator.id,parameterMode)
+    }
+
+    if(changes == true || changeNameOrDesc == true){
+      showNotification()
+    }
+
     $("#device-refrigerator").modal("hide");
+}
+
+function showNotification(){
+  $("#notification").fadeIn(2000);
+  setTimeout(function(){
+    $("#notification").fadeOut(2000);
+}, 6000);
+  
+}
+$(function() {
+    $('#cp3').colorpicker({
+       color: '#AA3399',
+        format: 'hex',
+    });
+});
+
+
+function isColor(color){
+  for (var i = 0; i < color.length; i++) {
+    var c = color.charAt(i);
+    if( (c < '0' || c > '9') && ( c < 'a' || c > 'z') && ( c < 'A' || c > 'Z'))
+      return false;
+  }
+  return true;
 }
 
 function cleanAllErrors(){
@@ -1555,39 +2359,6 @@ function cleanAllErrors(){
     document.getElementById("error-refrigerator-freezertemperature").style.display = "none"
     document.getElementById("error-refrigerator-mode").style.display = "none"
 }
-
-
-$(function() {
-    $('#cp3').colorpicker({
-       color: '#AA3399',
-        format: 'hex',
-    });
-});
-
-
-function isColor(color){
-  for (var i = 0; i < color.length; i++) {
-    var c = color.charAt(i);
-    if( (c < '0' || c > '9') && ( c < 'a' || c > 'z') && ( c < 'A' || c > 'Z'))
-      return false;
-  }
-  return true;
-}
-
-function isAlphaNumeric(str) {
-  var code, i, len;
-  for (i = 0, len = str.length; i < len; i++) {
-    code = str.charCodeAt(i);
-    if (!(code > 47 && code < 58) && // numeric (0-9)
-        !(code > 64 && code < 91) && // upper alpha (A-Z)
-        !(code > 96 && code < 123) && // lower alpha (a-z)
-        !(code == '-')) {         // '-'
-      return false;
-    }
-  }
-  return true;
-};
-
 </script>
 
 </body>
