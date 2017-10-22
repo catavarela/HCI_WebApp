@@ -2319,6 +2319,7 @@ function createDevice(){
 
   var description = deviceDesc;
   var newDevice = new api.model.device(deviceTypeId, deviceName, description);
+
   api.device.add(newDevice)
   .done(function (data) {
     addDeviceToRoom(actualRoomName,data.device.id,data.device,1);
