@@ -616,6 +616,7 @@ input:checked + .slider:before {
               <label for="usrname">Name:</label>
               <input type="text" class="form-control" id="device-name" placeholder="Enter name" name="usrname">
               <p class="error" id="error-nameDeviceLength">The name must have between 3 and 30 characters </p>
+              <p class="error" id="error-exist-device-name">This name already exists</p>
               <label for="descr">Description (optional):</label>
               <input type="text" class="form-control" id="device-description" placeholder="Enter description" name="descr">
             </div>
@@ -697,6 +698,23 @@ input:checked + .slider:before {
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" id="accept-delete-device">Accept </button>
           <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>  
+      </div>
+    </div>
+  </div> 
+
+   <!-- Modal of errorConnection-->
+  <div class="modal fade" id="data-base-error" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-center"><h3>
+        </div>
+        <div class="modal-body">
+          <p class="confirm-delete-text">There was a connection problem with the data base. Please check that you are connected and refresh the page</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" data-dismiss="modal">Accept </button>
         </div>  
       </div>
     </div>
@@ -1834,6 +1852,9 @@ if(roomDesc == "")
 button.setAttribute("data-desc", roomDesc)
 var room = new api.model.room(null, getNameRoom(), roomDesc);
 api.room.add(room)
+.fail(function (jqXHR, textStatus) {
+   ("#data-base-error").modal()
+})
 $("#room").modal("hide");
 }
 
@@ -1870,6 +1891,7 @@ function cleanAllErrors(){
     document.getElementById("error-refrigerator-temperature").style.display = "none"
     document.getElementById("error-refrigerator-freezertemperature").style.display = "none"
     document.getElementById("error-refrigerator-mode").style.display = "none"
+    document.getElementById("error-exist-device-name").style.display = "none"
 }
 
 
@@ -1881,7 +1903,7 @@ function loadAll(){
     loadDevices(data)
   })
   .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
+    ("#data-base-error").modal()
   })
   
   api.device.getTypes()
@@ -1889,7 +1911,6 @@ function loadAll(){
     updateNewDeviceModal(data)
   })
   .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
   })  
   
 }
@@ -2134,7 +2155,7 @@ function modifyRoomFromDB(roomName, newRoomName){
     findAndUpdate(data,roomName,newRoomName)
   })
   .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
+    ("#data-base-error").modal()
   })
 }
 
@@ -2155,6 +2176,9 @@ function findAndUpdate(data,roomName,newRoomName){
   alert("Desc: " + roomDesc)
   var modifiedRoom = new api.model.room(idRoom, newRoomName, roomDesc);
   api.room.modify(modifiedRoom)
+   .fail(function (jqXHR, textStatus) {
+    ("#data-base-error").modal()
+  })
 }
 
 function confirmDelete(roomName){
@@ -2197,7 +2221,7 @@ function removeRoomFromDB(roomName){
     findAndDelete(data,roomName)
   })
   .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
+    ("#data-base-error").modal()
   })
 }
 
@@ -2211,6 +2235,9 @@ function findAndDelete(data,roomName){
       }
   }
   api.room.delete(idRoom)
+  .fail(function (jqXHR, textStatus) {
+    ("#data-base-error").modal()
+  })
 }
 
 function deleteAllDevicesOfRoom(room){
@@ -2219,7 +2246,7 @@ function deleteAllDevicesOfRoom(room){
     deleteAllDevices(data,room)
   })
   .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
+    ("#data-base-error").modal()
   })
 }
 
@@ -2241,20 +2268,28 @@ function createDevice(){
   var deviceTypeId = comboBoxTypeDevices.options[comboBoxTypeDevices.selectedIndex].value
   var deviceName = document.getElementById("device-name").value;
   var deviceDesc = document.getElementById("device-description").value
+  var error = false;
   if(deviceTypeId == "none" && (deviceName.length < 3 || deviceName.length == 0 || deviceName.length > 30)){
     document.getElementById("error-deviceType").style.display = "block"
     document.getElementById("error-nameDeviceLength").style.display = "block"
   }
+  var errorExist = document.getElementById("error-exist-device-name")
+  if(deviceNameExist(deviceName,errorExist)){
+  	error = true;
+  }
 
   if(deviceTypeId == "none"){
     document.getElementById("error-deviceType").style.display = "block"
-    return;
+    error = true;
   }
   
   if(deviceName.length < 3 || deviceName.length == 0 || deviceName.length > 30){
     document.getElementById("error-nameDeviceLength").style.display = "block"
-    return;
+    error = true;
   }
+
+  if(error == true)
+  	return;
 
   if(deviceDesc == ""){
     deviceDesc = "None"
@@ -2267,7 +2302,7 @@ function createDevice(){
     addDeviceToRoom(actualRoomName,data.device.id,data.device,1);
   })
   .fail(function (jqXHR, textStatus) {
-    alert ('Request failed: Fallo al agregar el device' + textStatus);
+    ("#data-base-error").modal()
   })
   document.getElementById("device-name").value = "";
   document.getElementById("device-description").value = "";
@@ -2304,7 +2339,7 @@ function findRoomForDevice(dato,roomName,deviceID,device,boolean){
       chargeDevice(device,room)
   })
   .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
+    ("#data-base-error").modal()
   })
 
 }
@@ -2322,7 +2357,7 @@ function getDevices(room){
       chargeDevices(data,room)
   })
   .fail(function (jqXHR, textStatus) {
-      alert ('Request failed:' + textStatus);
+      ("#data-base-error").modal()
   })
 }
 
@@ -2406,7 +2441,7 @@ function deviceNameExist(deviceName,errorElement){
       }
   })
   .fail(function (jqXHR, textStatus) {
-      alert ('Request failed:' + textStatus);
+      ("#data-base-error").modal()
   })
   return boolean;
 }
@@ -2441,7 +2476,7 @@ function updateDeviceBlindModal(button){
       updateBlindState(button,data)
   })
   .fail(function (jqXHR, textStatus) {
-      alert ('Request failed: al cargar el status de cortina' + textStatus);
+      ("#data-base-error").modal()
   })
 }
 
@@ -2570,7 +2605,7 @@ function deleteDevice(device){
   })
 
   .fail(function(jqXHR, textStatus){
-    alert('Request failed: al borrar el device' + textStatus);
+    ("#data-base-error").modal()
   })  
 }
 
@@ -2618,11 +2653,11 @@ function updateDevice(deviceObj){
         .done(function (boolean){
         })
         .fail(function (jqXHR, textStatus) {
-        alert ('Request failed:' + textStatus);
+        ("#data-base-error").modal()
         })
       })
     .fail(function (jqXHR, textStatus) {
-      alert ('Request failed:' + textStatus);
+      ("#data-base-error").modal()
       })
 
     var deviceTag = createTag(deviceObj.name);
@@ -2651,7 +2686,7 @@ function updateDeviceLampModal(button){
       updateLampState(button,data)
   })
   .fail(function (jqXHR, textStatus) {
-      alert ('Request failed: al cargar el status de cortina' + textStatus);
+      ("#data-base-error").modal()
   })
 }
 
@@ -2678,12 +2713,15 @@ function updateLampState(button,data){
 
 function DisableLampOptions(){
 	var switchLamp = document.getElementById("lamp-switch")
+	var button = document.getElementById(document.getElementById("device-lamp").getAttribute("data-device"))
 	if(switchLamp.checked == true){
 		document.getElementById("lamp-change-brightness").disabled = false
     	document.getElementById("lamp-change-color").disabled = false
 	}else{
 		document.getElementById("lamp-change-brightness").disabled = true
     	document.getElementById("lamp-change-color").disabled = true
+    	document.getElementById("lamp-change-brightness").value = button.getAttribute("data-brightness")
+    	document.getElementById("lamp-change-color").value = button.getAttribute("data-color")
 	}
 }
 
@@ -2707,7 +2745,9 @@ function saveChangesLamp(){
       fieldError = true;
     }
     var newColor = document.getElementById("lamp-change-color").value;
-    newColor = newColor.substring(1);
+    var firstChar = newColor.charAt(0);
+    if(firstChar == '#')
+    	newColor = newColor.substring(1);
     if(! isColor(newColor) || newColor == ""){
       document.getElementById("lamp-change-brightness").value = document.getElementById(lamp.id).getAttribute("data-color")
       document.getElementById("error-lamp-color").style.display = "block"
@@ -2744,7 +2784,7 @@ function saveChangesLamp(){
 	        lamp.changeColor(lamp.id,parameterColor)
 	        })
 	      .fail(function (jqXHR, textStatus) {
-	        alert ('Request failed:' + textStatus);
+	        $("#data-base-error").modal()
 	        })
 	    }
 	    else{
@@ -2773,7 +2813,7 @@ function saveChangesLamp(){
         updateOvenState(button,data)
     })
     .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al cargar el status de cortina' + textStatus);
+        ("#data-base-error").modal()
     })
 }
 
@@ -2802,6 +2842,7 @@ function saveChangesLamp(){
 
 function DisableOvenOptions(){
 	var switchOven = document.getElementById("oven-switch")
+	var button = document.getElementById(document.getElementById("device-oven").getAttribute("data-device"))
 	if(switchOven.checked == true){
     	document.getElementById("oven-change-temperature").disabled = false;
     	document.getElementById("oven-change-heatmode").disabled = false;
@@ -2812,6 +2853,11 @@ function DisableOvenOptions(){
     	document.getElementById("oven-change-heatmode").disabled = true;
     	document.getElementById("oven-change-grillmode").disabled = true;
     	document.getElementById("oven-change-convectionmode").disabled = true;
+    	document.getElementById("oven-change-temperature").value = button.getAttribute("data-temperature")
+    	document.getElementById("oven-change-heatmode").value = button.getAttribute("data-heatmode")
+    	document.getElementById("oven-change-grillmode").value = button.getAttribute("data-grillmode")
+    	document.getElementById("oven-change-convectionmode").value = button.getAttribute("data-convectionmode")
+
 	}
 }
 
@@ -2895,7 +2941,7 @@ function saveChangesOven(){
 	          oven.setConvection(oven.id,parameterConvectionMode)
 	        })
 	      .fail(function (jqXHR, textStatus) {
-	        alert ('Request failed:' + textStatus);
+	        ("#data-base-error").modal()
 	        })
 	    }
 	    else{
@@ -2923,7 +2969,7 @@ function saveChangesOven(){
         updateAcState(button,data)
     })
     .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al cargar el status de cortina' + textStatus);
+       ("#data-base-error").modal()
     })
 }
 
@@ -2952,6 +2998,7 @@ function saveChangesOven(){
 
 function DisableAcOptions(){
 	var switchAc = document.getElementById("ac-switch")
+	var button = document.getElementById(document.getElementById("device-ac").getAttribute("data-device"))
 	if(switchAc.checked == true){
     document.getElementById("ac-change-temperature").disabled = false;
     document.getElementById("ac-change-mode").disabled = false;
@@ -2964,6 +3011,11 @@ function DisableAcOptions(){
     document.getElementById("ac-change-verticalswing").disabled = true;
     document.getElementById("ac-change-horizontalswing").disabled = true;
     document.getElementById("ac-change-fanspeed").disabled = true;
+    document.getElementById("ac-change-temperature").value = button.getAttribute("data-temperature")
+    document.getElementById("ac-change-mode").value = button.getAttribute("data-mode")
+    document.getElementById("ac-change-verticalswing").value = button.getAttribute("data-verticalswing")
+    document.getElementById("ac-change-horizontalswing").value = button.getAttribute("data-horizontalswing")
+    document.getElementById("ac-change-fanspeed").value = button.getAttribute("data-fanspeed")
 	}
 }
 
@@ -3060,7 +3112,7 @@ function saveChangesAc(){
 	          ac.setFanSpeed(ac.id,parameterFanspeed)
 	        })
 	      .fail(function (jqXHR, textStatus) {
-	        alert ('Request failed:' + textStatus);
+	        ("#data-base-error").modal()
 	        })
 	    }
 	    else{
@@ -3089,7 +3141,7 @@ function saveChangesAc(){
         updateDoorState(button,data)
     })
     .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al cargar el status de cortina' + textStatus);
+       ("#data-base-error").modal()
     })
 }
 
@@ -3167,7 +3219,7 @@ function saveChangesDoor(){
 	        }
 	        })
 	      .fail(function (jqXHR, textStatus) {
-	        alert ('Request failed:' + textStatus);
+	        ("#data-base-error").modal()
 	        })
 	    }
 	}
@@ -3193,7 +3245,7 @@ function updateDeviceRefrigeratorModal(button){
         updateRefrigeratorState(button,data)
     })
     .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al cargar el status de cortina' + textStatus);
+        ("#data-base-error").modal()
     })
 }
 
@@ -3257,6 +3309,9 @@ function saveChangesRefrigerator(){
     	refrigerator.setFreezerTemperature(refrigerator.id,parameterFreezerTemperature)
     	refrigerator.setTemperature(refrigerator.id,parameterTemperature)
     	refrigerator.setMode(refrigerator.id,parameterMode)
+    	.fail(function (jqXHR, textStatus) {
+        ("#data-base-error").modal()
+    	})
     }
 
     if(changes == true || changeNameOrDesc == true){
@@ -3299,7 +3354,7 @@ function mySearch(){
     searchRoomList();
   })
   .fail(function (jqXHR, textStatus) {
-    alert ('Request failed:' + textStatus);
+    ("#data-base-error").modal()
   })
 }
 
