@@ -170,7 +170,9 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         <div class="modal-body">
           <form class="form-horizontal">
             <label class="control-label">Name: </label>
-            <input type="text" class="form-control" id="combination-name" placeholder="Enter name" name="combination-name">
+            <input type="text" class="form-control" id="combination-create-name" placeholder="Enter name" name="combination-name">
+            <p class="error" id="error-name-combo-create-exists">This name already exists</p>
+            <p class="error" id="error-name-combo-create-length">The name must be between 3 and 23 characters</p>
             <div class="form-group" id="append-here">
             </div>
           </form>
@@ -178,6 +180,32 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" onclick="submitRoutines()">Accept </button>
           <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <!--modal modify-->
+  <div class="modal fade" id="modify-combo" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">Combination</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <label class="control-label">Name: </label>
+            <input type="text" class="form-control" id="combination-modify-name" placeholder="Enter name" name="combination-name">
+            <p class="error" id="error-name-combo-modify-exists">This name already exists</p>
+            <p class="error" id="error-name-combo-modify-length">The name must be between 3 and 23 characters</p>
+            <div class="form-group" id="append-here-modify">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" onclick="">Accept </button>
+          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default pull-left" onclick=""><span class="glyphicon glyphicon-trash"></span> Delete</button>
         </div>
       </div>  
     </div>
@@ -499,6 +527,7 @@ function loadRoutine(routine){
   routineButton.classList.add("btn-default");
   routineButton.setAttribute("id", routine.id);
   routineButton.setAttribute("data-name", routine.name);
+  routineButton.setAttribute("onclick", "modifyRoutine(this)");
 
   displayContainer.appendChild(routineButton);
 
@@ -512,7 +541,30 @@ function loadRoutine(routine){
   return routineContainer;
 }
 
-function displayDevices(num){
+function modifyRoutine(routineButton){
+
+  api.routine.get(routineButton.id)
+
+  .done(function (data) {
+    $("#modify-combo").modal("show");
+    $("#modify-combo").on('shown.bs.modal', function () {
+      loadRoutineCamps(data);
+    });
+  })
+
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  })
+}
+
+function loadRoutineCamps(rout){
+  document.getElementById("combination-modify-name").value = rout.routine.name;
+  
+  createDivs(1, true, rout.routine.actions, rout.routine.actions[0]);
+}
+
+
+function displayDevices(num, boolean, routine, currentAction){
   if(document.getElementById("selectDevice" + num) != null){
       var deviceDiv = document.getElementById("deviceDiv" + num);
       deviceDiv.innerHTML = "";
@@ -531,27 +583,46 @@ function displayDevices(num){
     none.setAttribute("value", "none");   
     none.innerHTML = "None";
     selectDevice.appendChild(none);
-  
-    createOptions(selectDevice);
+    
+    createOptions(selectDevice, currentAction);
     document.getElementById("deviceDiv" + num).appendChild(deviceLabel);
     document.getElementById("deviceDiv" + num).appendChild(selectDevice);
-    selectDevice.addEventListener("change", function handler(){displayActions(num);});
+    if(routine == null){
+      selectDevice.addEventListener("change", function handler(){displayActions(num, boolean, routine, currentAction);});
+    } else{
+      selectDevice.addEventListener("change", function handler(){displayActions(num, boolean, null, null);});
+      displayActions(num, boolean, routine, currentAction);
+      
+    }
+ 
 }
 
 
-function loadDevices(data, selectDevice){
-  var i;
+function loadDevices(data, selectDevice, currentAction){
+  var i, boolean = false;
 
   for (i = 0; i < data.devices.length; i++){
-    loadDevice(data.devices[i], selectDevice)
+    if(currentAction != null){
+      if(data.devices[i].id == currentAction.deviceId){
+        boolean = true;
+      } else{
+        boolean = false;
+      }
+    }
+
+    loadDevice(data.devices[i], selectDevice, boolean);
   }
 }
 
-function loadDevice(device, selectDevice){
+function loadDevice(device, selectDevice, boolean){
   var option = document.createElement("option");
 
   option.setAttribute("value", device.id);
   option.innerHTML = device.name;
+
+  if(boolean){
+    option.setAttribute("selected", "true");
+  }
 
   selectDevice.appendChild(option);
 }
@@ -587,11 +658,11 @@ function deviceTypeName(typeId, returnValue){
   }
 }
 
-function createOptions(selectDevice){
+function createOptions(selectDevice, currentAction){
   api.device.getAll()
 
   .done(function (data) {
-    loadDevices(data, selectDevice);
+    loadDevices(data, selectDevice, currentAction);
   })
 
   .fail(function (jqXHR, textStatus) {
@@ -784,7 +855,7 @@ function delete(){
 */
 
 
-function displayActions(num) {
+function displayActions(num, boolean, routine, currentAction) {
   if(document.getElementById("selectAction" + num) != null){
     var actionDiv = document.getElementById("actionDiv" + num);
     actionDiv.innerHTML = " ";
@@ -794,7 +865,114 @@ function displayActions(num) {
       parameterDiv.innerHTML = " ";
     }
   }
-    
+
+  var action = null;
+
+  if(currentAction != null){
+    var retrieve, myDeviceType;
+    retrieve = currentAction.actionName;
+    myDeviceType = deviceType(currentAction.deviceId);
+
+    if(retrieve == "up"){
+      action = "blinds-open";
+    }
+
+    if(retrieve == "down"){
+      action == "blinds-close";
+    }
+
+    if(retrieve == "turnOn"){
+      if(myDeviceType == "lamp"){
+        action = "lamp-on";
+      } else if(myDeviceType == "oven"){
+        action = "oven-on";
+      } else if(myDeviceType == "ac"){
+        action = "ac-on";
+      }
+    }
+
+    if(retrieve == "turnOff"){
+      if(myDeviceType == "lamp"){
+        action = "lamp-off";
+      } else if(myDeviceType == "oven"){
+        action = "oven-off";
+      } else if(myDeviceType == "ac"){
+        action = "ac-off";
+      }
+    }
+
+    if(retrieve == "changeColor"){
+      action = "lamp-color";
+    }
+
+    if(retrieve == "changeBrightness"){
+      action = "lamp-brightness";
+    }
+
+    if(retrieve == "setTemperature"){
+      if(myDeviceType == "oven"){
+        action = "oven-temperature";
+      } else if(myDeviceType == "ac"){
+        action = "ac-temperature";
+      } else if(myDeviceType == "refrigerator"){
+        action = "refrigerator-temperature";
+      }
+    }
+
+    if(retrieve == "setHeat"){
+      action = "oven-heatmode";
+    }
+
+    if(retrieve == "setGrill"){
+      action = "oven-grillmode";
+    }
+
+    if(retrieve == "setConvection"){
+      action = "oven-convectionmode";
+    } 
+
+    if(retrieve == "setMode"){
+      if(myDeviceType == "ac"){
+        action = "ac-mode";
+      } else if(myDeviceType == "refrigerator"){
+        action = "refrigerator-mode";
+      }
+    }
+
+    if(retrieve == "setVerticalSwing"){
+      action = "ac-verticalswing";
+    }   
+
+    if(retrieve == "setHorizontalSwing"){
+      action = "ac-horizontalswing";
+    }
+
+    if(retrieve == "setFanSpeed"){
+      action = "ac-fanspeed";
+    }
+
+    if(retrieve == "open"){
+      action = "door-open";
+    }
+
+    if(retrieve == "close"){
+      action = "door-close";
+    }
+
+    if(retrieve == "lock"){
+      action = "door-lock";
+    }
+
+    if(retrieve == "unlock"){
+      action = "door-unlock"
+    }
+
+    if(retrieve == "setFreezerTemperature"){
+      action = "refrigerator-freezertemperature";
+    }
+  }
+   
+   alert(action); 
     var actionLabel = document.createElement("label");
     actionLabel.setAttribute("class", "control-label");
     actionLabel.setAttribute("id", "actionLabel" + num);
@@ -805,7 +983,7 @@ function displayActions(num) {
     if(val != "none")
       val = deviceType(val);
     
-    if(val != "none"){
+  if(val != "none"){
       var selectAction = document.createElement("select");
       selectAction.setAttribute("id", "selectAction" + num);
       selectAction.setAttribute("class", "form-control");
@@ -820,6 +998,12 @@ function displayActions(num) {
       empty.setAttribute("selected", "true");
       op1.setAttribute("value", "blinds-open");
       op2.setAttribute("value", "blinds-close");
+
+      if(action == "blinds-open"){
+        op1.setAttribute("selected", "true");
+      } else if(action == "blinds-close"){
+        op2.setAttribute("selected", "true");
+      }
     
       empty.innerHTML = "";    
       op1.innerHTML = "Open";
@@ -844,12 +1028,22 @@ function displayActions(num) {
       op2.setAttribute("value", "lamp-off");
       op3.setAttribute("value", "lamp-brightness");
       op4.setAttribute("value", "lamp-color");
+
+      if(action == "lamp-on"){
+        op1.setAttribute("selected", "true");
+      } else if(action == "lamp-off"){
+        op2.setAttribute("selected", "true");
+      } else if(action == "lamp-brightness"){
+        op3.setAttribute("selected", "true");
+      } else if(action == "lamp-color"){
+        op4.setAttribute("selected", "true");
+      }
     
       empty.innerHTML = "";
       op1.innerHTML = "Turn on";
       op2.innerHTML = "Turn off";
       op3.innerHTML = "Set brightness";
-      op4.innerHTML = "Set color";
+      op4.innerHTML = "Select color";
       
       selectAction.appendChild(empty);
       selectAction.appendChild(op1);
@@ -872,7 +1066,17 @@ function displayActions(num) {
       op2.setAttribute("value", "door-close");
       op3.setAttribute("value", "door-lock");
       op4.setAttribute("value", "door-unlock");
-    
+
+      if(action == "door-open"){
+        op1.setAttribute("selected", "true");
+      } else if(action == "door-close"){
+        op2.setAttribute("selected", "true");
+      } else if(action == "door-lock"){
+        op3.setAttribute("selected", "true");
+      } else if(action == "door-unlock"){
+        op4.setAttribute("selected", "true");
+      }
+
       empty.innerHTML = "";
       op1.innerHTML = "Open";
       op2.innerHTML = "Close";
@@ -904,14 +1108,28 @@ function displayActions(num) {
       op4.setAttribute("value", "oven-heatmode");
       op5.setAttribute("value", "oven-grillmode");
       op6.setAttribute("value", "oven-convectionmode");
+
+      if(action == "oven-on"){
+        op1.setAttribute("selected", "true");
+      } else if(action == "oven-off"){
+        op2.setAttribute("selected", "true");
+      } else if(action == "oven-temperature"){
+        op3.setAttribute("selected", "true");
+      } else if(action == "oven-heatmode"){
+        op4.setAttribute("selected", "true");
+      } else if(action == "oven-grillmode"){
+        op5.setAttribute("selected", "true");
+      } else if(action == "oven-convectionmode"){
+        op6.setAttribute("selected", "true");
+      }
     
       empty.innerHTML = "";
       op1.innerHTML = "Turn on";
       op2.innerHTML = "Turn off";
       op3.innerHTML = "Set temperature";
-      op4.innerHTML = "Set heat mode";
-      op5.innerHTML = "Set grill mode";
-      op6.innerHTML = "Set convection mode";
+      op4.innerHTML = "Select heat mode";
+      op5.innerHTML = "Select grill mode";
+      op6.innerHTML = "Select convection mode";
       
       selectAction.appendChild(empty);
       selectAction.appendChild(op1);
@@ -934,11 +1152,19 @@ function displayActions(num) {
       op1.setAttribute("value", "refrigerator-temperature");
       op2.setAttribute("value", "refrigerator-freezertemperature");
       op3.setAttribute("value", "refrigerator-mode");
+
+      if(action == "refrigerator-temperature"){
+        op1.setAttribute("selected", "true");
+      } else if(action == "refrigerator-freezertemperature"){
+        op2.setAttribute("selected", "true");
+      } else if(action == "refrigerator-mode"){
+        op3.setAttribute("selected", "true");
+      }
       
       empty.innerHTML = "";
       op1.innerHTML = "Set temperature";
       op2.innerHTML = "Set freezer temperature";
-      op3.innerHTML = "Set refrigerator mode";
+      op3.innerHTML = "Select mode";
     
       selectAction.appendChild(empty);
       selectAction.appendChild(op1);
@@ -966,15 +1192,31 @@ function displayActions(num) {
       op5.setAttribute("value", "ac-verticalswing");
       op6.setAttribute("value", "ac-horizontalswing");
       op7.setAttribute("value", "ac-fanspeed");
+
+      if(action == "ac-on"){
+        op1.setAttribute("selected", "true");
+      } else if(action == "ac-off"){
+        op2.setAttribute("selected", "true");
+      } else if(action == "ac-temperature"){
+        op3.setAttribute("selected", "true");
+      } else if(action == "ac-mode"){
+        op4.setAttribute("selected", "true");
+      } else if(action == "ac-verticalswing"){
+        op5.setAttribute("selected", "true");
+      } else if(action == "ac-horizontalswing"){
+        op6.setAttribute("selected", "true");
+      } else if(action == "ac-fanspeed"){
+        op7.setAttribute("selected", "true");
+      }
       
       empty.innerHTML = "";
       op1.innerHTML = "Turn on";
       op2.innerHTML = "Turn off";
       op3.innerHTML = "Set temperature";
-      op4.innerHTML = "Set mode";
-      op5.innerHTML = "Set vertical swing";
-      op6.innerHTML = "Set horizontal swing";
-      op7.innerHTML = "Set fan speed";
+      op4.innerHTML = "Select mode";
+      op5.innerHTML = "Select vertical swing";
+      op6.innerHTML = "Select horizontal swing";
+      op7.innerHTML = "Select fan speed";
       
       selectAction.appendChild(empty);
       selectAction.appendChild(op1);
@@ -988,11 +1230,18 @@ function displayActions(num) {
     
     document.getElementById("actionDiv" + num).appendChild(actionLabel);
     document.getElementById("actionDiv" + num).appendChild(selectAction);
-    selectAction.addEventListener("change", function handler(){inputParameters(num);});
+    if(routine == null){
+      selectAction.addEventListener("change", function handler(){inputParameters(num, boolean, routine, currentAction);});  
+    } else{
+      selectAction.addEventListener("change", function handler(){inputParameters(num, boolean, null, null);});
+      inputParameters(num, boolean, routine, currentAction);
+
+    }
+    
     }
 }
 
-function inputParameters(n){
+function inputParameters(n, boolean, routine, currentAction){
   if(document.getElementById("inputParameter" + n) != null){
         var parameterDiv = document.getElementById("parameterDiv" + n);
         parameterDiv.innerHTML = "";
@@ -1002,7 +1251,13 @@ function inputParameters(n){
     
     
   if(val == "blinds-open" || val == "blinds-close" || val == "lamp-on" || val == "lamp-off" || val == "door-open" || val == "door-close" || val == "door-lock" || val == "door-unlock" || val =="oven-on" || val == "oven-off" || val == "ac-on" || val == "ac-off"){
-    createDivs(n + 1);
+    if(routine != null && routine.length == n){
+      createDivs(n + 1, true, null, null);
+    } else if(routine != null){
+      createDivs(n + 1, boolean, routine, routine[n]);  
+    } else {
+      createDivs(n + 1, boolean, null, null);
+    }
   }
     
   var inputParameter;
@@ -1018,13 +1273,23 @@ function inputParameters(n){
 
     document.getElementById("parameterDiv" + n).appendChild(parameterLabel);
     document.getElementById("parameterDiv" + n).appendChild(inputParameter);
-    inputParameter.addEventListener("change", function handler(){createDivs(n + 1);});
+    if(routine == null){
+      inputParameter.addEventListener("change", function handler(){
+        createDivs(n + 1, boolean, null, null);
+      });
+    } else if(routine != null && routine.length == n){
+        createDivs(n + 1, true, null, null);
+    } else{
+        createDivs(n + 1, true, routine, routine[n]);
+    }
   } else if(val != "blinds-open" && val != "blinds-close" && val != "lamp-on" && val != "lamp-off" && val != "door-open" && val != "door-close" && val != "door-lock" && val != "door-unlock" && val !="oven-on" && val != "oven-off" && val != "ac-on" && val != "ac-off"){
     inputParameter = document.createElement("input");
     inputParameter.setAttribute("id", "inputParameter" + n);
 
     var parameterLabel = document.createElement("label");
+
     parameterLabel.setAttribute("class", "control-label");
+
     parameterLabel.setAttribute("id", "parameterLabel" + n);
 
     document.getElementById("parameterDiv" + n).appendChild(parameterLabel);
@@ -1038,8 +1303,19 @@ function inputParameters(n){
     errorText.innerHTML = ""
     var father = inputParameter.parentNode
     father.appendChild(errorText)
-    inputParameter.addEventListener("change", function handler(){lookForErrors(n + 1,val,inputParameter,errorText);});
+
+    inputParameter.addEventListener("change", function handler(){
+    if(routine != null && routine.length == n){
+      lookForErrors(n + 1, val, inputParameter, errorText, true, null, null);
+    } else if(routine != null){
+      lookForErrors(n + 1, val, inputParameter, errorText, true, routine, routine[n]);  
+    } else {
+      lookForErrors(n + 1, val, inputParameter, errorText, boolean, null, null);
+    }
+    });
   } 
+
+  var parameterType = null;
     
   if(val == "lamp-brightness"){
     inputParameter.setAttribute("type", "number");
@@ -1051,7 +1327,10 @@ function inputParameters(n){
     inputParameter.setAttribute("max", "100");
     
     parameterLabel.innerHTML = "Change brightness: ";
-    
+
+    if(currentAction != null){
+      inputParameter.value = currentAction.params[0];
+    }
   }
     
   if(val == "lamp-color"){
@@ -1072,6 +1351,10 @@ function inputParameters(n){
     document.getElementById("parameterDiv" + n).appendChild(div);
 
     parameterLabel.innerHTML = "Select color: "
+
+    if(currentAction != null){
+      inputParameter.value = currentAction.params[0];
+    }
   }
     
   if(val == "oven-temperature"){
@@ -1084,6 +1367,10 @@ function inputParameters(n){
     inputParameter.setAttribute("max", "230");
 
     parameterLabel.innerHTML = "Change temperature: ";
+
+    if(currentAction != null){
+      inputParameter.value = currentAction.params[0];
+    }
   }
     
   if(val == "oven-heatmode"){
@@ -1109,6 +1396,18 @@ function inputParameters(n){
     inputParameter.appendChild(op3);
 
     parameterLabel.innerHTML = "Change heat mode: ";
+
+    if(currentAction != null){
+      var parameter = currentAction.params[0];
+
+      if(parameter == "conventional"){
+        op1.setAttribute("selected", "true");
+      } else if(parameter == "bottom"){
+        op2.setAttribute("selected", "true");
+      } else if(parameter == "top"){
+        op3.setAttribute("selected", "true");
+      }
+    }
   }
     
   if(val == "oven-grillmode"){
@@ -1126,7 +1425,7 @@ function inputParameters(n){
     op1.innerHTML = "Large";
     op2.setAttribute("value", "eco");
     op2.innerHTML = "Eco";
-    op3.setAttribute("value", "Off");
+    op3.setAttribute("value", "off");
     op3.innerHTML = "Off";
     inputParameter.appendChild(empty);
     inputParameter.appendChild(op1);
@@ -1134,6 +1433,18 @@ function inputParameters(n){
     inputParameter.appendChild(op3);
 
     parameterLabel.innerHTML = "Change grill mode: ";
+
+    if(currentAction != null){
+      var parameter = currentAction.params[0];
+
+      if(parameter == "large"){
+        op1.setAttribute("selected", "true");
+      } else if(parameter == "eco"){
+        op2.setAttribute("selected", "true");
+      } else if(parameter == "off"){
+        op3.setAttribute("selected", "true");
+      }
+    }    
   }
   
   if(val == "oven-convectionmode"){
@@ -1147,11 +1458,11 @@ function inputParameters(n){
     empty.setAttribute("disabled", "true");
     empty.setAttribute("selected", "true");
     empty.innerHTML = "";
-    op1.setAttribute("value", "eco");
+    op1.setAttribute("value", "normal");
     op1.innerHTML = "Normal";
     op2.setAttribute("value", "eco");
     op2.innerHTML = "Eco";
-    op3.setAttribute("value", "Off");
+    op3.setAttribute("value", "off");
     op3.innerHTML = "Off";
     inputParameter.appendChild(empty);
     inputParameter.appendChild(op1);
@@ -1159,6 +1470,18 @@ function inputParameters(n){
     inputParameter.appendChild(op3);
 
     parameterLabel.innerHTML = "Change convection mode: ";
+
+    if(currentAction != null){
+      var parameter = currentAction.params[0];
+
+      if(parameter == "normal"){
+        op1.setAttribute("selected", "true");
+      } else if(parameter == "eco"){
+        op2.setAttribute("selected", "true");
+      } else if(parameter == "off"){
+        op3.setAttribute("selected", "true");
+      }
+    }
   }
     
   if(val == "refrigerator-temperature"){
@@ -1170,7 +1493,11 @@ function inputParameters(n){
     inputParameter.setAttribute("min", "2");
     inputParameter.setAttribute("max", "8");
 
-    parameterLabel.innerHTML = "Change temperature: ";
+    parameterLabel.innerHTML = "Set temperature: ";
+
+    if(currentAction != null){
+      inputParameter.value = currentAction.params[0];
+    }
   }
     
   if(val == "refrigerator-freezertemperature"){
@@ -1182,7 +1509,11 @@ function inputParameters(n){
     inputParameter.setAttribute("min", "-20");
     inputParameter.setAttribute("max", "-8");
 
-    parameterLabel.innerHTML = "Change freezer temperature: ";
+    parameterLabel.innerHTML = "Set freezer temperature: ";
+
+    if(currentAction != null){
+      inputParameter.value = currentAction.params[0];
+    }
   }
     
   if(val == "refrigerator-mode"){
@@ -1207,7 +1538,19 @@ function inputParameters(n){
     inputParameter.appendChild(op2);
     inputParameter.appendChild(op3);
 
-    parameterLabel.innerHTML = "Change mode: ";
+    parameterLabel.innerHTML = "Select mode: ";
+
+    if(currentAction != null){
+      var parameter = currentAction.params[0];
+
+      if(parameter == "default"){
+        op1.setAttribute("selected", "true");
+      } else if(parameter == "vacation"){
+        op2.setAttribute("selected", "true");
+      } else if(parameter == "party"){
+        op3.setAttribute("selected", "true");
+      }
+    }    
   }
     
   if(val == "ac-temperature"){
@@ -1219,7 +1562,11 @@ function inputParameters(n){
     inputParameter.setAttribute("min", "18");
     inputParameter.setAttribute("max", "38");
 
-    parameterLabel.innerHTML = "Change temperature: ";
+    parameterLabel.innerHTML = "Set temperature: ";
+
+    if(currentAction != null){
+      inputParameter.value = currentAction.params[0];
+    }
   }
     
   if(val == "ac-mode"){
@@ -1244,7 +1591,19 @@ function inputParameters(n){
     inputParameter.appendChild(op2);
     inputParameter.appendChild(op3);
 
-    parameterLabel.innerHTML = "Change mode: ";
+    parameterLabel.innerHTML = "Select mode: ";
+
+    if(currentAction != null){
+      var parameter = currentAction.params[0];
+
+      if(parameter == "cool"){
+        op1.setAttribute("selected", "true");
+      } else if(parameter == "heat"){
+        op2.setAttribute("selected", "true");
+      } else if(parameter == "fan"){
+        op3.setAttribute("selected", "true");
+      }
+    }   
   }
     
   if(val == "ac-verticalswing"){
@@ -1277,7 +1636,23 @@ function inputParameters(n){
     inputParameter.appendChild(op4);
     inputParameter.appendChild(op5);
 
-    parameterLabel.innerHTML = "Change vertical swing: ";
+    parameterLabel.innerHTML = "Select vertical swing: ";
+
+    if(currentAction != null){
+      var parameter = currentAction.params[0];
+
+      if(parameter == "auto"){
+        op1.setAttribute("selected", "true");
+      } else if(parameter == "22"){
+        op2.setAttribute("selected", "true");
+      } else if(parameter == "45"){
+        op3.setAttribute("selected", "true");
+      } else if(parameter == "67"){
+        op4.setAttribute("selected", "true");
+      } else if(parameter == "90"){
+        op5.setAttribute("selected", "true");
+      }
+    }
   }
     
   if(val == "ac-horizontalswing"){
@@ -1314,7 +1689,21 @@ function inputParameters(n){
     inputParameter.appendChild(op5);
     inputParameter.appendChild(op6);
 
-    parameterLabel.innerHTML = "Change horizontal swing: ";
+    parameterLabel.innerHTML = "Select horizontal swing: ";
+
+    if(parameter == "auto"){
+        op1.setAttribute("selected", "true");
+      } else if(parameter == "-90"){
+        op2.setAttribute("selected", "true");
+      } else if(parameter == "-45"){
+        op3.setAttribute("selected", "true");
+      } else if(parameter == "0"){
+        op4.setAttribute("selected", "true");
+      } else if(parameter == "45"){
+        op5.setAttribute("selected", "true");
+      } else if(parameter == "90"){
+        op6.setAttribute("selected", "true");
+      }
   }
     
   if(val == "ac-fanspeed"){
@@ -1347,11 +1736,29 @@ function inputParameters(n){
     inputParameter.appendChild(op4);
     inputParameter.appendChild(op5);
 
-    parameterLabel.innerHTML = "Change fan speed: ";
+    parameterLabel.innerHTML = "Select fan speed: ";
+
+    if(parameter == "auto"){
+        op1.setAttribute("selected", "true");
+      } else if(parameter == "25"){
+        op2.setAttribute("selected", "true");
+      } else if(parameter == "50"){
+        op3.setAttribute("selected", "true");
+      } else if(parameter == "75"){
+        op4.setAttribute("selected", "true");
+      } else if(parameter == "100"){
+        op5.setAttribute("selected", "true");
+      }
   }
+
+   if(routine != null && routine.length == n){
+        createDivs(n + 1, true, null, null);
+    } else{
+        createDivs(n + 1, true, routine, routine[n]);
+    }
 }
 
-function lookForErrors(num,val,input,errorText){
+function lookForErrors(num,val,input,errorText, boolean, routine, currentAction){
   var inputValue = input.value
   if(val == "lamp-brightness"){
 
@@ -1418,12 +1825,23 @@ function lookForErrors(num,val,input,errorText){
   document.getElementById("create-combo").setAttribute("num",actualCantOfDivs)
   document.getElementById("create-combo").setAttribute("error",false)
   errorText.style.display = "none"
-  createDivs(num)
+  createDivs(num, boolean, routine, currentAction);
 }
 
 function finalCheckErrors(num){
   alert("entre" + " " + num)
   var error = false;
+
+  var nameModify = document.getElementById("combination-modify-name").value;
+  if(nameModify.length < 3 || nameModify.length > 23){
+    document.getElementById("error-name-combo-modify-length").style.display = "block";
+  }
+
+  var nameCreate = document.getElementById("combination-create-name").value;
+  if(nameCreate.length < 3 || nameCreate.length > 23){
+    document.getElementById("error-name-combo-create-length").style.display = "block";
+  }
+
   for(var i = 1 ; i <= num; i++){
     var device = document.getElementById("selectDevice" + i)
     var action = document.getElementById("selectAction" + i)
@@ -1468,7 +1886,7 @@ function finalCheckErrors(num){
   return error;
 }
 
-function createDivs(num){
+function createDivs(num, boolean, routine, currentAction){
   if(document.getElementById("deviceDiv" + num) != null){
     var deviceDiv = document.getElementById("deviceDiv" + num);
     deviceDiv.parentNode.removeChild(deviceDiv);
@@ -1492,15 +1910,27 @@ function createDivs(num){
   actionDiv.setAttribute("id", "actionDiv" + num);
   parameterDiv.setAttribute("id", "parameterDiv" + num);
   
-  document.getElementById("append-here").appendChild(deviceDiv);
-  document.getElementById("append-here").appendChild(actionDiv);
-  document.getElementById("append-here").appendChild(parameterDiv);
-    
-  displayDevices(num);
+  if(routine == null && !boolean){
+    document.getElementById("append-here").appendChild(deviceDiv);
+    document.getElementById("append-here").appendChild(actionDiv);
+    document.getElementById("append-here").appendChild(parameterDiv);
+  } else if(routine != null || boolean){
+    document.getElementById("append-here-modify").appendChild(deviceDiv);
+    document.getElementById("append-here-modify").appendChild(actionDiv);
+    document.getElementById("append-here-modify").appendChild(parameterDiv);
+  }
+  
+  if(routine == null && !boolean){
+    displayDevices(num, false, null, null);
+  } else if(routine == null && boolean){
+    displayDevices(num, true, null, null);
+  } else{
+    displayDevices(num, true, routine, currentAction);
+  }
 }
 
 $("#create-combo").on('shown.bs.modal', function () {
-  createDivs(1);
+  createDivs(1, false, null, null);
 });
 
 $(function() {
