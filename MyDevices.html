@@ -337,7 +337,7 @@ body{
     top:25%;
     width:100%;
     height:100%;
-    background-image:url("https://i.imgur.com/3OBKX7l.png");
+    background-image:url("addDevice.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     border-color:transparent;
@@ -445,15 +445,16 @@ input:checked + .slider:before {
 }
 
 .notification{
-  width:300px;
-  height:150px;
-  background-color:black;
+  width:200px;
+  height:35px;
+  background-color: #B1CADF;
   position: absolute;
-  top:15px;
+  bottom:15px;
   right:15px;
   display:none;
 }
 
+/*
 .header-notification{
   width:100%;
     height:20%;
@@ -472,26 +473,18 @@ input:checked + .slider:before {
     height:80%;
     background-color:#75ff7c;
 }
-
-.img-not{
-  background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Checkmark_green.svg/417px-Checkmark_green.svg.png");
- background-size: 100px 100px;
- background-repeat: no-repeat;
- width: 120px;
- height: 100px;
- margin-top:10px;
- margin-right:10px;
- margin-left:10px;
- border-right: 2px solid #15993c;
-}
+*/
 
 .body-text{
-  font-size:140%;
-    text-align:center;
-    width:150px;
-    height:100%;
-    margin-top:32px;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  font-weight: 10;
+  /*width:150px;
+  height:100%;
+  margin-top:32px;*/
 }
+
 
 /*SEARCH*/
 #my-search {
@@ -503,6 +496,10 @@ input:checked + .slider:before {
   padding: 8px;
   border: 1px solid #ddd;
   margin-bottom: 12px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
  </style>
@@ -1133,14 +1130,9 @@ input:checked + .slider:before {
 
 <!-- Notification-->
 <div class="notification" id="notification">
-    <div class="header-notification">
-        <p class="header-not">Notification</p>
-    </div>
     <div class="body-notification">
-        <div class="img-not">
-        </div>
         <div class="body-text-not">
-            <p class="body-text">Changes saved</p>
+            <p class="body-text"><span class="glyphicon glyphicon-ok"></span> Changes saved</p>
         </div>
     </div> 
 </div>
@@ -3186,7 +3178,6 @@ function saveChangesDoor(){
     $("#device-door").modal("hide");
 }
 
-
 function viewRefrigeratorState(button){
     cleanAllErrors()
     document.getElementById("device-refrigerator").setAttribute("data-device",button.getAttribute("id"))
@@ -3342,17 +3333,11 @@ function searchRoomList(){
         a = li[i].getElementsByTagName("a")[0];
         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
           document.getElementById(a.innerHTML + "room").parentNode.style.display = "";
-          //li[i].style.display = ""; //aca se deberia mostrar
         } else {
           document.getElementById(a.innerHTML + "room").parentNode.style.display = "none";
-          //li[i].style.display = "none"; //aca no se deberia mostrar
-
         }
     }
 }
-
-
-
 
 </script>
 </body>
