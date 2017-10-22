@@ -561,7 +561,7 @@ input:checked + .slider:before {
     </div>
     <div class="right-container" id="starter-right-container">
         <div class="wrapper-room-title-two">
-            <h1 class="title-right-container">"Room name"</h1>
+            <h1 class="title-right-container">Devices</h1>
             <hr class="right-fine-line">
         </div>
         <div class="wrapper-devices-container scrollContent">
@@ -572,14 +572,10 @@ input:checked + .slider:before {
     </div>
   </div>
 
-
-
   <!-- Idea del href del "a" del ver-menu-->
   <div class="hidden-devices" id ="hidden-div">
   </div>
 
-  
-  
   <!-- Modal -->
   <div class="modal fade" id="room" role="dialog">
     <div class="modal-dialog">
@@ -3345,9 +3341,11 @@ function searchRoomList(){
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("a")[0];
         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = ""; //aca se deberia mostrar
+          document.getElementById(a.innerHTML + "room").parentNode.style.display = "";
+          //li[i].style.display = ""; //aca se deberia mostrar
         } else {
-            li[i].style.display = "none"; //aca no se deberia mostrar
+          document.getElementById(a.innerHTML + "room").parentNode.style.display = "none";
+          //li[i].style.display = "none"; //aca no se deberia mostrar
 
         }
     }
