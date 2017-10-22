@@ -229,11 +229,6 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="lamp-type" class="control-label col-sm-4" style="text-align: right">Type:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="lamp-type" style="text-align: left">Lamp</p>
-              </div>
-              <br>
               <label for="lamp-name" class="control-label col-sm-4" style="text-align: right">Name:</label>
               <div class="col-sm-8">
                 <p class="form-control-static" id="lamp-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
@@ -257,26 +252,21 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
               <p class="trampa">a</p>
               <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
               <div class="col-sm-8">
-                <!--agregado por cata (comentado)-->
-                <!--<label class="switch">
-                  <input type="checkbox" id="lamp-switch">
-                  <span class="slider round"></span>
-                </label>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" id="lamp-switch"><!--agregado por cata -->
+                <input type="checkbox" data-toggle="toggle" id="lamp-switch">
               </div>      
               <br>
               <p class="trampa">a</p>
-              <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Change brightness:</label>
+              <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Set brightness:</label>
               <div class="col-sm-8">
-                <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter new brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
+                <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
                 <p class="error" id="error-lamp-brightness">The brightness must be between 0 and 100</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select new color:</label>
+              <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select color:</label>
               <div class="col-sm-8">
                 <div id="cp3" class="input-group colorpicker-component">
-                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color">
+                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color" placeholder="Enter hexadecimal color">
                   <span class="input-group-addon"><i></i></span>
                 </div>
                 <p class="error" id="error-lamp-color">The color must be between #000000 and #FFFFFF</p>
@@ -293,10 +283,9 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
     </div>
   </div>
 
-
       <!-- Modal de oven -->
   <div class="modal fade" id="device-oven" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title text-center">Oven</h3>
@@ -304,52 +293,42 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="oven-type" class="control-label col-sm-6" style="text-align: right">Type:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="oven-type" style="text-align: left">Oven</p>
-              </div>
-              <br>
-              <label for="oven-name" class="control-label col-sm-6" style="text-align: right;">Name:</label>
-              <div class="col-sm-6">
+              <label for="oven-name" class="control-label col-sm-5" style="text-align: right;">Name:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="oven-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
               </div>
-              <label for="oven-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-name" class="control-label col-sm-5" style="text-align: right">Change name:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="oven-change-name" placeholder="Enter new name" name="oven-change-name">
                 <p class="error" id="error-name-oven">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-oven">This name already exists</p>
               </div>
               <br>
-              <label for="oven-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
-              <div class="col-sm-6">
+              <label for="oven-description" class="control-label col-sm-5" style="text-align: right">Description:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="oven-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
               </div>
-              <label for="oven-change-description" class="control-label col-sm-6" style="text-align: right">Change description:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-description" class="control-label col-sm-5" style="text-align: right">Change description:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="oven-change-description" placeholder="Enter new description" name="oven-change-description">
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-status" class="control-label col-sm-6" style="text-align: right">Status:</label>
-              <div class="col-sm-6">
-                <!--agregado por cata (comentado)-->
-                <!--<label class="switch">
-                  <input type="checkbox" id="oven-switch">
-                  <span class="slider round"></span>
-                </label>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" id="oven-switch"><!--agregado por cata -->
+              <label for="oven-status" class="control-label col-sm-5" style="text-align: right">Status:</label>
+              <div class="col-sm-7">
+                <input type="checkbox" data-toggle="toggle" id="oven-switch">
               </div> 
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter new temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
+              <label for="oven-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
                 <p class="error" id="error-oven-temperature">The temperature must be between 90 and 230</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-heatmode" class="control-label col-sm-6" style="text-align: right;">Change heat mode:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-heatmode" class="control-label col-sm-5" style="text-align: right;">Select heat mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="oven-change-heatmode">
                     <option val="conventional">Conventional</option>
                     <option val="bottom">Bottom</option>
@@ -359,8 +338,8 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-grillmode" class="control-label col-sm-6" style="text-align: right;">Change grill mode:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-grillmode" class="control-label col-sm-5" style="text-align: right;">Select grill mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="oven-change-grillmode">
                     <option val="large">Large</option>
                     <option val="eco">Eco</option>
@@ -370,8 +349,8 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-convectionmode" class="control-label col-sm-6" style="text-align: right;">Change convection mode:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-convectionmode" class="control-label col-sm-5" style="text-align: right;">Select convection mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="oven-change-convectionmode">
                     <option val="normal">Normal</option>
                     <option val="eco">Eco</option>
@@ -393,7 +372,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 
   <!-- Modal de ac -->
   <div class="modal fade" id="device-ac" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title text-center">Ac</h3>
@@ -401,52 +380,42 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="ac-type" class="control-label col-sm-6" style="text-align: right">Type:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="ac-type" style="text-align: left">Ac</p>
-              </div>
-              <br>
-              <label for="ac-name" class="control-label col-sm-6" style="text-align: right;">Name:</label>
-              <div class="col-sm-6">
+              <label for="ac-name" class="control-label col-sm-5" style="text-align: right;">Name:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="ac-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
               </div>
-              <label for="ac-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-name" class="control-label col-sm-5" style="text-align: right">Change name:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="ac-change-name" placeholder="Enter new name" name="ac-change-name">
                 <p class="error" id="error-name-ac">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-ac">This name already exists</p>
               </div>
               <br>
-              <label for="ac-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
-              <div class="col-sm-6">
+              <label for="ac-description" class="control-label col-sm-5" style="text-align: right">Description:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="ac-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
               </div>
-              <label for="ac-change-description" class="control-label col-sm-6" style="text-align: right">Change description:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-description" class="control-label col-sm-5" style="text-align: right">Change description:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="ac-change-description" placeholder="Enter new description" name="ac-change-description">
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-status" class="control-label col-sm-6" style="text-align: right">Status:</label>
-              <div class="col-sm-6">
-                <!--agregado por cata (comentado)-->
-                <!--<label class="switch">
-                  <input type="checkbox" id="ac-switch">
-                  <span class="slider round"></span>
-                </label>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" id="ac-switch"><!--agregado por cata -->
+              <label for="ac-status" class="control-label col-sm-5" style="text-align: right">Status:</label>
+              <div class="col-sm-7">
+                <input type="checkbox" data-toggle="toggle" id="ac-switch">
               </div> 
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter new temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
+              <label for="ac-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
                 <p class="error" id="error-ac-temperature">The temperature must be between 18 and 38</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-mode" class="control-label col-sm-6" style="text-align: right;">Change mode:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-mode" class="control-label col-sm-5" style="text-align: right;">Select mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="ac-change-mode">
                     <option val="cool">Cool</option>
                     <option val="heat">Heat</option>
@@ -456,8 +425,8 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-verticalswing" class="control-label col-sm-6" style="text-align: right;">Change vertical swing:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-verticalswing" class="control-label col-sm-5" style="text-align: right;">Select vertical swing:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="ac-change-verticalswing">
                     <option val="auto">Auto</option>
                     <option val="22">22°</option>
@@ -469,8 +438,8 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-horizontalswing" class="control-label col-sm-6" style="text-align: right;">Change horizontal swing:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-horizontalswing" class="control-label col-sm-5" style="text-align: right;">Select horizontal swing:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="ac-change-horizontalswing">
                     <option val="auto">Auto</option>
                     <option val="-90">-90°</option>
@@ -483,8 +452,8 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-fanspeed" class="control-label col-sm-6" style="text-align: right;">Change fan speed:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-fanspeed" class="control-label col-sm-5" style="text-align: right;">Select fan speed:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="ac-change-fanspeed">
                     <option val="auto">Auto</option>
                     <option val="25">25</option>

@@ -337,7 +337,7 @@ body{
     top:25%;
     width:100%;
     height:100%;
-    background-image:url("https://i.imgur.com/3OBKX7l.png");
+    background-image:url("addDevice.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     border-color:transparent;
@@ -445,15 +445,16 @@ input:checked + .slider:before {
 }
 
 .notification{
-  width:300px;
-  height:150px;
-  background-color:black;
+  width:200px;
+  height:35px;
+  background-color: #B1CADF;
   position: absolute;
-  top:15px;
+  bottom:15px;
   right:15px;
   display:none;
 }
 
+/*
 .header-notification{
   width:100%;
     height:20%;
@@ -472,30 +473,38 @@ input:checked + .slider:before {
     height:80%;
     background-color:#75ff7c;
 }
-
-.img-not{
-  background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Checkmark_green.svg/417px-Checkmark_green.svg.png");
- background-size: 100px 100px;
- background-repeat: no-repeat;
- width: 120px;
- height: 100px;
- margin-top:10px;
- margin-right:10px;
- margin-left:10px;
- border-right: 2px solid #15993c;
-}
+*/
 
 .body-text{
-  font-size:140%;
-    text-align:center;
-    width:150px;
-    height:100%;
-    margin-top:32px;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  font-weight: 10;
+  /*width:150px;
+  height:100%;
+  margin-top:32px;*/
+}
+
+
+/*SEARCH*/
+#my-search {
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-family: Verdana, sans-serif;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
  </style>
 </head>
-<body onload="loadAll()">
+<body onload="loadAll()" id="myBody">
 
   <nav class="navbar navbar-inverse color">
     <div class="container-fluid">
@@ -538,6 +547,8 @@ input:checked + .slider:before {
         <div class="middle">
             <div class="wrapper scrollContent">
                 <div class="vertical-menu" id="ver-menu">
+                  <input type="text" id="my-search" onkeyup="mySearch()" placeholder="Search..."> <!--SEARCH-->
+                  <br>
                 </div>
             </div>
         </div>
@@ -547,7 +558,7 @@ input:checked + .slider:before {
     </div>
     <div class="right-container" id="starter-right-container">
         <div class="wrapper-room-title-two">
-            <h1 class="title-right-container">"Room name"</h1>
+            <h1 class="title-right-container">Devices</h1>
             <hr class="right-fine-line">
         </div>
         <div class="wrapper-devices-container scrollContent">
@@ -558,14 +569,10 @@ input:checked + .slider:before {
     </div>
   </div>
 
-
-
   <!-- Idea del href del "a" del ver-menu-->
   <div class="hidden-devices" id ="hidden-div">
   </div>
 
-  
-  
   <!-- Modal -->
   <div class="modal fade" id="room" role="dialog">
     <div class="modal-dialog">
@@ -577,7 +584,7 @@ input:checked + .slider:before {
         <div class="modal-body">
            <form role="form">
             <div class="form-group">
-              <label for="room-name"><span class="glyphicon glyphicon-home"></span>Name:</label>
+              <label for="room-name"><span class="glyphicon glyphicon-home"></span> Name:</label>
               <input type="text" class="form-control" id="room-name" placeholder="Enter name" name="room-name">
               <p class="error" id="error-nameRoomLength">The name must have between 3 and 30 characters </p>
               <p class="error" id="error-nameRoomExist">This name already exists</p>
@@ -614,10 +621,10 @@ input:checked + .slider:before {
             </div>
            </form>
            <label>Select type:</label>
-           <select id="comboBoxTypeDevices">
+           <select id="comboBoxTypeDevices" class="form-control">
             <option value="none"></option>
            </select>
-         <p class="error" id="error-deviceType">You have not select a device type</p>
+         <p class="error" id="error-deviceType">You have not selected a device type</p>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary" onclick="createDevice();">Accept </button>
@@ -708,11 +715,6 @@ input:checked + .slider:before {
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="blinds-type" class="control-label col-sm-4" style="text-align: right">Type:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="blinds-type" style="text-align: left">Blinds</p>
-              </div>
-              <br>
               <label for="blinds-name" class="control-label col-sm-4" style="text-align: right;">Name:</label>
               <div class="col-sm-8">
                 <p class="form-control-static" id="blinds-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
@@ -736,10 +738,7 @@ input:checked + .slider:before {
               <p class="trampa">a</p>
               <label for="blinds-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
               <div class="col-sm-8">
-                <!--agregado por cata (comentado)-->
-                <!--<label class="radio-inline"><input type="radio" name="optradio" id="blinds-open">Open</label>
-                <label class="radio-inline"><input type="radio" name="optradio" id="blinds-closed" checked>Closed</label>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed"  id="blinds-switch" data-width="82"/><!--agregado por cata -->
+                <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed"  id="blinds-switch" data-width="82"/>
               </div>
             </div>
           </form>
@@ -764,11 +763,6 @@ input:checked + .slider:before {
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="lamp-type" class="control-label col-sm-4" style="text-align: right">Type:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="lamp-type" style="text-align: left">Lamp</p>
-              </div>
-              <br>
               <label for="lamp-name" class="control-label col-sm-4" style="text-align: right">Name:</label>
               <div class="col-sm-8">
                 <p class="form-control-static" id="lamp-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
@@ -792,26 +786,21 @@ input:checked + .slider:before {
               <p class="trampa">a</p>
               <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
               <div class="col-sm-8">
-                <!--agregado por cata (comentado)-->
-                <!--<label class="switch">
-                  <input type="checkbox" id="lamp-switch">
-                  <span class="slider round"></span>
-                </label>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" id="lamp-switch"><!--agregado por cata -->
+                <input type="checkbox" data-toggle="toggle" id="lamp-switch">
               </div>      
               <br>
               <p class="trampa">a</p>
-              <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Change brightness:</label>
+              <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Set brightness:</label>
               <div class="col-sm-8">
-                <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter new brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
+                <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
                 <p class="error" id="error-lamp-brightness">The brightness must be between 0 and 100</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select new color:</label>
+              <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select color:</label>
               <div class="col-sm-8">
                 <div id="cp3" class="input-group colorpicker-component">
-                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color">
+                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color" placeholder="Enter hexadecimal color">
                   <span class="input-group-addon"><i></i></span>
                 </div>
                 <p class="error" id="error-lamp-color">The color must be between #000000 and #FFFFFF</p>
@@ -828,10 +817,9 @@ input:checked + .slider:before {
     </div>
   </div>
 
-
       <!-- Modal de oven -->
   <div class="modal fade" id="device-oven" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title text-center">Oven</h3>
@@ -839,52 +827,42 @@ input:checked + .slider:before {
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="oven-type" class="control-label col-sm-6" style="text-align: right">Type:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="oven-type" style="text-align: left">Oven</p>
-              </div>
-              <br>
-              <label for="oven-name" class="control-label col-sm-6" style="text-align: right;">Name:</label>
-              <div class="col-sm-6">
+              <label for="oven-name" class="control-label col-sm-5" style="text-align: right;">Name:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="oven-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
               </div>
-              <label for="oven-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-name" class="control-label col-sm-5" style="text-align: right">Change name:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="oven-change-name" placeholder="Enter new name" name="oven-change-name">
                 <p class="error" id="error-name-oven">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-oven">This name already exists</p>
               </div>
               <br>
-              <label for="oven-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
-              <div class="col-sm-6">
+              <label for="oven-description" class="control-label col-sm-5" style="text-align: right">Description:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="oven-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
               </div>
-              <label for="oven-change-description" class="control-label col-sm-6" style="text-align: right">Change description:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-description" class="control-label col-sm-5" style="text-align: right">Change description:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="oven-change-description" placeholder="Enter new description" name="oven-change-description">
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-status" class="control-label col-sm-6" style="text-align: right">Status:</label>
-              <div class="col-sm-6">
-                <!--agregado por cata (comentado)-->
-                <!--<label class="switch">
-                  <input type="checkbox" id="oven-switch">
-                  <span class="slider round"></span>
-                </label>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" id="oven-switch"><!--agregado por cata -->
+              <label for="oven-status" class="control-label col-sm-5" style="text-align: right">Status:</label>
+              <div class="col-sm-7">
+                <input type="checkbox" data-toggle="toggle" id="oven-switch">
               </div> 
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter new temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
+              <label for="oven-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
                 <p class="error" id="error-oven-temperature">The temperature must be between 90 and 230</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-heatmode" class="control-label col-sm-6" style="text-align: right;">Change heat mode:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-heatmode" class="control-label col-sm-5" style="text-align: right;">Select heat mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="oven-change-heatmode">
                     <option val="conventional">Conventional</option>
                     <option val="bottom">Bottom</option>
@@ -894,8 +872,8 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-grillmode" class="control-label col-sm-6" style="text-align: right;">Change grill mode:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-grillmode" class="control-label col-sm-5" style="text-align: right;">Select grill mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="oven-change-grillmode">
                     <option val="large">Large</option>
                     <option val="eco">Eco</option>
@@ -905,8 +883,8 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="oven-change-convectionmode" class="control-label col-sm-6" style="text-align: right;">Change convection mode:</label>
-              <div class="col-sm-6">
+              <label for="oven-change-convectionmode" class="control-label col-sm-5" style="text-align: right;">Select convection mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="oven-change-convectionmode">
                     <option val="normal">Normal</option>
                     <option val="eco">Eco</option>
@@ -928,7 +906,7 @@ input:checked + .slider:before {
 
   <!-- Modal de ac -->
   <div class="modal fade" id="device-ac" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title text-center">Ac</h3>
@@ -936,52 +914,42 @@ input:checked + .slider:before {
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="ac-type" class="control-label col-sm-6" style="text-align: right">Type:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="ac-type" style="text-align: left">Ac</p>
-              </div>
-              <br>
-              <label for="ac-name" class="control-label col-sm-6" style="text-align: right;">Name:</label>
-              <div class="col-sm-6">
+              <label for="ac-name" class="control-label col-sm-5" style="text-align: right;">Name:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="ac-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
               </div>
-              <label for="ac-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-name" class="control-label col-sm-5" style="text-align: right">Change name:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="ac-change-name" placeholder="Enter new name" name="ac-change-name">
                 <p class="error" id="error-name-ac">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-ac">This name already exists</p>
               </div>
               <br>
-              <label for="ac-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
-              <div class="col-sm-6">
+              <label for="ac-description" class="control-label col-sm-5" style="text-align: right">Description:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="ac-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
               </div>
-              <label for="ac-change-description" class="control-label col-sm-6" style="text-align: right">Change description:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-description" class="control-label col-sm-5" style="text-align: right">Change description:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="ac-change-description" placeholder="Enter new description" name="ac-change-description">
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-status" class="control-label col-sm-6" style="text-align: right">Status:</label>
-              <div class="col-sm-6">
-                <!--agregado por cata (comentado)-->
-                <!--<label class="switch">
-                  <input type="checkbox" id="ac-switch">
-                  <span class="slider round"></span>
-                </label>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" id="ac-switch"><!--agregado por cata -->
+              <label for="ac-status" class="control-label col-sm-5" style="text-align: right">Status:</label>
+              <div class="col-sm-7">
+                <input type="checkbox" data-toggle="toggle" id="ac-switch">
               </div> 
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter new temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
+              <label for="ac-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
                 <p class="error" id="error-ac-temperature">The temperature must be between 18 and 38</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-mode" class="control-label col-sm-6" style="text-align: right;">Change mode:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-mode" class="control-label col-sm-5" style="text-align: right;">Select mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="ac-change-mode">
                     <option val="cool">Cool</option>
                     <option val="heat">Heat</option>
@@ -991,8 +959,8 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-verticalswing" class="control-label col-sm-6" style="text-align: right;">Change vertical swing:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-verticalswing" class="control-label col-sm-5" style="text-align: right;">Select vertical swing:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="ac-change-verticalswing">
                     <option val="auto">Auto</option>
                     <option val="22">22°</option>
@@ -1004,8 +972,8 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-horizontalswing" class="control-label col-sm-6" style="text-align: right;">Change horizontal swing:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-horizontalswing" class="control-label col-sm-5" style="text-align: right;">Select horizontal swing:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="ac-change-horizontalswing">
                     <option val="auto">Auto</option>
                     <option val="-90">-90°</option>
@@ -1018,8 +986,8 @@ input:checked + .slider:before {
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="ac-change-fanspeed" class="control-label col-sm-6" style="text-align: right;">Change fan speed:</label>
-              <div class="col-sm-6">
+              <label for="ac-change-fanspeed" class="control-label col-sm-5" style="text-align: right;">Select fan speed:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="ac-change-fanspeed">
                     <option val="auto">Auto</option>
                     <option val="25">25</option>
@@ -1051,11 +1019,6 @@ input:checked + .slider:before {
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="door-type" class="control-label col-sm-4" style="text-align: right">Type:</label>
-              <div class="col-sm-8">
-                <p class="form-control-static" id="door-type" style="text-align: left">Door</p>
-              </div>
-              <br>
               <label for="door-name" class="control-label col-sm-4" style="text-align: right;">Name:</label>
               <div class="col-sm-8">
                 <p class="form-control-static" id="door-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
@@ -1079,23 +1042,13 @@ input:checked + .slider:before {
               <p class="trampa">a</p>
               <label for="door-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
               <div class="col-sm-8">
-                <!--agregado por cata(comentado) -->
-                <!--<fieldset id="door-status-check">  
-                  <label class="radio-inline"><input type="radio" name="door-status-check" id="door-open">Open</label>
-                  <label class="radio-inline"><input type="radio" name="door-status-check" id="door-closed" checked>Closed</label>
-                </fieldset>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed" id="door-switch" data-width="82"><!--agregado por cata -->
+                <input type="checkbox" data-toggle="toggle" data-on="Open" data-off="Closed" id="door-switch" data-width="82">
               </div>
               <br>
               <p class="trampa">a</p>
               <label for="door-lock" class="control-label col-sm-4" style="text-align: right">Lock state:</label>
               <div class="col-sm-8">
-                <!--agregado por cata (comentado)-->
-                <!--<fieldset id="door-lock-check">  
-                  <label class="radio-inline"><input type="radio" name="door-lock-check" id="door-locked">Locked</label>                esto hay que ponerlo en disabled si la puerta esta abierta
-                  <label class="radio-inline"><input type="radio" name="door-lock-check" id="door-unlocked" checked>Unlocked</label>      
-                </fieldset>--><!--agregado por cata (comentado)-->
-                <input type="checkbox" data-toggle="toggle" data-on="Locked" data-off="Unlocked" id="lock-switch" data-width="100"><!--agregado por cata -->
+                <input type="checkbox" data-toggle="toggle" data-on="Locked" data-off="Unlocked" id="lock-switch" data-width="100">
               </div>
             </div>
           </form>
@@ -1111,7 +1064,7 @@ input:checked + .slider:before {
 
   <!-- Modal de refrigerator-->
   <div class="modal fade" id="device-refrigerator" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title text-center">Refrigerator</h3>
@@ -1119,48 +1072,43 @@ input:checked + .slider:before {
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <label for="refrigerator-type" class="control-label col-sm-6" style="text-align: right">Type:</label>
-              <div class="col-sm-6">
-                <p class="form-control-static" id="refrigerator-type" style="text-align: left">Refrigerator</p>
-              </div>
-              <br>
-              <label for="refrigerator-name" class="control-label col-sm-6" style="text-align: right;">Name:</label>
-              <div class="col-sm-6">
+              <label for="refrigerator-name" class="control-label col-sm-5" style="text-align: right;">Name:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="refrigerator-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
               </div>
-              <label for="refrigerator-change-name" class="control-label col-sm-6" style="text-align: right">Change name:</label>
-              <div class="col-sm-6">
+              <label for="refrigerator-change-name" class="control-label col-sm-5" style="text-align: right">Change name:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="refrigerator-change-name" placeholder="Enter new name" name="refrigerator-change-name">
                 <p class="error" id="error-name-refrigerator">The name must have between 3 and 30 characters </p>
                 <p class="error" id="error-nameExist-refrigerator">This name already exists</p>
               </div>
               <br>
-              <label for="refrigerator-description" class="control-label col-sm-6" style="text-align: right">Description:</label>
-              <div class="col-sm-6">
+              <label for="refrigerator-description" class="control-label col-sm-5" style="text-align: right">Description:</label>
+              <div class="col-sm-7">
                 <p class="form-control-static" id="refrigerator-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
               </div>
-              <label for="refrigerator-change-description" class="control-label col-sm-6" style="text-align: right">Change description:</label>
-              <div class="col-sm-6">
+              <label for="refrigerator-change-description" class="control-label col-sm-5" style="text-align: right">Change description:</label>
+              <div class="col-sm-7">
                 <input type="text" class="form-control" id="refrigerator-change-description" placeholder="Enter new description" name="refrigerator-change-description">
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="refrigerator-change-temperature" class="control-label col-sm-6" style="text-align: right;">Change temperature:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="refrigerator-change-temperature" placeholder="Enter new temperature (2 - 8)" name="refrigerator-change-temperature" min="2" max="8">
+              <label for="refrigerator-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="refrigerator-change-temperature" placeholder="Enter temperature (2 - 8)" name="refrigerator-change-temperature" min="2" max="8">
                 <p class="error" id="error-refrigerator-temperature">The temperature must be between 2 and 8</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="refrigerator-change-freezertemperature" class="control-label col-sm-6" style="text-align: right;">Change freezer temperature:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" id="refrigerator-change-freezertemperature" placeholder="Enter new temperature ((-20) - (-8))" name="refrigerator-change-freezertemperature" min="-20" max="-8">
+              <label for="refrigerator-change-freezertemperature" class="control-label col-sm-5" style="text-align: right;">Set freezer temperature:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="refrigerator-change-freezertemperature" placeholder="Enter temperature ((-20) - (-8))" name="refrigerator-change-freezertemperature" min="-20" max="-8">
                 <p class="error" id="error-refrigerator-freezertemperature">The freezer temperature must be between -20 and -8</p>
               </div>
               <br>
               <p class="trampa">a</p>
-              <label for="refrigerator-change-mode" class="control-label col-sm-6" style="text-align: right;">Change mode:</label>
-              <div class="col-sm-6">
+              <label for="refrigerator-change-mode" class="control-label col-sm-5" style="text-align: right;">Select mode:</label>
+              <div class="col-sm-7">
                 <select class="form-control" id="refrigerator-change-mode">
                     <option val="default">Default</option>
                     <option val="vacation">Vacation</option>
@@ -1182,14 +1130,9 @@ input:checked + .slider:before {
 
 <!-- Notification-->
 <div class="notification" id="notification">
-    <div class="header-notification">
-        <p class="header-not">Notification</p>
-    </div>
     <div class="body-notification">
-        <div class="img-not">
-        </div>
         <div class="body-text-not">
-            <p class="body-text">Changes saved</p>
+            <p class="body-text"><span class="glyphicon glyphicon-ok"></span> Changes saved</p>
         </div>
     </div> 
 </div>
@@ -3236,7 +3179,6 @@ function saveChangesDoor(){
     $("#device-door").modal("hide");
 }
 
-
 function viewRefrigeratorState(button){
     cleanAllErrors()
     document.getElementById("device-refrigerator").setAttribute("data-device",button.getAttribute("id"))
@@ -3349,7 +3291,54 @@ function isColor(color){
   return true;
 }
 
+//SEARCH
+function mySearch(){
+  api.room.getAll()
+  .done(function (data) {
+    // data tiene el valor retornado por la petición Ajax
+    createRoomList(data);
+    searchRoomList();
+  })
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  })
+}
 
+function createRoomList(data){
+  if(document.getElementById("myUL") != null){
+    var deleteUL = document.getElementById("myUL");
+    deleteUL.parentNode.removeChild(deleteUL);
+  }
+
+  var allRooms = data;
+  myUL = document.createElement("ul");
+  myUL.setAttribute("id", "myUL");
+  myUL.setAttribute("hidden", "true");
+  document.getElementById("myBody").appendChild(myUL);
+  for (var i = 0; i < allRooms.rooms.length; i++) {
+      var myLI = document.createElement("li");
+      var myA = document.createElement("a");
+      myA.innerHTML = allRooms.rooms[i].name;
+      myLI.appendChild(myA);
+      myUL.appendChild(myLI);
+  }
+}
+
+function searchRoomList(){
+  var input, filter, ul, li, a, i;
+    input = document.getElementById("my-search");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          document.getElementById(a.innerHTML + "room").parentNode.style.display = "";
+        } else {
+          document.getElementById(a.innerHTML + "room").parentNode.style.display = "none";
+        }
+    }
+}
 
 </script>
 </body>
