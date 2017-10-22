@@ -1422,7 +1422,6 @@ function lookForErrors(num,val,input,errorText){
 }
 
 function finalCheckErrors(num){
-  alert("entre" + " " + num)
   var error = false;
   for(var i = 1 ; i <= num; i++){
     var device = document.getElementById("selectDevice" + i)
@@ -1459,12 +1458,9 @@ function finalCheckErrors(num){
       }
     }
   }
-  alert(document.getElementById("create-combo").getAttribute("error") + " es lo q tenia combo")
   if(document.getElementById("create-combo").getAttribute("error") == "true"){
-    alert("Le di true")
       error = true
   }
-  alert("Return: " + error)
   return error;
 }
 
