@@ -100,6 +100,12 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
   border-bottom-left-radius: 12px;
  }
 
+.error{
+  color:red;
+  font-size:75%;
+  display:none;
+}
+
  </style>
 </head>
 <body onload="loadRoutines()">
@@ -176,6 +182,7 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
       </div>  
     </div>
   </div>
+
 <!-- delete routine modal-->
     <div class="modal fade" id="confirmation-delete-routine" role="dialog">
     <div class="modal-dialog">
@@ -256,6 +263,15 @@ api.model.routine = class {
   }
 }
 
+api.model.action = class {
+  constructor(deviceId, actionName, params, meta){
+    this.deviceId = deviceId;
+    this.actionName = actionName
+    this.params = params
+    this.meta = meta
+  }
+}
+
 api.routine = class{
   static get url() {
     return api.baseUrl + "routines/";
@@ -266,6 +282,7 @@ api.routine = class{
       url: api.routine.url,
       method: "POST",
       dataType: "json",
+      contentType: "application/json",
       timeout: api.timeout,
       data: routine
     }); 
@@ -591,18 +608,15 @@ function submitRoutines(){
   while((currentDevice = document.getElementById("selectDevice" + num)) != null){
     if(currentDevice.value != "none")
       getActionInvolved(num, currentDevice.value, errorsArray, actionsArray);
-
     num++;
   }
 
-  if(errorsArray.length == 0){
-    createRoutine(actionsArray);
 
-    $("#create-combo").modal("hide");
+  if(! finalCheckErrors(num)){
+    createRoutine(actionsArray);
+    location.reload();
     return;
   }
-
-  //displayErrorsIntoModal(errorsArray); //falta implementar
 }
 
 function getActionInvolved(num, deviceId, errorsArray, actionsArray){
@@ -615,8 +629,7 @@ function getActionInvolved(num, deviceId, errorsArray, actionsArray){
     putDeviceIntoRoutineWithoutParameter(deviceId, action.value, actionsArray);
     return;
   }
-
-  getParameterInvolved(num, deviceId, action.value);
+  getParameterInvolved(num, deviceId, action.value, errorsArray, actionsArray);
 }
 
 function isActionWithParameter(actionName){
@@ -629,15 +642,14 @@ function isActionWithParameter(actionName){
 }
 
 function putDeviceIntoRoutineWithoutParameter(deviceId, actionName, actionsArray){
-  var action = parseAction(actionName);
+  var actionString = parseAction(actionName);
 
-  var routine = {deviceId: deviceId, actionName: action, params: []};
-  actionsArray.push(routine);
+  var action = {"deviceId":deviceId,"actionName":actionString,"params":[],"meta":"{}"}
+  actionsArray.push(action);
 }
 
 function getParameterInvolved(num, deviceId, actionName, errorsArray, actionsArray){
   var parameter = document.getElementById("inputParameter" + num).value;
-
   if(parameter == "")
     return;
 
@@ -650,10 +662,10 @@ function getParameterInvolved(num, deviceId, actionName, errorsArray, actionsArr
 }
 
 function putDeviceIntoRoutineWithParameter(num, deviceId, actionName, parameter, actionsArray){
-  var action = parseAction(actionName);
-
-  var routine = {deviceId: deviceId, actionName: action, params: parameter};
-  actionsArray.push(routine);
+  
+  var actionString = parseAction(actionName);
+  var action = {"deviceId":deviceId,"actionName":actionString,"params":[parameter],"meta":"{}"}
+  actionsArray.push(action);
 }
 
 function addToErrorsArray(num, deviceId, actionName, parameter, errorsArray){
@@ -723,15 +735,11 @@ function parseAction(actionName){
 function createRoutine(actionsArray){
   var routineName = document.getElementById("combination-name").value;
 
-  var routine = new api.model.routine(null, routineName, actionsArray, "{}");
-
-  api.routine.add(routine) //rompe porque la rutina esta mal creada por alguna razon, debe ser un detalle
+  var routine = {"name":routineName,"actions":actionsArray,"meta":"{}"}
+  var JSONroutine = JSON.stringify(routine)
+  api.routine.add(JSONroutine) //rompe porque la rutina esta mal creada por alguna razon, debe ser un detalle
     .done(function(data){
     displayRoutine(routine);
-  })
-
-  .fail(function(jqXHR, textStatus){
-    alert('Request failed: no se pudo agregar la rutina' + textStatus);
   })
 }
 
@@ -744,7 +752,6 @@ function displayRoutine(routine){
     var newRow = createRow();
     rowContainer.appendChild(newRow);
   }
-
   rows[rowNumber].appendChild(loadRoutine(routine));
 }
 /*
@@ -762,6 +769,7 @@ function deleteRoutine(routine){
   }) 
 }
 
+/
 function delete(){
 //hay que crear el modal de modify combo para que funcione
   var routine = document.getElementById(document.getElementById("modify-combo").getAttribute("data-routineId"));
@@ -1024,7 +1032,13 @@ function inputParameters(n){
     if(val != "lamp-color"){
       document.getElementById("parameterDiv" + n).appendChild(inputParameter);
     }
-    inputParameter.addEventListener("change", function handler(){createDivs(n + 1);});
+
+    var errorText = document.createElement("p")
+    errorText.classList.add("error")
+    errorText.innerHTML = ""
+    var father = inputParameter.parentNode
+    father.appendChild(errorText)
+    inputParameter.addEventListener("change", function handler(){lookForErrors(n + 1,val,inputParameter,errorText);});
   } 
     
   if(val == "lamp-brightness"){
@@ -1335,6 +1349,123 @@ function inputParameters(n){
 
     parameterLabel.innerHTML = "Change fan speed: ";
   }
+}
+
+function lookForErrors(num,val,input,errorText){
+  var inputValue = input.value
+  if(val == "lamp-brightness"){
+
+    if( inputValue < 0 || inputValue > 100){
+      errorText.innerHTML = "The brightness must be between 0 and 100"
+      errorText.style.display = "block"
+      document.getElementById("create-combo").setAttribute("error",true)
+      return;
+    }
+
+  }
+  if(val == "lamp-color"){
+
+    if(! isColor(inputValue)){
+      errorText.innerHTML = "The color must be between #000000 and #FFFFFF"
+      errorText.style.display = "block"
+      document.getElementById("create-combo").setAttribute("error",true)
+      return;
+    }
+
+  }  
+  if(val == "oven-temperature"){
+
+    if( inputValue < 90 || inputValue > 230){
+      errorText.innerHTML = "The temperature must be between 90 and 230"
+      errorText.style.display = "block"
+      document.getElementById("create-combo").setAttribute("error",true)
+      return;
+    }
+
+  }
+  if(val == "refrigerator-temperature"){
+
+    if( inputValue < 2 || inputValue > 8){
+      errorText.innerHTML = "The temperature must be between 2 and 8"
+      errorText.style.display = "block"
+      document.getElementById("create-combo").setAttribute("error",true)
+      return;
+    }
+
+  }
+  if(val == "refrigerator-freezertemperature"){
+
+    if( inputValue < -20 || inputValue > -8){
+      errorText.innerHTML = "The freezer temperature must be between -20 and -8"
+      errorText.style.display = "block"
+      document.getElementById("create-combo").setAttribute("error",true)
+      return;
+    }
+
+
+  }
+  if(val == "ac-temperature"){
+
+    if( inputValue < 18 || inputValue > 38){
+      errorText.innerHTML = "The temperature must be between 18 and 38"
+      errorText.style.display = "block"
+      document.getElementById("create-combo").setAttribute("error",true)
+      return;
+    }
+
+  }
+  var actualCantOfDivs = num - 1
+  document.getElementById("create-combo").setAttribute("num",actualCantOfDivs)
+  document.getElementById("create-combo").setAttribute("error",false)
+  errorText.style.display = "none"
+  createDivs(num)
+}
+
+function finalCheckErrors(num){
+  alert("entre" + " " + num)
+  var error = false;
+  for(var i = 1 ; i <= num; i++){
+    var device = document.getElementById("selectDevice" + i)
+    var action = document.getElementById("selectAction" + i)
+    var input = document.getElementById("inputParameter" + i)
+    var errorExist = document.createElement("p")
+    errorExist.classList.add("error")
+    errorExist.innerHTML = "You must complete this field"
+    if(device != null){
+      device.parentNode.appendChild(errorExist)
+      if(device.value == ""){
+        errorExist.style.display = "block"
+        error = true;
+      }else{
+        errorExist.style.display = "none"
+      }
+    }
+    if(action != null){
+      action.parentNode.appendChild(errorExist)
+      if(action.value == ""){
+        errorExist.style.display = "block"
+        error = true;
+      }else{
+        errorExist.style.display = "none"
+      }
+    }
+    if(input != null){
+      input.parentNode.appendChild(errorExist)
+      if(input.value == ""){
+        errorExist.style.display = "block"
+        error = true;
+      }else{
+        errorExist.style.display = "none"
+      }
+    }
+  }
+  alert(document.getElementById("create-combo").getAttribute("error") + " es lo q tenia combo")
+  if(document.getElementById("create-combo").getAttribute("error") == "true"){
+    alert("Le di true")
+      error = true
+  }
+  alert("Return: " + error)
+  return error;
 }
 
 function createDivs(num){
