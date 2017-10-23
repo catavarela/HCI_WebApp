@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="animate.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -114,52 +113,23 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 }
 
 .notification{
-  width:300px;
-  height:150px;
-  background-color:black;
+  width:200px;
+  height:35px;
+  background-color: #B1CADF;
   position: absolute;
-  top:15px;
+  bottom:15px;
   right:15px;
   display:none;
 }
 
-.header-notification{
-  width:100%;
-    height:20%;
-    background-color:#15993c;
-    text-align:center;
-    font-size:155%;
-    color:white;
-}
-
-.header-not{
-}
-
-.body-notification{
-  display: flex;
-    width:100%;
-    height:80%;
-    background-color:#75ff7c;
-}
-
-.img-not{
-  background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Checkmark_green.svg/417px-Checkmark_green.svg.png");
- background-size: 100px 100px;
- background-repeat: no-repeat;
- width: 120px;
- height: 100px;
- margin-top:10px;
- margin-right:10px;
- margin-left:10px;
- border-right: 2px solid #15993c;
-}
-
 .body-text{
-  font-size:140%;
-    text-align:center;
-    width:150px;
-    height:100%;
-    margin-top:32px;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  font-weight: 10;
+  /*width:150px;
+  height:100%;
+  margin-top:32px;*/
 }
 
  </style>
@@ -174,25 +144,13 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand logo" href="Home.html"></a>
+      <a class="navbar-brand logo" href="index.html"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav justify-center-56px">
         <li><a class="flex-center tam" href="MyDevices.html">Rooms and Devices</a></li>
         <li><a class="flex-center tam" href="MyCombos.html">Combinations</a></li>
-        <li><a class="flex-center tam" href="MyAgenda.html">Agenda</a></li>
         <li><a class="flex-center tam" href="Now On.html">Switched On</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a class="dropdown-toggle flex-center tam" data-toggle="dropdown" href="#">My Profile <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Configurations</a></li>
-            <li><a href="#">News</a></li>
-            <li><a href="Profiles.html">Change Profile</a></li>
-            <li><a href="Main Page.html">Log out</a></li>
-          </ul>
-        </li>
       </ul>
     </div>
   </div>
@@ -477,18 +435,12 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
 
   <!-- Notification-->
   <div class="notification" id="notification">
-    <div class="header-notification">
-        <p class="header-not">Notification</p>
-    </div>
     <div class="body-notification">
-        <div class="img-not">
-        </div>
         <div class="body-text-not">
-            <p class="body-text">Changes saved</p>
+            <p class="body-text"><span class="glyphicon glyphicon-ok"></span> Changes saved</p>
         </div>
     </div> 
 </div>
-
 
 <!-- Page content -->
 <div class="my-content my-padding" id="devicesContainer" style="max-width:1564px">
@@ -1052,7 +1004,6 @@ function moveAllUp(row){
 
   while((num < rowContainer.children.length) && nextRowHasDevices(rowContainer.children[num + 1])){
     nextChild = next(rowContainer.children[num + 1]);
-    //alert(rowContainer.children[num + 1].children[0].children[0].children[1].getAttribute("data-name"))
     rowContainer.children[num + 1].removeChild(rowContainer.children[num + 1].children[0])
     rowContainer.children[num].appendChild(nextChild);
     num++;
@@ -1131,7 +1082,7 @@ function isOnLOA(data, i){
           boolean = true;
     })
     .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al chequear si la lampara estaba prendida' + textStatus);
+        alert ('Request failed: checking if the device was on' + textStatus);
     })
 
     return boolean;
@@ -1192,7 +1143,7 @@ function deleteDevice(device){
   })
 
   .fail(function(jqXHR, textStatus){
-    alert('Request failed: al borrar el device' + textStatus);
+    alert('Request failed: trying to delete the device' + textStatus);
   })  
 }
 
@@ -1302,7 +1253,7 @@ function updateDeviceLampModal(button){
       updateLampState(button,data)
   })
   .fail(function (jqXHR, textStatus) {
-      alert ('Request failed: al cargar el status de cortina' + textStatus);
+      alert ('Request failed: loading the lamp status' + textStatus);
   })
 }
 
@@ -1425,7 +1376,7 @@ function updateDeviceOvenModal(button){
       updateOvenState(button,data)
   })
   .fail(function (jqXHR, textStatus) {
-      alert ('Request failed: al cargar el status de cortina' + textStatus);
+      alert ('Request failed: loading the oven status' + textStatus);
   })
 }
 
@@ -1576,7 +1527,7 @@ function saveChangesOven(){
         updateAcState(button,data)
     })
     .fail(function (jqXHR, textStatus) {
-        alert ('Request failed: al cargar el status de cortina' + textStatus);
+        alert ('Request failed: loading the ac status' + textStatus);
     })
 }
 

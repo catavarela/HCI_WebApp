@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="animate.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -21,7 +20,6 @@
 
   <style>
 
-  /* W3.CSS 4.04 Apr 2017 by Jan Egil and Borge Refsnes */
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
 /* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
@@ -514,7 +512,7 @@ input:checked + .slider:before {
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
         </button>
-        <a class="navbar-brand logo" href="Home.html"></a>
+        <a class="navbar-brand logo" href="index.html"></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav justify-center-56px">
@@ -574,6 +572,7 @@ input:checked + .slider:before {
             <div class="form-group">
               <label for="room-name"><span class="glyphicon glyphicon-home"></span> Name:</label>
               <input type="text" class="form-control" id="room-name" placeholder="Enter name" name="room-name">
+              <p class="error" id="error-nameRoomAlpha">The room name must contain only letters or numbers </p>
               <p class="error" id="error-nameRoomLength">The name must have between 3 and 30 characters </p>
               <p class="error" id="error-nameRoomExist">This name already exists</p>
               <label for="room-description">Description (optional):</label>
@@ -640,6 +639,7 @@ input:checked + .slider:before {
               <p class="room-description-modal form-control-static" id="actual-room-description"></p>                           <!--hay que poner la descripcion actual-->
               <label for="new-room-name"><span class="glyphicon glyphicon-home"></span> Change name:</label>
               <input type="text" class="form-control" id="new-room-name" placeholder="Enter new name" name="new-room-name">
+              <p class="error" id="error-nameNewRoomAlpha">The room name must contain only letters or numbers </p>
               <p class="error" id="error-nameNewRoomLength">The name must have between 3 and 30 characters </p>
               <p class="error" id="error-nameNewRoomExist">This name already exists</p>
               <label for="new-room-description">Change description:</label>                                                     <!--hay que updatear la descripcion tambien-->
@@ -1785,7 +1785,7 @@ function getNameRoom(){
 function createRoom(){
 cleanAllErrors()
 if(! isAlphaNumeric(getNameRoom())){
-  alert("The room name must contain only letters or numbers")
+  document.getElementById("error-nameRoomAlpha").style.display = "block";
   return;
 }
 
@@ -1849,6 +1849,8 @@ $("#room").modal("hide");
 function cleanAllErrors(){
     document.getElementById("error-nameRoomLength").style.display = "none";  
     document.getElementById("error-nameRoomExist").style.display = "none";
+    document.getElementById("error-nameRoomAlpha").style.display = "none";  
+    document.getElementById("error-nameNewRoomAlpha").style.display = "none";
     document.getElementById("error-nameDeviceLength").style.display = "none";
     document.getElementById("error-nameNewRoomExist").style.display = "none";
     document.getElementById("error-nameNewRoomLength").style.display = "none";
@@ -2075,7 +2077,7 @@ function changeName(){
   cleanAllErrors()
   var newName = getNewNameRoom()
   if(! isAlphaNumeric(newName)){
-    alert("The room name must contain only letters or numbers")
+    document.getElementById("error-nameNewRoomAlpha").style.display = "block";
     return;
   }
 
@@ -2092,7 +2094,6 @@ if( document.getElementById(newName)){
     var info = document.getElementById("modify-room-header");
     if(newName.length == 0){
      newName = info.getAttribute("type")
-     alert(newName + "sisi")
     }
     var oldName = info.getAttribute("type")
     var trashButton = document.getElementById(info.getAttribute("type") + "trash");
@@ -2158,10 +2159,8 @@ function findAndUpdate(data,roomName,newRoomName){
       }
   }
   var roomDesc = getNewDescRoom();
-  alert("Desc: " + roomDesc)
   if(roomDesc == "")
     roomDesc = actualDescRoom
-  alert("Desc: " + roomDesc)
   var modifiedRoom = new api.model.room(idRoom, newRoomName, roomDesc);
   api.room.modify(modifiedRoom)
    .fail(function (jqXHR, textStatus) {
