@@ -615,7 +615,6 @@ function displayDevices(num, boolean, routine, currentAction){
  
 }
 
-
 function loadDevices(data, selectDevice, currentAction){
   var i, boolean = false;
 
@@ -876,8 +875,7 @@ function deleteRoutine(routine){
   api.routine.delete(routine.id)
 
   .done(function(data){
-    var father = routine.parentElement;
-    father.parentElement.removeChild(father);
+    location.reload();
     $("#confirmation-delete-routine").modal("hide");
   })
 
@@ -1870,7 +1868,8 @@ function lookForErrors(num,val,input,errorText, boolean, routine, currentAction)
 }
 
 function finalCheckErrors(num){
-  var error = false;
+  var error = false;  
+
   for(var i = 1 ; i <= num; i++){
     var device = document.getElementById("selectDevice" + i)
     var action = document.getElementById("selectAction" + i)
