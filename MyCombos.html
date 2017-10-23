@@ -1829,7 +1829,6 @@ function lookForErrors(num,val,input,errorText, boolean, routine, currentAction)
 }
 
 function finalCheckErrors(num){
-  alert("entre" + " " + num)
   var error = false;
 
   var nameModify = document.getElementById("combination-modify-name").value;
@@ -1877,12 +1876,9 @@ function finalCheckErrors(num){
       }
     }
   }
-  alert(document.getElementById("create-combo").getAttribute("error") + " es lo q tenia combo")
   if(document.getElementById("create-combo").getAttribute("error") == "true"){
-    alert("Le di true")
       error = true
   }
-  alert("Return: " + error)
   return error;
 }
 
