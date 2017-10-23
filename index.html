@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+ 
+
+html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
+/* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+img{border-style:none}
+
+::-webkit-input-placeholder{color:inherit;opacity:0.54}
+::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
+/* End extract */
+
+html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
+h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3b7aaf;
+    text-align:left;
+    font-size:3vw;
+    display: block;}
+
+.my-display-container{position:relative}
+.my-container:after,.my-container:before,.my-row-padding:after,.my-row-padding:before{content:"";display:table;clear:both}
+.my-col{float:left;width:100%}
+
+@media (min-width:700px){.my-col.m6{width:49.99999%}}
+@media (min-width:1300px){.my-col.l3{width:24.99999%}}
+.my-content{max-width:980px;margin:auto}
+
+.my-display-topleft{position:absolute;left:0;top:0}
+
+.my-row-padding,.my-row-padding>.my-col{padding:0 8px}
+.my-container{padding:0.01em 16px}
+
+.my-border-bottom{border-bottom-color: #d3d3d3; border-style: solid; border-bottom-width: thin; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent;}
+.my-margin-bottom{margin-bottom:16px!important}
+.my-padding{padding:8px 16px!important}
+.my-padding-16{padding-top:16px!important;padding-bottom:16px!important}
+.my-padding-0-16{padding-top:0px!important;padding-bottom:16px!important}
+.my-padding-32{padding-top:32px!important;padding-bottom:32px!important}
+.my-padding-0-32{padding-top:0px!important;padding-bottom:32px!important}
+
+.my-black{color:#fff!important;background-color:#000!important}
+
+ .logo{
+ background-image:url("smart_house_logo.png");
+ background-size: 56px 56px;
+ background-repeat: no-repeat;
+ width: 56px;
+ height: 56px;
+}
+
+ .justify-center-56px{
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  height: 56px;
+ }
+
+ .flex-center{
+  display: flex;
+  align-items: center;
+ }
+
+ .tam{
+    font-size:16px;
+ }
+
+ .color{
+  background-color: black;
+ }
+
+  .image{
+    width:100%; height:auto;
+  }
+
+  .center-text{
+    text-align: center;
+  }
+
+ </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse color">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand logo" href="index.html"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav justify-center-56px">
+        <li><a class="flex-center tam" href="MyDevices.html">Rooms and Devices</a></li>
+        <li><a class="flex-center tam" href="MyCombos.html">Combinations</a></li>
+        <li><a class="flex-center tam" href="Now On.html">Switched On</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+ 
+<!-- Page content -->
+<div class="my-content my-padding" style="max-width:1564px">
+
+  <!-- Project Section -->
+  <div class="my-container my-padding-0-32" id="Home">
+    <h3 class="my-border-bottom my-padding-0-16">Home</h3>
+  </div>
+
+  <div class="my-row-padding">
+    <div class="my-col l3 m6 my-margin-bottom">
+      <div class="my-display-container">
+        <div class="my-display-topleft my-black my-padding">Rooms and Devices</div>
+           <a href="MyDevices.html" role="button" class="btn btn-default sizeB flex-center">
+            <img src="Devices.png" alt="Rooms and Devices" class="image">
+          </a>
+          <p></p>
+          <p class="center-text">Add, edit, delete and manage rooms and devices</p>
+      </div>
+    </div>
+    <div class="my-col l3 m6 my-margin-bottom">
+      <div class="my-display-container">
+        <div class="my-display-topleft my-black my-padding">Combinations</div>
+          <a href="MyCombos.html" role="button" class="btn btn-default sizeB flex-center">
+            <img src="Combos.png" alt="Combinations" class="image">
+          </a>
+          <p></p>
+                    <p class="center-text">Manage several devices with just one click</p>
+      </div>
+    </div>
+    <div class="my-col l3 m6 my-margin-bottom">
+      <div class="my-display-container">
+        <div class="my-display-topleft my-black my-padding">Switched On</div>
+          <a href="Now On.html" role="button" class="btn btn-default sizeB flex-center">
+            <img src="SwitchedOn.png" alt="Switched On" class="image">
+          </a>
+          <p></p>
+          <p class="center-text">Quick access to all your devices which are currently switched on</p>
+      </div>
+    </div>
+  </div>
+ 
+<!-- End page content -->
+</div>
+
+</body>
+</html>

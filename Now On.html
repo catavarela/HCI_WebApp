@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Switched On</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/css/bootstrap-colorpicker.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/js/bootstrap-colorpicker.js"></script>
+
+  <style>
+
+html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
+/* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+img{border-style:none}
+
+::-webkit-input-placeholder{color:inherit;opacity:0.54}
+::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
+/* End extract */
+
+html,body{font-family:Verdana,sans-serif;font-size:15px;line-height:1.5}html{overflow-x:hidden}
+h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3b7aaf;
+    text-align:left;
+    font-size:3vw;
+    display: block;}
+
+.my-image{max-width:100%;height:auto}img{margin-bottom:-5px}
+
+.my-display-container{position:relative}
+.my-container:after,.my-container:before,.my-row-padding:after,.my-row-padding:before{content:"";display:table;clear:both}
+.my-col{float:left;width:100%}
+
+@media (min-width:700px){.my-col.m6{width:49.99999%}}
+@media (min-width:1300px){.my-col.l3{width:24.99999%}}
+.my-content{max-width:980px;margin:auto}
+
+.my-display-topleft{position:absolute;left:0;top:0}
+
+.my-row-padding,.my-row-padding>.my-col{padding:0 8px}
+.my-container{padding:0.01em 16px}
+
+.my-border-bottom{border-bottom-color: #d3d3d3; border-style: solid; border-bottom-width: thin; border-top-color: transparent; border-right-color: transparent; border-left-color: transparent;}
+.my-margin-bottom{margin-bottom:16px!important}
+.my-padding{padding:8px 16px!important}
+.my-padding-16{padding-top:16px!important;padding-bottom:16px!important}
+.my-padding-0-16{padding-top:0px!important;padding-bottom:16px!important}
+.my-padding-32{padding-top:32px!important;padding-bottom:32px!important}
+.my-padding-0-32{padding-top:0px!important;padding-bottom:32px!important}
+
+.my-black{color:#fff!important;background-color:#000!important}
+
+ .logo{
+ background-image:url("smart_house_logo.png");
+ background-size: 56px 56px;
+ background-repeat: no-repeat;
+ width: 56px;
+ height: 56px;
+}
+
+ .justify-center-56px{
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  height: 56px;
+ }
+
+ .flex-center{
+  display: flex;
+  align-items: center;
+ }
+
+ .tam{
+    font-size:16px;
+ }
+
+ .color{
+  background-color: black;
+ }
+
+.modal-footer{
+  background-color: #D8E4EF;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+ }
+
+.modal-header{
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+ }
+
+.modal-text-device{
+  font-size:200%;
+}
+
+.trampa{
+  font-size: 1px;
+  color:white;
+}
+
+.error{
+  color:red;
+  font-size:75%;
+  display:none;
+}
+
+.notification{
+  width:200px;
+  height:35px;
+  background-color: #B1CADF;
+  position: absolute;
+  bottom:15px;
+  right:15px;
+  display:none;
+}
+
+.body-text{
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  font-weight: 10;
+  /*width:150px;
+  height:100%;
+  margin-top:32px;*/
+}
+
+ </style>
+</head>
+<body onload="loadDevices()">
+
+<nav class="navbar navbar-inverse color">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand logo" href="index.html"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav justify-center-56px">
+        <li><a class="flex-center tam" href="MyDevices.html">Rooms and Devices</a></li>
+        <li><a class="flex-center tam" href="MyCombos.html">Combinations</a></li>
+        <li><a class="flex-center tam" href="Now On.html">Switched On</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <!-- Confirmation modal delete device-->
+  <div class="modal fade" id="confirmation-Delete-device" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-center" id="delete-modal-device-name"><h3>
+        </div>
+        <div class="modal-body">
+          <p class="confirm-delete-text">Are you sure you want to delete this device?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="accept-delete-device">Accept </button>
+          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>  
+      </div>
+    </div>
+  </div> 
+
+
+  <!-- MODALS DE DEVICES-->
+    <!-- Modal de lamp -->
+  <div class="modal fade" id="device-lamp" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-center">Lamp</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="lamp-name" class="control-label col-sm-4" style="text-align: right">Name:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="lamp-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
+              </div>
+              <label for="lamp-change-name" class="control-label col-sm-4" style="text-align: right">Change name:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="lamp-change-name" placeholder="Enter new name" name="lamp-change-name">
+                <p class="error" id="error-name-lamp">The name must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-lamp">This name already exists</p>
+              </div>
+              <br>
+              <label for="lamp-description" class="control-label col-sm-4" style="text-align: right">Description:</label>
+              <div class="col-sm-8">
+                <p class="form-control-static" id="lamp-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
+              </div>
+              <label for="lamp-change-description" class="control-label col-sm-4" style="text-align: right">Change description:</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="lamp-change-description" placeholder="Enter new description" name="lamp-change-description">
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="lamp-status" class="control-label col-sm-4" style="text-align: right">Status:</label>
+              <div class="col-sm-8">
+                <input type="checkbox" data-toggle="toggle" id="lamp-switch">
+              </div>      
+              <br>
+              <p class="trampa">a</p>
+              <label for="lamp-change-brightness" class="control-label col-sm-4" style="text-align: right">Set brightness:</label>
+              <div class="col-sm-8">
+                <input type="number" class="form-control" id="lamp-change-brightness" placeholder="Enter brightness (0 - 100)" name="lamp-change-brightness" min="0" max="100"> <!--hay que verificar que sea un numero entre 0 y 100-->
+                <p class="error" id="error-lamp-brightness">The brightness must be between 0 and 100</p>
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="lamp-change-color" class="control-label col-sm-4" style="text-align: right">Select color:</label>
+              <div class="col-sm-8">
+                <div id="cp3" class="input-group colorpicker-component">
+                  <input type="text" value="#00AABB" class="form-control" id="lamp-change-color" placeholder="Enter hexadecimal color">
+                  <span class="input-group-addon"><i></i></span>
+                </div>
+                <p class="error" id="error-lamp-color">The color must be between #000000 and #FFFFFF</p>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="saveChangesLamp()">Accept</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default pull-left" onclick="deleteLamp()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <!-- Modal de oven -->
+  <div class="modal fade" id="device-oven" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">Oven</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="oven-name" class="control-label col-sm-5" style="text-align: right;">Name:</label>
+              <div class="col-sm-7">
+                <p class="form-control-static" id="oven-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
+              </div>
+              <label for="oven-change-name" class="control-label col-sm-5" style="text-align: right">Change name:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="oven-change-name" placeholder="Enter new name" name="oven-change-name">
+                <p class="error" id="error-name-oven">The name must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-oven">This name already exists</p>
+              </div>
+              <br>
+              <label for="oven-description" class="control-label col-sm-5" style="text-align: right">Description:</label>
+              <div class="col-sm-7">
+                <p class="form-control-static" id="oven-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
+              </div>
+              <label for="oven-change-description" class="control-label col-sm-5" style="text-align: right">Change description:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="oven-change-description" placeholder="Enter new description" name="oven-change-description">
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="oven-status" class="control-label col-sm-5" style="text-align: right">Status:</label>
+              <div class="col-sm-7">
+                <input type="checkbox" data-toggle="toggle" id="oven-switch">
+              </div> 
+              <br>
+              <p class="trampa">a</p>
+              <label for="oven-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="oven-change-temperature" placeholder="Enter temperature (90 - 230)" name="oven-change-temperature" min="90" max="230">    <!--hay que verificar que este entre 90 y 230-->
+                <p class="error" id="error-oven-temperature">The temperature must be between 90 and 230</p>
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="oven-change-heatmode" class="control-label col-sm-5" style="text-align: right;">Select heat mode:</label>
+              <div class="col-sm-7">
+                <select class="form-control" id="oven-change-heatmode">
+                    <option val="conventional">Conventional</option>
+                    <option val="bottom">Bottom</option>
+                    <option val="top">Top</option>
+                  </select>
+                  <p class="error" id="error-oven-heatmode">You must select an option</p>
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="oven-change-grillmode" class="control-label col-sm-5" style="text-align: right;">Select grill mode:</label>
+              <div class="col-sm-7">
+                <select class="form-control" id="oven-change-grillmode">
+                    <option val="large">Large</option>
+                    <option val="eco">Eco</option>
+                    <option val="off">Off</option>
+                  </select>
+                  <p class="error" id="error-oven-grillmode">You must select an option</p>
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="oven-change-convectionmode" class="control-label col-sm-5" style="text-align: right;">Select convection mode:</label>
+              <div class="col-sm-7">
+                <select class="form-control" id="oven-change-convectionmode">
+                    <option val="normal">Normal</option>
+                    <option val="eco">Eco</option>
+                    <option val="off">Off</option>
+                  </select>
+                  <p class="error" id="error-oven-convectionmode">You must select an option</p>
+              </div>
+            </div> 
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" onclick="saveChangesOven()">Accept </button>
+          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default pull-left" onclick="deleteOven()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <!-- Modal de ac -->
+  <div class="modal fade" id="device-ac" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title text-center">Ac</h3>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="ac-name" class="control-label col-sm-5" style="text-align: right;">Name:</label>
+              <div class="col-sm-7">
+                <p class="form-control-static" id="ac-name" style="text-align: left"></p> <!--hay que agregar el nombre que eligio el usuario-->
+              </div>
+              <label for="ac-change-name" class="control-label col-sm-5" style="text-align: right">Change name:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="ac-change-name" placeholder="Enter new name" name="ac-change-name">
+                <p class="error" id="error-name-ac">The name must have between 3 and 30 characters </p>
+                <p class="error" id="error-nameExist-ac">This name already exists</p>
+              </div>
+              <br>
+              <label for="ac-description" class="control-label col-sm-5" style="text-align: right">Description:</label>
+              <div class="col-sm-7">
+                <p class="form-control-static" id="ac-description" style="text-align: left"></p> <!--hay que agregar la descripcion que puso el usuario si es que la hubo, y "none" si es que no puso nada-->
+              </div>
+              <label for="ac-change-description" class="control-label col-sm-5" style="text-align: right">Change description:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" id="ac-change-description" placeholder="Enter new description" name="ac-change-description">
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="ac-status" class="control-label col-sm-5" style="text-align: right">Status:</label>
+              <div class="col-sm-7">
+                <input type="checkbox" data-toggle="toggle" id="ac-switch">
+              </div> 
+              <br>
+              <p class="trampa">a</p>
+              <label for="ac-change-temperature" class="control-label col-sm-5" style="text-align: right;">Set temperature:</label>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" id="ac-change-temperature" placeholder="Enter temperature (18 - 38)" name="ac-change-temperature" min="18" max="38">    <!--hay que verificar que este entre 18 y 38-->
+                <p class="error" id="error-ac-temperature">The temperature must be between 18 and 38</p>
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="ac-change-mode" class="control-label col-sm-5" style="text-align: right;">Select mode:</label>
+              <div class="col-sm-7">
+                <select class="form-control" id="ac-change-mode">
+                    <option val="cool">Cool</option>
+                    <option val="heat">Heat</option>
+                    <option val="fan">Fan</option>
+                  </select>
+                  <p class="error" id="error-ac-mode">You must select an option</p>
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="ac-change-verticalswing" class="control-label col-sm-5" style="text-align: right;">Select vertical swing:</label>
+              <div class="col-sm-7">
+                <select class="form-control" id="ac-change-verticalswing">
+                    <option val="auto">Auto</option>
+                    <option val="22">22°</option>
+                    <option val="45">45°</option>
+                    <option val="67">67°</option>
+                    <option val="90">90°</option>
+                  </select>
+                  <p class="error" id="error-ac-verticalswing">You must select an option</p>
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="ac-change-horizontalswing" class="control-label col-sm-5" style="text-align: right;">Select horizontal swing:</label>
+              <div class="col-sm-7">
+                <select class="form-control" id="ac-change-horizontalswing">
+                    <option val="auto">Auto</option>
+                    <option val="-90">-90°</option>
+                    <option val="-45">-45°</option>
+                    <option val="0">0°</option>
+                    <option val="45">45°</option>
+                    <option val="90">90°</option>
+                  </select>
+                  <p class="error" id="error-ac-horizontalswing">You must select an option</p>
+              </div>
+              <br>
+              <p class="trampa">a</p>
+              <label for="ac-change-fanspeed" class="control-label col-sm-5" style="text-align: right;">Select fan speed:</label>
+              <div class="col-sm-7">
+                <select class="form-control" id="ac-change-fanspeed">
+                    <option val="auto">Auto</option>
+                    <option val="25">25</option>
+                    <option val="50">50</option>
+                    <option val="75">75</option>
+                    <option val="100">100</option>
+                  </select>
+                  <p class="error" id="error-ac-fanspeed">You must select an option</p>
+              </div>
+            </div> 
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" onclick="saveChangesAc()">Accept </button>
+          <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default pull-left" onclick="deleteAc()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <!-- Notification-->
+  <div class="notification" id="notification">
+    <div class="body-notification">
+        <div class="body-text-not">
+            <p class="body-text"><span class="glyphicon glyphicon-ok"></span> Changes saved</p>
+        </div>
+    </div> 
+</div>
+
+<!-- Page content -->
+<div class="my-content my-padding" id="devicesContainer" style="max-width:1564px">
+
+  <!-- Project Section -->
+  <div class="my-container my-padding-0-32" id="SwitchedOn">
+    <h3 class="my-border-bottom my-padding-0-16">Switched On</h3>
+  </div>
+
+<!-- Aca estarian los dispositivos añadidos dinamicamente-->
+
+<!-- End page content -->
+</div>
+
+
+
+<script>
+
+$(document).ready(function () {
+    $('#lamp-switch').on('change', function () {
+        DisableLampOptions()
+    });
+});
+
+$(document).ready(function () {
+    $('#oven-switch').on('change', function () {
+        DisableOvenOptions()
+    });
+});
+
+$(document).ready(function () {
+    $('#ac-switch').on('change', function () {
+        DisableAcOptions()
+    });
+});
+
+var api = class {
+  static get baseUrl() {
+    return "http://127.0.0.1:8080/api/";
+  }
+
+  static get timeout() {
+    return 60 * 1000;
+  }
+}
+api.room = class {
+  static get url() {
+    return api.baseUrl + "rooms/";
+  }
+
+  static add(room) {
+   return $.ajax({
+      url: api.room.url,
+      method: "POST",
+      dataType: "json",
+      timeout: api.timeout,
+      async: false,
+      data: room
+    }); 
+  }
+
+  static modify(room) {
+   return $.ajax({
+      url: api.room.url + room.id,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+      async: false,
+      data: room
+    }); 
+  }
+
+  static delete(id) {
+   return $.ajax({
+      url: api.room.url + id,
+      method: "DELETE",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    }); 
+  }
+
+  static get(id) {
+    return $.ajax({
+      url: api.room.url + id,
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+  static getRoomDevices(id) {
+    return $.ajax({
+      url: api.room.url + id + "/devices",
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+
+  static getAll(){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/rooms",
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+}
+
+api.device = class {
+  static get url() {
+    return api.baseUrl + "devices/";
+  }
+
+  static add(device) {
+   return $.ajax({
+      url: api.device.url,
+      method: "POST",
+      dataType: "json",
+      timeout: api.timeout,
+      async: false,
+      data: device
+    }); 
+  }
+
+  static modify(device) {
+   return $.ajax({
+      url: api.device.url + device.id,
+      method: "PUT",
+      dataType: "json",
+      timeout: api.timeout,
+      async: false,
+      data:device
+    }); 
+  }
+
+  static delete(id) {
+   return $.ajax({
+      url: api.device.url + id,
+      method: "DELETE",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    }); 
+  }
+
+  static get(id) {
+    return $.ajax({
+      url: api.device.url + id,
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+  static linkToRoom(idDevice,idRoom){
+      return $.ajax({
+      url: "http://127.0.0.1:8080/api" + /devices/+ idDevice + /rooms/ + idRoom,
+      method: "POST",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+  static getAll(){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices",
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+  static getTypes(){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devicetypes",
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+  static getType(id){
+      return $.ajax({
+      url: "http://127.0.0.1:8080/api/devicetypes/" + id,
+      method: "GET",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout
+    });
+  }
+
+  static getState(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/getState",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+}
+
+api.lamp = class {
+
+    constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+    turnOn(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOn",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+    turnOff(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOff",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+    
+    changeBrightness(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "changeBrightness",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+
+    changeColor(deviceID,string){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "changeColor",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: string
+    });
+  }
+}
+  api.oven = class {
+
+    constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+    turnOn(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOn",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+    turnOff(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOff",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+    
+    setTemperature(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setTemperature",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setHeat(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setHeat",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setGrill(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setGrill",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setConvection(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setConvection",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+}
+
+  api.ac = class {
+
+    constructor(id,typeId,name,description){
+    this.id = id;
+    this.typeId = typeId;
+    this.name = name;
+    this.description = description;
+  }
+    turnOn(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOn",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+
+    turnOff(deviceID){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "turnOff",
+      method: "PUT",
+      dataType: "json",
+      async: false,
+      timeout: api.timeout,
+    });
+  }
+    
+    setTemperature(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setTemperature",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setMode(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setMode",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setVerticalSwing(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setVerticalSwing",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+  setHorizontalSwing(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setHorizontalSwing",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+
+
+  setFanSpeed(deviceID,integer){
+    return $.ajax({
+      url: "http://127.0.0.1:8080/api/devices/" + deviceID + "/" + "setFanSpeed",
+      method: "PUT",
+      dataType: "json",
+      contentType: "application/json",
+      timeout: api.timeout,
+      async: false,
+      data: integer
+    });
+  }
+}
+
+api.model = api.model || {};
+
+api.model.room = class {
+  constructor(id, name, meta) {
+    if (id) {
+      this.id = id;
+    } else {
+      delete(this.id);
+    }
+    this.name = name;
+    this.meta = meta;
+  }
+}
+
+api.model.device = class {
+  constructor(typeId, name, meta) {
+    if (typeId) {
+      this.typeId = typeId;
+    } else {
+      delete(this.typeId);
+    }
+    this.name = name;
+    this.meta = meta;
+  }
+}
+
+api.model.action = class{
+    constructor(name,params) {
+     this.name = name;
+     this.params = params;
+  }
+}
+
+
+function addAttributesOfDeviceButton(deviceButton, deviceImage){
+
+  switch(deviceButton.getAttribute("data-typeID")){
+    case "go46xmbqeomjrsjr":
+        deviceImage.setAttribute("src", "Lamp.png");
+        deviceButton.setAttribute("data-type","lamp");
+        deviceButton.setAttribute("onclick","viewLampState(this)");
+        break;
+
+    case "im77xxyulpegfmv8":
+        deviceImage.setAttribute("src", "Oven.png");
+        deviceButton.setAttribute("data-type","oven");
+        deviceButton.setAttribute("onclick","viewOvenState(this)");
+        break;
+
+    case "li6cbv5sdlatti0j":
+        deviceImage.setAttribute("src", "Ac.png");
+        deviceButton.setAttribute("data-type","ac");
+        deviceButton.setAttribute("onclick","viewAcState(this)");
+        break;
+
+    default:
+        deviceButton.disabled = true;
+        deviceImage.setAttribute("src", "Default.png");
+  }
+}
+
+
+function loadDevice(data, i){
+
+  var deviceContainer = document.createElement("div");
+  deviceContainer.classList.add("my-col");
+  deviceContainer.classList.add("l3");
+  deviceContainer.classList.add("m6");
+  deviceContainer.classList.add("my-margin-bottom");
+
+  var displayContainer = document.createElement("div");
+  displayContainer.classList.add("my-display-container");
+
+  deviceContainer.appendChild(displayContainer);
+
+  var tag = document.createElement("div");
+  tag.classList.add("my-display-topleft");
+  tag.classList.add("my-black");
+  tag.classList.add("my-padding");
+
+  displayContainer.appendChild(tag);
+
+  var deviceName = data.devices[i].name;
+  tag.innerHTML = deviceName;
+
+  var deviceButton = document.createElement("button");
+  deviceButton.classList.add("btn");
+  deviceButton.classList.add("btn-default");
+  deviceButton.setAttribute("type", data.devices[i].typeId);
+  deviceButton.setAttribute("id", data.devices[i].id);
+  
+  deviceButton.setAttribute("data-name",data.devices[i].name)
+  deviceButton.setAttribute("data-desc",data.devices[i].meta)
+  deviceButton.setAttribute("data-typeID",data.devices[i].typeId)
+  deviceButton.setAttribute("data-ID",data.devices[i].id)
+
+  displayContainer.appendChild(deviceButton);
+
+  var deviceImage = document.createElement("img");
+  deviceImage.setAttribute("alt", deviceName);
+  deviceImage.classList.add("my-image");
+
+  deviceButton.appendChild(deviceImage);
+
+  addAttributesOfDeviceButton(deviceButton, deviceImage);
+
+  return deviceContainer;
+}
+
+function deleteFromDisplay(id){
+  var displayContainer = document.getElementById(id).parentElement;
+  var deviceContainer = displayContainer.parentElement;
+  var row = deviceContainer.parentElement;
+
+  var boolean = rowFull(row);
+  row.removeChild(deviceContainer);
+  if(boolean)
+    moveAllUp(row);
+}
+
+function rowFull(row){
+  return row.children.length == 4;
+}
+
+function moveAllUp(row){
+  var rowContainer = row.parentElement;
+  var num = childNumber(row, rowContainer);
+  var nextChild;
+
+  while((num < rowContainer.children.length) && nextRowHasDevices(rowContainer.children[num + 1])){
+    nextChild = next(rowContainer.children[num + 1]);
+    rowContainer.children[num + 1].removeChild(rowContainer.children[num + 1].children[0])
+    rowContainer.children[num].appendChild(nextChild);
+    num++;
+  }
+}
+
+function childNumber(row, rowContainer){
+  var i = 1;
+
+  while(i < rowContainer.children.length){
+    if (row === rowContainer.children[i])
+      return i;
+    i++;
+  }
+}
+
+function next(row){
+  return row.children[0];
+}
+
+function nextRowHasDevices(row){
+  if(row == null)
+    return false
+  return row.children.length > 0;
+}
+
+function createRow(){
+  var row = document.createElement("div");
+  row.classList.add("my-row-padding");
+
+  return row;
+}
+
+function loadDevicesHTML(data){
+  var i, j, father, currentRow;
+
+  father = document.getElementById("devicesContainer");
+
+  for(i = 0, j = 0; i < data.devices.length; i++){
+    if(isOn(data, i)){
+      if((j % 4) == 0){
+        currentRow = createRow();
+        father.appendChild(currentRow);
+      }
+
+      currentRow.appendChild(loadDevice(data, i));
+      j++;
+    }
+  }
+}
+
+function isOn(data, i){
+  switch(data.devices[i].typeId){
+    case "eu0v2xgprrhhg41g" : return false;
+
+    case "go46xmbqeomjrsjr": return isOnLOA(data, i);
+
+    case "im77xxyulpegfmv8": return isOnLOA(data, i);
+
+    case "li6cbv5sdlatti0j": return isOnLOA(data, i);
+
+    case "lsf78ly0eqrjbz91": return false;
+
+    case "rnizejqr2di0okho": return false;
+
+    default: return false;
+  }
+}
+
+function isOnLOA(data, i){
+  var boolean = false;
+
+  api.device.getState(data.devices[i].id)
+    .done(function (data) {
+        if(data.result.status == 'on')
+          boolean = true;
+    })
+    .fail(function (jqXHR, textStatus) {
+        alert ('Request failed: checking if the device was on' + textStatus);
+    })
+
+    return boolean;
+}
+
+function loadDevices(){
+
+  api.device.getAll()
+
+  .done(function (data) {
+    loadDevicesHTML(data);
+  })
+
+  .fail(function (jqXHR, textStatus) {
+    alert ('Request failed:' + textStatus);
+  })
+}
+
+function deleteLamp(){
+  var device = document.getElementById(document.getElementById("device-lamp").getAttribute("data-device"));
+
+  $("#device-lamp").modal("hide");
+  $("#confirmation-Delete-device").modal();
+
+  document.getElementById("delete-modal-device-name").innerHTML = "Delete " + device.getAttribute("data-name") + "?";
+
+  document.getElementById("accept-delete-device").onclick = function() {deleteDevice(device)};
+}
+
+function deleteAc(){
+  var device = document.getElementById(document.getElementById("device-ac").getAttribute("data-device"));
+
+  $("#device-ac").modal("hide");
+  $("#confirmation-Delete-device").modal();
+
+  document.getElementById("delete-modal-device-name").innerHTML = "Delete " + device.getAttribute("data-name") + "?";
+
+  document.getElementById("accept-delete-device").onclick = function() {deleteDevice(device)};
+}
+
+function deleteOven(){
+  var device = document.getElementById(document.getElementById("device-oven").getAttribute("data-device"));
+
+  $("#device-oven").modal("hide");
+  $("#confirmation-Delete-device").modal();
+
+  document.getElementById("delete-modal-device-name").innerHTML = "Delete " + device.getAttribute("data-name") + "?";
+
+  document.getElementById("accept-delete-device").onclick = function() {deleteDevice(device)};
+}
+
+function deleteDevice(device){
+  api.device.delete(device.getAttribute("data-ID"))
+
+  .done(function(data){
+    deleteFromDisplay(device.getAttribute("data-ID"));
+    $("#confirmation-Delete-device").modal("hide");
+  })
+
+  .fail(function(jqXHR, textStatus){
+    alert('Request failed: trying to delete the device' + textStatus);
+  })  
+}
+
+function modifyDevice(modalID,newNameID,newDescID,deviceObj,deviceType){
+   var device = document.getElementById(document.getElementById(modalID).getAttribute("data-device"));
+   deviceObj.id = device.getAttribute("data-ID")
+   deviceObj.name = document.getElementById(newNameID).value;
+   deviceObj.description = document.getElementById(newDescID).value;
+   deviceObj.typeId = device.getAttribute("data-typeID")
+   var errorName = document.getElementById("error-name-" + deviceType)
+   var errorExistName = document.getElementById("error-nameExist-" + deviceType)
+
+   if( (deviceObj.name.length != 0 && deviceObj.name.length < 3) || deviceObj.name.length > 30){
+    errorName.style.display = "block";
+    document.getElementById(newNameID).value = ""
+    return false;
+   }
+   if(deviceNameExist(deviceObj.name,errorExistName)){
+    document.getElementById(newNameID).value = ""
+    return false;
+   }
+   if(deviceObj.name.length != 0 || deviceObj.description.length != 0){
+     if(deviceObj.description == "")
+      deviceObj.description = device.getAttribute("data-desc");
+     if(deviceObj.name  == "")
+      deviceObj.name = device.getAttribute("data-name")
+    }else{
+      deviceObj.description = device.getAttribute("data-desc");
+      deviceObj.name = device.getAttribute("data-name")
+      return null;
+    }
+
+  device.setAttribute("data-name",deviceObj.name)
+  device.setAttribute("data-desc",deviceObj.description)
+  document.getElementById(newDescID).value = "";
+  document.getElementById(newNameID).value = "";
+  return true;
+}
+
+function deviceNameExist(deviceName,errorElement){
+  var boolean = false;
+  api.device.getAll()
+  .done(function (data){
+      for(var i=0; i < data.devices.length ; i++){
+        if(data.devices[i].name == deviceName){
+            errorElement.style.display = "block"
+            boolean = true;
+        }
+      }
+  })
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed:' + textStatus);
+  })
+  return boolean;
+}
+
+function updateDevice(deviceObj){
+    api.device.get(deviceObj.id)
+    .done(function (data) {
+        data.device.name = deviceObj.name
+        data.device.meta = deviceObj.description
+        api.device.modify(data.device)
+        .done(function (boolean){
+        })
+        .fail(function (jqXHR, textStatus) {
+        alert ('Request failed:' + textStatus);
+        })
+      })
+    .fail(function (jqXHR, textStatus) {
+      alert ('Request failed:' + textStatus);
+      })
+    var deviceTag = createTag(deviceObj.name);
+    var button = document.getElementById(deviceObj.id)
+    var deviceContainer = button.parentNode
+    var divToRemove = deviceContainer.children[0]
+    deviceContainer.removeChild(divToRemove)
+    deviceContainer.appendChild(deviceTag)
+}
+
+function createTag(deviceName){
+    var tag = document.createElement("div");
+    tag.classList.add("my-display-topleft");
+    tag.classList.add("my-black");
+    tag.classList.add("my-padding");
+
+    if(deviceName.length > 23){
+      tag.innerHTML = deviceName.substring(0, 21) + "...";
+    }else
+      tag.innerHTML = deviceName;
+      
+    return tag;
+}
+
+function viewLampState(button){
+   cleanAllErrors()
+   document.getElementById("device-lamp").setAttribute("data-device",button.getAttribute("id"))
+   updateDeviceLampModal(button)
+   $("#device-lamp").modal();
+}
+
+
+function updateDeviceLampModal(button){
+  document.getElementById("lamp-name").innerHTML = button.getAttribute("data-name");
+  document.getElementById("lamp-description").innerHTML = button.getAttribute("data-desc");
+  api.device.getState(button.getAttribute("data-ID"))
+  .done(function (data) {
+      updateLampState(button,data)
+  })
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed: loading the lamp status' + textStatus);
+  })
+}
+
+function updateLampState(button,data){
+  var status = data.result.status
+  if(status == "on"){
+    document.getElementById("lamp-switch").checked = true;
+    $('#lamp-switch').bootstrapToggle('on')
+    document.getElementById("lamp-change-brightness").disabled = false
+    document.getElementById("lamp-change-color").disabled = false
+  }
+  else{
+    document.getElementById("lamp-switch").checked = false
+    $('#lamp-switch').bootstrapToggle('off')
+    document.getElementById("lamp-change-brightness").disabled = true
+    document.getElementById("lamp-change-color").disabled = true
+  }
+  button.setAttribute("data-brightness", data.result.brightness);
+  button.setAttribute("data-color", data.result.color);
+  button.setAttribute("data-status", document.getElementById("lamp-switch").checked)
+  document.getElementById("lamp-change-brightness").value = data.result.brightness;
+  document.getElementById("lamp-change-color").value = data.result.color;
+}
+
+function DisableLampOptions(){
+  var switchLamp = document.getElementById("lamp-switch")
+  if(switchLamp.checked == true){
+    document.getElementById("lamp-change-brightness").disabled = false
+      document.getElementById("lamp-change-color").disabled = false
+  }else{
+    document.getElementById("lamp-change-brightness").disabled = true
+      document.getElementById("lamp-change-color").disabled = true
+  }
+}
+
+
+
+function saveChangesLamp(){
+    cleanAllErrors()
+    var fieldError = false;
+    var changeNameOrDesc = false
+    var changes = false;
+    var lamp = new api.lamp(null,null,null,null)
+
+    changeNameOrDesc = modifyDevice("device-lamp","lamp-change-name","lamp-change-description",lamp,"lamp")
+    if( changeNameOrDesc == false){
+      fieldError = true;
+    }
+    var newBrightness = document.getElementById("lamp-change-brightness").value;
+    if(newBrightness > 100 || newBrightness < 0 || newBrightness == ""){
+      document.getElementById("error-lamp-brightness").style.display = "block"
+      document.getElementById("lamp-change-brightness").value = document.getElementById(lamp.id).getAttribute("data-brightness")
+      fieldError = true;
+    }
+    var newColor = document.getElementById("lamp-change-color").value;
+    newColor = newColor.substring(1);
+    if(! isColor(newColor) || newColor == ""){
+      document.getElementById("lamp-change-brightness").value = document.getElementById(lamp.id).getAttribute("data-color")
+      document.getElementById("error-lamp-color").style.display = "block"
+      fieldError = true;
+    }
+    if(fieldError){
+      return;
+    }
+
+    if((newBrightness != document.getElementById(lamp.id).getAttribute("data-brightness")) 
+        || newColor != document.getElementById(lamp.id).getAttribute("data-color")){
+      changes = true;
+  }
+
+  var currentState = document.getElementById("lamp-switch").checked
+  var previousState = document.getElementById(lamp.id).getAttribute("data-status")
+
+  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
+    changes = true;
+  }
+
+  if(changeNameOrDesc == true){
+      updateDevice(lamp)
+  }
+    if(changes){
+      var newBrightnessJSON={"0":newBrightness}; //si fueran 2 parametros seria {"0":newBrightness,"1":segundaParam}
+      var newColorJSON={"0":newColor}
+      var parameterBrightness = JSON.stringify(newBrightnessJSON)
+      var parameterColor = JSON.stringify(newColorJSON)
+      if(document.getElementById("lamp-switch").checked == true){
+        lamp.turnOn(lamp.id)
+        .done(function (data) {
+          lamp.changeBrightness(lamp.id,parameterBrightness)
+          lamp.changeColor(lamp.id,parameterColor)
+          })
+        .fail(function (jqXHR, textStatus) {
+          alert ('Request failed:' + textStatus);
+          })
+      }
+      else{
+        lamp.turnOff(lamp.id);
+        deleteFromDisplay(lamp.id);
+      }
+  }
+
+  if(changeNameOrDesc == true || changes == true){
+    showNotification()
+  }
+    $("#device-lamp").modal("hide");
+}
+
+function viewOvenState(button){
+  cleanAllErrors()
+  document.getElementById("device-oven").setAttribute("data-device",button.getAttribute("id"))
+  updateDeviceOvenModal(button)
+  $("#device-oven").modal();
+}
+
+function updateDeviceOvenModal(button){
+  document.getElementById("oven-name").innerHTML = button.getAttribute("data-name");
+  document.getElementById("oven-description").innerHTML = button.getAttribute("data-desc");
+  api.device.getState(button.getAttribute("data-ID"))
+  .done(function (data) {
+      updateOvenState(button,data)
+  })
+  .fail(function (jqXHR, textStatus) {
+      alert ('Request failed: loading the oven status' + textStatus);
+  })
+}
+
+  function updateOvenState(button,data){
+    var status = data.result.status
+    if(status == "on"){
+      document.getElementById("oven-switch").checked = true;
+      $('#oven-switch').bootstrapToggle('on')
+    }
+    else{
+      document.getElementById("oven-switch").checked = false;
+      $('#oven-switch').bootstrapToggle('off')
+    }
+    document.getElementById("oven-change-temperature").value = data.result.temperature;
+    document.getElementById("oven-change-heatmode").value = data.result.heat;
+    document.getElementById("oven-change-grillmode").value = data.result.grill;
+    document.getElementById("oven-change-convectionmode").value = data.result.convection;
+    button.setAttribute("data-temperature", data.result.temperature);
+    button.setAttribute("data-heatmode", data.result.heat);
+    button.setAttribute("data-grillmode", data.result.grill);
+    button.setAttribute("data-convectionmode", data.result.convection);
+    button.setAttribute("data-status", document.getElementById("oven-switch").checked)
+    DisableOvenOptions()
+
+}
+
+function DisableOvenOptions(){
+  var switchOven = document.getElementById("oven-switch")
+  if(switchOven.checked == true){
+      document.getElementById("oven-change-temperature").disabled = false;
+      document.getElementById("oven-change-heatmode").disabled = false;
+      document.getElementById("oven-change-grillmode").disabled = false;
+      document.getElementById("oven-change-convectionmode").disabled = false;
+  }else{
+      document.getElementById("oven-change-temperature").disabled = true;
+      document.getElementById("oven-change-heatmode").disabled = true;
+      document.getElementById("oven-change-grillmode").disabled = true;
+      document.getElementById("oven-change-convectionmode").disabled = true;
+  }
+}
+
+function saveChangesOven(){
+    cleanAllErrors()
+    var fieldError = false;
+    var changeNameOrDesc = false;
+    var changes = false;
+    var oven = new api.oven(null,null,null,null)
+    
+    changeNameOrDesc = modifyDevice("device-oven","oven-change-name","oven-change-description",oven,"oven")
+
+    if(changeNameOrDesc == false){
+      fieldError = true
+    }
+
+    var newTemperature = document.getElementById("oven-change-temperature").value;
+    if(newTemperature < 90 || newTemperature > 230){
+      document.getElementById("error-oven-temperature").style.display = "block"
+      document.getElementById("oven-change-temperature").value = document.getElementById(oven.id).getAttribute("data-temperature")
+      fieldError = true
+    }
+    var newTemperatureJSON={"0":newTemperature}
+    var parameterTemperature = JSON.stringify(newTemperatureJSON)
+    var newHeatMode = document.getElementById("oven-change-heatmode").value;
+    var newHeatModeJSON={"0":newHeatMode}
+    var parameterHeatMode = JSON.stringify(newHeatModeJSON)
+    var newGrillMode = document.getElementById("oven-change-grillmode").value;
+    var newGrillModeJSON={"0":newGrillMode}
+    var parameterGrillMode = JSON.stringify(newGrillModeJSON)
+    var newConvectionMode = document.getElementById("oven-change-convectionmode").value;
+    var newConvectionModeJSON={"0":newConvectionMode}
+    var parameterConvectionMode = JSON.stringify(newConvectionModeJSON)
+    
+    if(newHeatMode == ""){
+      document.getElementById("error-oven-heatmode").style.display = "block"
+      document.getElementById("oven-change-heatmode").value = document.getElementById(oven.id).getAttribute("data-heatmode")
+      fieldError = true;
+    }
+    if(newGrillMode == ""){
+      document.getElementById("error-oven-grillmode").style.display = "block"
+      document.getElementById("oven-change-grillmode").value = document.getElementById(oven.id).getAttribute("data-grillmode")
+      fieldError = true;
+    }
+    if(newConvectionMode == ""){
+      document.getElementById("error-oven-convectionmode").style.display = "block"
+      document.getElementById("oven-change-convectionmode").value = document.getElementById(oven.id).getAttribute("data-convectionmode")
+      fieldError = true;
+    }
+    if(fieldError)
+      return;
+
+    if(changeNameOrDesc == true){
+      updateDevice(oven)
+    }
+
+    if(newTemperature != document.getElementById(oven.id).getAttribute("data-temperature") ||
+      newHeatMode != document.getElementById(oven.id).getAttribute("data-heatmode") ||
+      newGrillMode != document.getElementById(oven.id).getAttribute("data-grillmode") ||
+      newConvectionMode != document.getElementById(oven.id).getAttribute("data-convectionmode")){
+        changes = true;
+    }
+
+    var currentState = document.getElementById("oven-switch").checked
+  var previousState = document.getElementById(oven.id).getAttribute("data-status")
+
+  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
+    changes = true;
+  }
+  if(changes){
+      if(document.getElementById("oven-switch").checked == true){
+        oven.turnOn(oven.id)
+        .done(function (data) {
+          if(newTemperature != "")
+            oven.setTemperature(oven.id,parameterTemperature)
+          if(newHeatMode != "")
+            oven.setHeat(oven.id,parameterHeatMode)
+          if(newGrillMode != "")
+            oven.setGrill(oven.id,parameterGrillMode)
+          if(newConvectionMode != "")
+            oven.setConvection(oven.id,parameterConvectionMode)
+          })
+        .fail(function (jqXHR, textStatus) {
+          alert ('Request failed:' + textStatus);
+          })
+      }
+      else{
+        oven.turnOff(oven.id);
+        deleteFromDisplay(oven.id);
+      }
+  }
+
+  if(changes == true || changeNameOrDesc == true)
+    showNotification()
+    $("#device-oven").modal("hide");
+}
+
+  function viewAcState(button){
+    cleanAllErrors()
+    document.getElementById("device-ac").setAttribute("data-device",button.getAttribute("id"))
+    updateDeviceAcModal(button)
+    $("#device-ac").modal();
+  }
+
+  function updateDeviceAcModal(button){
+    document.getElementById("ac-name").innerHTML = button.getAttribute("data-name");
+    document.getElementById("ac-description").innerHTML = button.getAttribute("data-desc");
+    api.device.getState(button.getAttribute("data-ID"))
+    .done(function (data) {
+        updateAcState(button,data)
+    })
+    .fail(function (jqXHR, textStatus) {
+        alert ('Request failed: loading the ac status' + textStatus);
+    })
+}
+
+  function updateAcState(button,data){
+    var status = data.result.status
+    if(status == "on"){
+    document.getElementById("ac-switch").checked = true;
+    $('#ac-switch').bootstrapToggle('on')
+    }else{
+    document.getElementById("ac-switch").checked = false;
+    $('#ac-switch').bootstrapToggle('off')
+    }
+    document.getElementById("ac-change-temperature").value = data.result.temperature;
+    document.getElementById("ac-change-mode").value = data.result.mode;
+    document.getElementById("ac-change-verticalswing").value = data.result.verticalSwing;
+    document.getElementById("ac-change-horizontalswing").value = data.result.horizontalSwing;
+    document.getElementById("ac-change-fanspeed").value = data.result.fanSpeed;
+    button.setAttribute("data-temperature", data.result.temperature);
+    button.setAttribute("data-verticalswing", data.result.verticalSwing);
+    button.setAttribute("data-horizontalswing", data.result.horizontalSwing);
+    button.setAttribute("data-mode", data.result.mode);
+    button.setAttribute("data-fanspeed", data.result.fanSpeed);
+    button.setAttribute("data-status", document.getElementById("ac-switch").checked)
+    DisableAcOptions()
+}
+
+function DisableAcOptions(){
+  var switchAc = document.getElementById("ac-switch")
+  if(switchAc.checked == true){
+    document.getElementById("ac-change-temperature").disabled = false;
+    document.getElementById("ac-change-mode").disabled = false;
+    document.getElementById("ac-change-verticalswing").disabled = false;
+    document.getElementById("ac-change-horizontalswing").disabled = false;
+    document.getElementById("ac-change-fanspeed").disabled = false;
+  }else{
+    document.getElementById("ac-change-temperature").disabled = true;
+    document.getElementById("ac-change-mode").disabled = true;
+    document.getElementById("ac-change-verticalswing").disabled = true;
+    document.getElementById("ac-change-horizontalswing").disabled = true;
+    document.getElementById("ac-change-fanspeed").disabled = true;
+  }
+}
+
+function saveChangesAc(){
+    cleanAllErrors()
+    var fieldError = false;
+    var ac = new api.ac(null,null,null,null)
+    var changeNameOrDesc = false;
+    var changes = false;
+    changeNameOrDesc = modifyDevice("device-ac","ac-change-name","ac-change-description",ac,"ac")
+    if( changeNameOrDesc == false){
+      fieldError = true;
+    }
+    var newTemperature = document.getElementById("ac-change-temperature").value;
+    var newTemperatureJSON={"0":newTemperature}
+    var parameterTemperature = JSON.stringify(newTemperatureJSON)
+    if(newTemperature < 18 || newTemperature > 38){
+      fieldError = true;
+      document.getElementById("error-ac-temperature").style.display = "block"
+      document.getElementById("ac-change-temperature").value = document.getElementById(ac.id).getAttribute("data-temperature");
+    }
+    
+    var newMode = document.getElementById("ac-change-mode").value;
+    var newModeJSON={"0":newMode}
+    var parameterMode = JSON.stringify(newModeJSON)
+    var newVerticalswing = document.getElementById("ac-change-verticalswing").value;
+    var newVerticalswingJSON={"0":newVerticalswing}
+    var parameterVerticalswing = JSON.stringify(newVerticalswingJSON)
+    var newHorizontalswing = document.getElementById("ac-change-horizontalswing").value;
+    var newHorizontalswingJSON={"0":newHorizontalswing}
+    var parameterHorizontalswing = JSON.stringify(newHorizontalswingJSON)
+    var newFanspeed = document.getElementById("ac-change-fanspeed").value;
+    var newFanspeedJSON={"0":newFanspeed}
+    var parameterFanspeed = JSON.stringify(newFanspeedJSON)
+    if(newMode == ""){
+      fieldError = true;
+      document.getElementById("error-ac-mode").style.display = "block"
+      document.getElementById("ac-change-mode").value = document.getElementById(ac.id).getAttribute("data-mode");
+    }
+
+    if(newVerticalswing == ""){
+      fieldError = true;
+      document.getElementById("error-ac-verticalswing").style.display = "block"
+      document.getElementById("ac-change-verticalswing").value = document.getElementById(ac.id).getAttribute("data-verticalswing");
+    }
+
+    if(newHorizontalswing == ""){
+      fieldError = true;
+      document.getElementById("error-ac-horizontalswing").style.display = "block"
+      document.getElementById("ac-change-horizontalswing").value = document.getElementById(ac.id).getAttribute("data-horizontalswing");
+    }
+
+    if(newFanspeed == ""){
+      fieldError = true;
+      document.getElementById("error-ac-fanspeed").style.display = "block"
+      document.getElementById("ac-change-fanspeed").value = document.getElementById(ac.id).getAttribute("data-fanspeed");
+    }
+
+    if(fieldError)
+      return;
+
+    if(newTemperature != document.getElementById(ac.id).getAttribute("data-temperature") ||
+      newMode != document.getElementById(ac.id).getAttribute("data-mode") ||
+      newVerticalswing != document.getElementById(ac.id).getAttribute("data-verticalswing") ||
+      newHorizontalswing != document.getElementById(ac.id).getAttribute("data-horizontalswing") ||
+      newFanspeed != document.getElementById(ac.id).getAttribute("data-fanspeed")){
+        changes = true;
+    }
+
+  var currentState = document.getElementById("ac-switch").checked
+  var previousState = document.getElementById(ac.id).getAttribute("data-status")
+
+  if((currentState == true && previousState == "false") || (currentState == false && previousState == "true")){
+    changes = true;
+  }
+  if(changeNameOrDesc == true){
+      updateDevice(ac)
+  }
+  if(changes == true){
+      if(document.getElementById("ac-switch").checked == true){
+        ac.turnOn(ac.id)
+        .done(function (data) {
+          if(newTemperature != "")
+            ac.setTemperature(ac.id,parameterTemperature)
+          if(newMode != "")
+            ac.setMode(ac.id,parameterMode)
+          if(newVerticalswing != "")
+            ac.setVerticalSwing(ac.id,parameterVerticalswing)
+          if(newHorizontalswing != "")
+            ac.setHorizontalSwing(ac.id,parameterHorizontalswing)
+          if(newFanspeed != "")
+            ac.setFanSpeed(ac.id,parameterFanspeed)
+          })
+        .fail(function (jqXHR, textStatus) {
+          alert ('Request failed:' + textStatus);
+          })
+      }
+      else{
+        ac.turnOff(ac.id);
+        deleteFromDisplay(ac.id);
+      }
+  }
+  if(changes == true || changeNameOrDesc == true){
+    showNotification()
+  }
+    $("#device-ac").modal("hide");
+}
+
+function showNotification(){
+  $("#notification").fadeIn(2000);
+  setTimeout(function(){
+    $("#notification").fadeOut(2000);
+}, 6000);
+  
+}
+$(function() {
+    $('#cp3').colorpicker({
+       color: '#AA3399',
+        format: 'hex',
+    });
+});
+
+
+function isColor(color){
+  for (var i = 0; i < color.length; i++) {
+    var c = color.charAt(i);
+    if( (c < '0' || c > '9') && ( c < 'a' || c > 'z') && ( c < 'A' || c > 'Z'))
+      return false;
+  }
+  return true;
+}
+
+function cleanAllErrors(){
+    document.getElementById("error-name-lamp").style.display = "none"
+    document.getElementById("error-name-oven").style.display = "none"
+    document.getElementById("error-name-ac").style.display = "none"
+    document.getElementById("error-nameExist-lamp").style.display = "none"
+    document.getElementById("error-nameExist-oven").style.display = "none"
+    document.getElementById("error-nameExist-ac").style.display = "none"
+    document.getElementById("error-lamp-color").style.display = "none"
+    document.getElementById("error-lamp-brightness").style.display = "none"
+    document.getElementById("error-oven-temperature").style.display = "none"
+    document.getElementById("error-oven-heatmode").style.display = "none"
+    document.getElementById("error-oven-grillmode").style.display = "none"
+    document.getElementById("error-oven-convectionmode").style.display = "none"
+    document.getElementById("error-ac-temperature").style.display = "none"
+    document.getElementById("error-ac-mode").style.display = "none"
+    document.getElementById("error-ac-verticalswing").style.display = "none"
+    document.getElementById("error-ac-horizontalswing").style.display = "none"
+    document.getElementById("error-ac-fanspeed").style.display = "none"
+}
+</script>
+
+</body>
+</html>

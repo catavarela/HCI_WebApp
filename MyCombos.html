@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="animate.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -18,8 +17,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/js/bootstrap-colorpicker.js"></script>
 <style>
-  
-  /* W3.CSS 4.04 Apr 2017 by Jan Egil and Borge Refsnes */
+
 html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
 /* Extract from normalize.css by Nicolas Gallagher and Jonathan Neal git.io/normalize */
 html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
@@ -106,6 +104,32 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
   display:none;
 }
 
+.notification{
+  width:300px;
+  height:150px;
+  background-color:black;
+  position: absolute;
+  top:15px;
+  right:15px;
+  display:none;
+}
+
+.header-notification{
+  width:100%;
+    height:20%;
+    background-color:#15993c;
+    text-align:center;
+    font-size:155%;
+    color:white;
+}
+
+.body-notification{
+  display: flex;
+    width:100%;
+    height:80%;
+    background-color:#75ff7c;
+}
+
  </style>
 </head>
 <body onload="loadRoutines()">
@@ -118,25 +142,13 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand logo" href="Home.html"></a>
+      <a class="navbar-brand logo" href="index.html"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav justify-center-56px">
         <li><a class="flex-center tam" href="MyDevices.html">Rooms and Devices</a></li>
         <li><a class="flex-center tam" href="MyCombos.html">Combinations</a></li>
-        <li><a class="flex-center tam" href="MyAgenda.html">Agenda</a></li>
         <li><a class="flex-center tam" href="Now On.html">Switched On</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a class="dropdown-toggle flex-center tam" data-toggle="dropdown" href="#">My Profile <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Configurations</a></li>
-            <li><a href="#">News</a></li>
-            <li><a href="Profiles.html">Change Profile</a></li>
-            <li><a href="Main Page.html">Log out</a></li>
-          </ul>
-        </li>
       </ul>
     </div>
   </div>
@@ -170,15 +182,13 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
         <div class="modal-body">
           <form class="form-horizontal">
             <label class="control-label">Name: </label>
-            <input type="text" class="form-control" id="combination-create-name" placeholder="Enter name" name="combination-name">
-            <p class="error" id="error-name-combo-create-exists">This name already exists</p>
-            <p class="error" id="error-name-combo-create-length">The name must be between 3 and 23 characters</p>
+            <input type="text" class="form-control" id="combination-name" placeholder="Enter name" name="combination-name">
             <div class="form-group" id="append-here">
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" onclick="submitRoutines()">Accept </button>
+          <button type="submit" class="btn btn-primary" onclick="submitRoutines(true)">Accept </button>
           <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>  
@@ -196,16 +206,15 @@ h3{font-family:"Segoe UI",Arial,sans-serif;font-weight:10;margin:10px 0;color:#3
           <form class="form-horizontal">
             <label class="control-label">Name: </label>
             <input type="text" class="form-control" id="combination-modify-name" placeholder="Enter name" name="combination-name">
-            <p class="error" id="error-name-combo-modify-exists">This name already exists</p>
-            <p class="error" id="error-name-combo-modify-length">The name must be between 3 and 23 characters</p>
             <div class="form-group" id="append-here-modify">
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" onclick="">Accept </button>
+          <button type="submit" class="btn btn-primary" onclick="executeRoutine()">Execute </button>
+          <button type="submit" class="btn btn-default" onclick="submitRoutines(false)">Save Changes </button>
           <button type="submit" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-default pull-left" onclick=""><span class="glyphicon glyphicon-trash"></span> Delete</button>
+          <button type="submit" class="btn btn-default pull-left" onclick="deleteR()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
         </div>
       </div>  
     </div>
@@ -316,11 +325,12 @@ api.routine = class{
     }); 
   }
 
-  static modify(routine) {
+  static modify(routine, id) {
    return $.ajax({
-      url: api.routine.url + routine.id,
+      url: api.routine.url + id,
       method: "PUT",
       dataType: "json",
+      contentType: "application/json",
       timeout: api.timeout,
       data: routine
     }); 
@@ -355,7 +365,7 @@ api.routine = class{
 
   static execute(id){
     return $.ajax({
-      url: api.routine.url + routine.id + "/execute",
+      url: api.routine.url + id + "/execute",
       method: "PUT",
       dataType: "json",
       timeout: api.timeout
@@ -548,6 +558,7 @@ function modifyRoutine(routineButton){
   .done(function (data) {
     $("#modify-combo").modal("show");
     $("#modify-combo").on('shown.bs.modal', function () {
+      document.getElementById("modify-combo").setAttribute("data-routineId", routineButton.id);
       loadRoutineCamps(data);
     });
   })
@@ -670,7 +681,7 @@ function createOptions(selectDevice, currentAction){
   })
 }
 
-function submitRoutines(){
+function submitRoutines(create){
   var num = 1;
   var currentDevice;
   var actionsArray = [];
@@ -684,10 +695,37 @@ function submitRoutines(){
 
 
   if(! finalCheckErrors(num)){
-    createRoutine(actionsArray);
+    if(create)
+      createRoutine(actionsArray);
+    else
+      modifyRoutineInAPI(actionsArray);
+
+    $("#create-combo").modal("hide");
     location.reload();
     return;
   }
+}
+
+function modifyRoutineInAPI(actionsArray){
+  var routineName = document.getElementById("combination-modify-name").value;
+  var routineId = document.getElementById("modify-combo").getAttribute("data-routineId");
+
+  var routine = {"name":routineName,"actions":actionsArray,"meta":"{}"}
+
+  var JSONroutine = JSON.stringify(routine);
+  api.routine.modify(JSONroutine, routineId)
+    .done(function(data){
+    location.reload();
+  }) 
+}
+
+function executeRoutine(){
+  var routineId = document.getElementById("modify-combo").getAttribute("data-routineId");
+
+  api.routine.execute(routineId)
+  .done(function(data){
+    $("#modify-combo").modal("hide");    
+  }) 
 }
 
 function getActionInvolved(num, deviceId, errorsArray, actionsArray){
@@ -808,9 +846,9 @@ function createRoutine(actionsArray){
 
   var routine = {"name":routineName,"actions":actionsArray,"meta":"{}"}
   var JSONroutine = JSON.stringify(routine)
-  api.routine.add(JSONroutine) //rompe porque la rutina esta mal creada por alguna razon, debe ser un detalle
+  api.routine.add(JSONroutine)
     .done(function(data){
-    displayRoutine(routine);
+    location.reload();
   })
 }
 
@@ -825,9 +863,9 @@ function displayRoutine(routine){
   }
   rows[rowNumber].appendChild(loadRoutine(routine));
 }
-/*
+
 function deleteRoutine(routine){
-  api.routine.delete(routine.id);
+  api.routine.delete(routine.id)
 
   .done(function(data){
     var father = routine.parentElement;
@@ -836,13 +874,11 @@ function deleteRoutine(routine){
   })
 
   .fail(function(jqXHR, textStatus){
-    alert('Request failed: al borrar la rutina' + textStatus);
+    alert('Request failed: trying to delete the routine' + textStatus);
   }) 
 }
 
-/
-function delete(){
-//hay que crear el modal de modify combo para que funcione
+function deleteR(){
   var routine = document.getElementById(document.getElementById("modify-combo").getAttribute("data-routineId"));
 
   $("#modify-combo").modal("hide");
@@ -852,8 +888,6 @@ function delete(){
 
   document.getElementById("accept-delete-routine").onclick = function() {deleteRoutine(routine)};
 }
-*/
-
 
 function displayActions(num, boolean, routine, currentAction) {
   if(document.getElementById("selectAction" + num) != null){
@@ -972,7 +1006,6 @@ function displayActions(num, boolean, routine, currentAction) {
     }
   }
    
-   alert(action); 
     var actionLabel = document.createElement("label");
     actionLabel.setAttribute("class", "control-label");
     actionLabel.setAttribute("id", "actionLabel" + num);
@@ -1830,17 +1863,6 @@ function lookForErrors(num,val,input,errorText, boolean, routine, currentAction)
 
 function finalCheckErrors(num){
   var error = false;
-
-  var nameModify = document.getElementById("combination-modify-name").value;
-  if(nameModify.length < 3 || nameModify.length > 23){
-    document.getElementById("error-name-combo-modify-length").style.display = "block";
-  }
-
-  var nameCreate = document.getElementById("combination-create-name").value;
-  if(nameCreate.length < 3 || nameCreate.length > 23){
-    document.getElementById("error-name-combo-create-length").style.display = "block";
-  }
-
   for(var i = 1 ; i <= num; i++){
     var device = document.getElementById("selectDevice" + i)
     var action = document.getElementById("selectAction" + i)
